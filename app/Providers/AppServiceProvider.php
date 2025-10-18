@@ -33,7 +33,6 @@ class AppServiceProvider extends ServiceProvider
         } elseif (Request::is('user/*')) {
             $layout = 'layouts.user';
         }
-
         config(['livewire.layout' => $layout]);
     }
 }
