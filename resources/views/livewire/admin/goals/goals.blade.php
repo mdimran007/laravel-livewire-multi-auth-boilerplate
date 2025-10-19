@@ -3,7 +3,7 @@
                 <div class="flex items-center justify-between mb-6">
                     <h4 class="text-slate-900 dark:text-slate-200 text-lg font-medium">{{ $pageTitle ?? '' }}</h4>
                     <a href="{{ route('admin.goals.create') }}"
-                        class="btn bg-success text-white" wire:navigate>
+                        class="btn bg-success text-white" >
                         + {{ __("Create Goal") }}
                     </a>
                 </div>
@@ -11,23 +11,24 @@
 
                 <div class="flex flex-auto flex-col">
 
-                    <div class="grid md:grid-cols-2 xl:grid-cols-3 gap-6">
+                    
                         @forelse ($goals as $item)
-                                 <div class="card">
+                        <div class="grid md:grid-cols-2 xl:grid-cols-3 gap-6">
+                                 <div wire:key="item-{{ $item->id }}" class="card">
                                     <div class="card-header">
-                                <div class="flex justify-between items-center">
-                                    <h5 class="card-title">{{ $item->name }}</h5>
-                                    @if ($item->status == STATUS_ACTIVE)
-                                     <div class="bg-success text-xs text-white rounded-md py-1 px-1.5 font-medium" role="alert">
-                                        <span>{{ __("Active") }}</span>
+                                    <div class="flex justify-between items-center">
+                                        <h5 class="card-title">{{ $item->name }}</h5>
+                                        @if ($item->status == STATUS_ACTIVE)
+                                        <div class="bg-success text-xs text-white rounded-md py-1 px-1.5 font-medium" role="alert">
+                                            <span>{{ __("Active") }}</span>
+                                        </div>
+                                        @else
+                                        <div class="bg-warning/60 text-xs text-white rounded-md py-1 px-1.5 font-medium" role="alert">
+                                            <span>{{ __("Pending") }}</span>
+                                        </div>
+                                        @endif
+                                    
                                     </div>
-                                    @else
-                                    <div class="bg-warning/60 text-xs text-white rounded-md py-1 px-1.5 font-medium" role="alert">
-                                        <span>{{ __("Pending") }}</span>
-                                    </div>
-                                    @endif
-                                   
-                                </div>
                                 </div>
                                     <div class="flex flex-col">
                                     <div class="py-3 px-6">
@@ -49,17 +50,22 @@
                                                 <button type="button" class="btn border-info text-info hover:bg-info hover:text-white">Details</button>
                                                 <a href="{{ route('admin.goals.edit', $item->id) }}" class="btn border-primary text-primary hover:bg-primary hover:text-white">Edit</a>
 
-                                                <button type="button" class="btn border-danger text-danger hover:bg-danger hover:text-white">Delete</button>
+                                                <button type="button" class="btn border-danger text-danger hover:bg-danger hover:text-white" wire:click="$dispatch('confirm-delete', {{ $item->id }})">Delete</button>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                         </div>
+                        </div>
                         @empty
-                            
+                            <div class="grid md:grid-cols-1 xl:grid-cols-1 gap-6">
+                                <div class="card flex h-80 justify-center p-8">
+                                <h6>{{ __("Data not found!") }}</h6>
+                                </div>
+                            </div>
                         @endforelse
         
-                    </div>
+                    
 
                     {{-- <div class="text-center mt-6">
                         <button type="button" class="btn bg-transparent border-gray-300 dark:border-gray-700">

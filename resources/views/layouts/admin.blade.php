@@ -38,5 +38,39 @@
     <script src="{{asset('assets/admin')}}/libs/quill/quill.min.js"></script>
     <script src="{{asset('assets/admin')}}/js/pages/form-editor.js"></script>
     @livewireScripts
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    document.addEventListener('livewire:initialized', () => {
+        Livewire.on('confirm-delete', (id) => {
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You want to delete this?",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, delete it!',
+                cancelButtonText: 'Cancel',
+                customClass: {
+                    confirmButton: 'btn border-primary text-primary hover:bg-primary hover:text-white',
+                    cancelButton: 'btn border-danger text-danger hover:bg-danger hover:text-white'
+                },
+                buttonsStyling: false 
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Livewire.dispatch('delete-goal', { id: id });
+                }
+            });
+        });
+
+        Livewire.on('goal-deleted', () => {
+            Swal.fire(
+                'Deleted!',
+                'Goal has been deleted.',
+                'success'
+            )
+        });
+    });
+</script>
+
 </body>
 </html>

@@ -90,7 +90,6 @@ if (!function_exists("goalItemList")) {
             'policy',
             'services',
             'programmes',
-            'events',
             'partnerships',
             'facilities',
             'events',
