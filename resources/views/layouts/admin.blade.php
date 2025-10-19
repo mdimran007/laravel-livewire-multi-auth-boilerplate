@@ -6,8 +6,14 @@
     <title>{{ $title ?? '-' }}</title>
     <link href="{{asset('assets/admin')}}/css/app.min.css" rel="stylesheet" type="text/css">
     <link href="{{asset('assets/admin')}}/css/icons.min.css" rel="stylesheet" type="text/css">
+    
+       <!-- quill css -->
+    <link href="{{asset('assets/admin')}}/libs/quill/quill.core.css" rel="stylesheet" type="text/css" >
+    <link href="{{asset('assets/admin')}}/libs/quill/quill.bubble.css" rel="stylesheet" type="text/css" >
+    <link href="{{asset('assets/admin')}}/libs/quill/quill.snow.css" rel="stylesheet" type="text/css" >
+
     <script src="{{asset('assets/admin')}}/js/config.js"></script>
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    {{-- @vite(['resources/css/app.css', 'resources/js/app.js']) --}}
     @livewireStyles
 </head>
 <body>
@@ -29,6 +35,8 @@
     <script src="{{asset('assets/admin')}}/js/app.js"></script>
     <script src="{{asset('assets/admin')}}/libs/apexcharts/apexcharts.min.js"></script>
     <script src="{{asset('assets/admin')}}/js/pages/dashboard.js"></script>
+    <script src="{{asset('assets/admin')}}/libs/quill/quill.min.js"></script>
+    <script src="{{asset('assets/admin')}}/js/pages/form-editor.js"></script>
     @livewireScripts
 </body>
 </html>

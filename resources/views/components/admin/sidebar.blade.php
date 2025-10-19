@@ -29,26 +29,26 @@
                     <li class="menu-item">
                         <a href="index.html" class="menu-link">
                             <span class="menu-icon"><i class="mgc_home_3_line"></i></span>
-                            <span class="menu-text"> Dashboard </span>
+                            <span class="menu-text"> {{ __("Dashboard") }} </span>
                         </a>
                     </li>
 
                     <li class="menu-item">
                         <a href="javascript:void(0)" data-fc-type="collapse" class="menu-link">
                             <span class="menu-icon"><i class="mgc_user_3_line"></i></span>
-                            <span class="menu-text"> Users </span>
+                            <span class="menu-text"> {{ __("Users") }} </span>
                             <span class="menu-arrow"></span>
                         </a>
 
                         <ul class="sub-menu hidden">
                             <li class="menu-item">
                                 <a href="auth-login.html" class="menu-link">
-                                    <span class="menu-text">Users List</span>
+                                    <span class="menu-text">{{ __("Users List") }}</span>
                                 </a>
                             </li>
                             <li class="menu-item">
                                 <a href="auth-register.html" class="menu-link">
-                                    <span class="menu-text">Role & Permission</span>
+                                    <span class="menu-text">{{ __("Role & Permission") }}</span>
                                 </a>
                             </li>
                         </ul>
@@ -56,9 +56,9 @@
 
 
                     <li class="menu-item">
-                        <a href="index.html" class="menu-link">
+                        <a href="{{ route('admin.goals') }}" class="menu-link">
                             <span class="menu-icon"><i class="mgc_building_2_line"></i></span>
-                            <span class="menu-text"> Goals </span>
+                            <span class="menu-text"> {{ __("Goals") }} </span>
                         </a>
                     </li>
 
@@ -67,19 +67,19 @@
                     <li class="menu-item">
                         <a href="javascript:void(0)" data-fc-type="collapse" class="menu-link">
                             <span class="menu-icon"><i class="mgc_box_3_line"></i></span>
-                            <span class="menu-text"> Settings </span>
+                            <span class="menu-text"> {{ __("Settings") }} </span>
                             <span class="menu-arrow"></span>
                         </a>
 
                         <ul class="sub-menu hidden">
                             <li class="menu-item">
                                 <a href="pages-starter.html" class="menu-link">
-                                    <span class="menu-text">Profile</span>
+                                    <span class="menu-text">{{ __("Profile") }}</span>
                                 </a>
                             </li>
                             <li class="menu-item">
                                 <a href="pages-timeline.html" class="menu-link">
-                                    <span class="menu-text">General Settings</span>
+                                    <span class="menu-text">{{ __("General Settings") }}</span>
                                 </a>
                             </li>
                         </ul>

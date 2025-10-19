@@ -83,3 +83,21 @@ if (!function_exists('getUserData')) {
         return null;
     }
 }
+
+if (!function_exists("goalItemList")) {
+    function goalItemList() {
+        $arr = [
+            'policy',
+            'services',
+            'programmes',
+            'events',
+            'partnerships',
+            'facilities',
+            'events',
+            'research',
+            'report',
+            'news',
+        ];
+        return $arr;
+    }
+}
