@@ -101,3 +101,17 @@ if (!function_exists("goalItemList")) {
         return $arr;
     }
 }
+
+if (!function_exists('encoder')) {
+    function encoder($id)
+    {
+        return base64_encode($id);  // simple encoding
+    }
+}
+
+if (!function_exists('decoder')) {
+    function decoder($encodedId)
+    {
+        return base64_decode($encodedId);  // decode
+    }
+}
