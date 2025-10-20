@@ -1,7 +1,7 @@
         <div class="app-menu">
 
             <!-- Sidenav Brand Logo -->
-            <a href="index.html" class="logo-box">
+            <a href="index.html" class="bg-gray-900 logo-box">
                 <!-- Light Brand Logo -->
                 <div class="logo-light">
                     <img src="{{asset('assets/admin')}}/images/logo-light.png" class="logo-lg h-6" alt="Light logo">
@@ -22,7 +22,7 @@
             </button>
 
             <!--- Menu -->
-            <div class="srcollbar" data-simplebar>
+            <div class="bg-gray-900 srcollbar" data-simplebar>
                 <ul class="menu" data-fc-type="accordion">
                     <li class="menu-title"></li>
 

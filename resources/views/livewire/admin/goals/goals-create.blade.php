@@ -70,6 +70,8 @@
 
                                         {{-- <button type="submit" class="btn bg-primary text-white">{{ __("Save Now") }}</button> --}}
 
+                                        {{-- <div id="snow-editor" style="height: 300px;"></div> --}}
+
                                         <button type="submit" 
                                             class="btn bg-primary text-white"
                                             wire:loading.attr="disabled">

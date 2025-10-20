@@ -110,7 +110,7 @@
                                         <div class="grid lg:grid-cols-4 gap-6">
                                                 @foreach($goalAssetList as $singleAsset)
                                                     @if ($singleAsset->asset_type === $key )
-                                                        <div wire:key="item-{{ $singleAsset->id }}" class="card">
+                                                        {{-- <div wire:key="item-{{ $singleAsset->id }}" class="card">
                                                             <div class="flex flex-shrink-0 bg-white rounded-lg shadow-md ">
                                                                 @php
                                                                         $data = json_decode($singleAsset->data);
@@ -138,7 +138,43 @@
                                                                         <button  wire:click="openAssetModal('{{ $key }}', {{ $singleAsset->id }})" class="btn border-primary text-primary hover:bg-primary hover:text-white">{{ __("Edit") }}</button>
                                                                         <button type="button" class="btn border-danger text-danger hover:bg-danger hover:text-white" wire:click="$dispatch('confirm-delete', {{ $singleAsset->id }})">{{ __("Delete") }}</button>
                                                             </div>
-                                                        </div>
+                                                        </div> --}}
+<div wire:key="item-{{ $singleAsset->id }}" class="bg-white border max-w-[490px] overflow-hidden rounded-lg shadow-[0_0_1rem_rgba(0,0,0,0.2)] w-[100%]">
+        <div class="bg-slate-200 card">
+            <div class="grid grid-cols-5">
+                <div class="col-span-2 p-3">
+                     @php
+                                                                        $data = json_decode($singleAsset->data);
+                                                                        $imagePath = '';
+
+                                                                        if ($data && isset($data->image)) {
+                                                                            // if image is object (old record) → get ->path, otherwise use directly
+                                                                            $imagePath = is_object($data->image) ? ($data->image->path ?? '') : $data->image;
+                                                                        }
+                                                                        @endphp
+
+                                                                        @if ($imagePath)
+                                                                            <img src="{{ asset('storage/' . $imagePath) }}" 
+                                                                                alt="Logo" 
+                                                                                class="w-24 h-24 rounded-l-lg object-cover">
+                                                                        @endif
+                </div>
+                <div class="col-span-3 p-3">
+                    <div class="font-bold">{{ $singleAsset->data != null? json_decode($singleAsset->data)->title:'N/A' }}</div>
+                    <div class="mb-3">{{ $singleAsset->data != null? json_decode($singleAsset->data)->short_description:'N/A' }}</div>
+                    
+                    <div class="flex mt-3 gap-2">
+                        <button wire:click="openAssetModal('{{ $key }}', {{ $singleAsset->id }})" class="bg-primary border-2 flex-1 hover:bg-gray-400 px-4 py-2 rounded-lg text-gray-500 text-white">
+                              <i class="msr">edit_square</i>
+                            </button>
+                        <button  wire:click="$dispatch('confirm-delete', {{ $singleAsset->id }})" class="bg-danger border-2 flex-1 hover:bg-gray-400 px-4 py-2 rounded-lg text-gray-500 text-white">
+                              <i class="msr">delete</i>
+                            </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
                                                     @endif
                                                 @endforeach
                                         </div>
@@ -193,10 +229,14 @@
                     @if ($field !== 'status') <!-- skip status -->
                         <div>
                             <label class="block text-sm font-medium text-gray-700 dark:text-gray-200 capitalize">
-                                {{ str_replace('_', ' ', $field) }}
+                                {{ str_replace('_', ' ', Str::ucfirst($field)) }}
                             </label>
 
                             @if ($field === 'description')
+                                <textarea wire:model.defer="formData.{{ $field }}" rows="3" id="summernote"
+                                    class="w-full mt-1 px-3 py-2 border rounded-lg text-sm dark:bg-slate-700 dark:border-slate-600 dark:text-gray-100"></textarea>
+                                    {{-- <div id="snow-editor" style="height: 300px;"></div> --}}
+                            @elseif ($field === 'short_description')
                                 <textarea wire:model.defer="formData.{{ $field }}" rows="3"
                                     class="w-full mt-1 px-3 py-2 border rounded-lg text-sm dark:bg-slate-700 dark:border-slate-600 dark:text-gray-100"></textarea>
                             @elseif ($field === 'image')
@@ -246,3 +286,4 @@
     @endif
                    
 </div>
+

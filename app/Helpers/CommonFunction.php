@@ -110,33 +110,66 @@ if (!function_exists("goalAssetsProperty")) {
                 'title',
                 'short_description',
                 'description',
-                'download_link',
+                'url',
                 'image',
             ],
             'services' =>[
-
+                'title',
+                'short_description',
+                'description',
+                'url',
+                'image',
             ],
             'programmes' =>[
-
+                'title',
+                'short_description',
+                'description',
+                'url',
+                'image',
             ],
             'partnerships'=>[
-
+                'title',
+                'short_description',
+                'url',
+                'image',
             ],
             'facilities'=>[
-
+                'title',
+                'short_description',
+                'description',
+                'url',
+                'image',
             ],
             'events'=>[
-
+                'title',
+                'short_description',
+                'description',
+                'url',
+                'image',
+                'event_date'
             ],
             'research'=>[
-
+                'title',
+                'short_description',
+                'description',
+                'url',
+                'image',
             ],
             'report'=>[
-
+                'title',
+                'short_description',
+                'description',
+                'url',
+                'image',
             ],
             'news'=>[
-
+                'title',
+                'short_description',
+                'description',
+                'url',
+                'image',
             ],
+
         ];
         return $arr;
     }

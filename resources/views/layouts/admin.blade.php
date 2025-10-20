@@ -13,6 +13,10 @@
     <link href="{{asset('assets/admin')}}/libs/quill/quill.snow.css" rel="stylesheet" type="text/css" >
 
     <script src="{{asset('assets/admin')}}/js/config.js"></script>
+
+    <!-- Summernote CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote-lite.min.css" rel="stylesheet">
+
     {{-- @vite(['resources/css/app.css', 'resources/js/app.js']) --}}
     @livewireStyles
 </head>
@@ -72,6 +76,23 @@
     });
 </script>
 
+<script>
+document.addEventListener('livewire:load', () => {
+    window.addEventListener('initQuillEditor', () => {
+        if (!window.quill) {
+            window.quill = new Quill('#quill-editor', {
+                theme: 'snow',
+                placeholder: 'Write something...',
+            });
+
+            window.quill.on('text-change', function() {
+                Livewire.emit('updateDescription', window.quill.root.innerHTML);
+            });
+        }
+    });
+});
+
+</script>
 
 </body>
 </html>

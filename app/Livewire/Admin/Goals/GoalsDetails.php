@@ -13,8 +13,11 @@ use Illuminate\Support\Facades\DB;
 
 class GoalsDetails extends Component
 {
+    public $listeners = [
+        'delete-goal' => 'delete',
+        'initQuillEditor'
+    ];
 
-    protected $listeners = ['delete-goal' => 'delete'];
 
      use WithFileUploads;
 
@@ -141,9 +144,13 @@ class GoalsDetails extends Component
             }
         }
 
+
         // dd($this->formData);
 
         $this->isAssetModalOpen = true;
+
+        $this->dispatch('initQuillEditor');
+
     }
 
     public function closeAssetModal()
