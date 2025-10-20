@@ -3,8 +3,8 @@
                 <div class="flex items-center justify-between mb-6">
                     <h4 class="text-slate-900 dark:text-slate-200 text-lg font-medium">{{ $pageTitle ?? '' }}</h4>
                     <a href="{{ route('admin.goals') }}"
-                        class="btn bg-success text-white" wire:navigate>
-                        + {{ __("Back") }}
+                        class="bg-indigo-600 btn text-white">
+                        {{ __("Back") }}
                     </a>
                 </div>
                 <!-- Page Title End -->

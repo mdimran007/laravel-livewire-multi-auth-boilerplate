@@ -62,6 +62,7 @@ class GoalsCreate extends Component
         session()->flash('message', 'Goal created successfully!');
 
         $this->reset(['title', 'status', 'short_description', 'image', 'selectedItems']);
+        return redirect()->route('admin.goals');
     }
 
 

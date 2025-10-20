@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\FileHandler;
+use App\Models\GoalAsset;
 use App\Models\User;
 use Illuminate\Support\Facades\Storage;
 
@@ -101,6 +102,46 @@ if (!function_exists("goalItemList")) {
     }
 }
 
+
+if (!function_exists("goalAssetsProperty")) {
+    function goalAssetsProperty() {
+        $arr = [
+            'policy'=>[
+                'title',
+                'short_description',
+                'description',
+                'download_link',
+                'image',
+            ],
+            'services' =>[
+
+            ],
+            'programmes' =>[
+
+            ],
+            'partnerships'=>[
+
+            ],
+            'facilities'=>[
+
+            ],
+            'events'=>[
+
+            ],
+            'research'=>[
+
+            ],
+            'report'=>[
+
+            ],
+            'news'=>[
+
+            ],
+        ];
+        return $arr;
+    }
+}
+
 if (!function_exists('encoder')) {
     function encoder($id)
     {
@@ -113,4 +154,20 @@ if (!function_exists('decoder')) {
     {
         return base64_decode($encodedId);  // decode
     }
+}
+
+function goalAssetCount($assetType) {
+        return GoalAsset::where('asset_type', $assetType)->count();
+}
+
+
+function goalAssetCounts() {
+    $types = goalAssetsProperty(); // your predefined array
+    $counts = [];
+
+    foreach ($types as $type => $fields) {
+        $counts[$type] = GoalAsset::where('asset_type', $type)->count();
+    }
+
+    return $counts;
 }

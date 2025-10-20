@@ -18,6 +18,7 @@ class Goals extends Component
 
     public $pageTitle = "Goals";
     public $goals;
+    
 
     public function delete($id)
     {

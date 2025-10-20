@@ -30,4 +30,11 @@ class Goal extends Model
             $goal->slug = Str::slug($goal->title);
         });
     }
+
+    public function creator()
+    {
+        return $this->belongsTo(User::class, 'created_by');
+    }
+
+
 }

@@ -82,6 +82,7 @@ class GoalsEdit extends Component
         ]);
 
         session()->flash('message', 'Goal updated successfully!');
+        return redirect()->route('admin.goals');
     }
 
 

@@ -11,13 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('goals', function (Blueprint $table) {
+        Schema::create('goal_assets', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
-            $table->string('slug');
-            $table->longText('short_description');
-            $table->string('images');
-            $table->json('achievements')->nullable();
+            $table->foreignId('goal_id')->constrained('goals')->onDelete('cascade');
+            $table->string('asset_type')->nullable();
+            $table->json('data')->nullable(); 
             $table->tinyInteger('status')->default(STATUS_ACTIVE);
             $table->bigInteger('created_by')->nullable();
             $table->timestamps();
@@ -29,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('goals');
+        Schema::dropIfExists('goal_assets');
     }
 };
