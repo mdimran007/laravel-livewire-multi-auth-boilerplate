@@ -73,7 +73,7 @@
 
                         <ul class="sub-menu hidden">
                             <li class="menu-item">
-                                <a href="pages-starter.html" class="menu-link">
+                                <a href="{{ route('admin.profile.update') }}" class="menu-link">
                                     <span class="menu-text">{{ __("Profile") }}</span>
                                 </a>
                             </li>
