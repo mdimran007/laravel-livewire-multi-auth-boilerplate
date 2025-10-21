@@ -42,7 +42,7 @@
 
                         <ul class="sub-menu hidden">
                             <li class="menu-item">
-                                <a href="auth-login.html" class="menu-link">
+                                <a href="{{ route('admin.users') }}" class="menu-link">
                                     <span class="menu-text">{{ __("Users List") }}</span>
                                 </a>
                             </li>

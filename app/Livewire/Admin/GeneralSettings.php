@@ -11,6 +11,8 @@ class GeneralSettings extends Component
 {
     use WithFileUploads;
 
+    public $pageTitle = "General Settings";
+
     public $app_name;
     public $app_email;
     public $app_contact;
