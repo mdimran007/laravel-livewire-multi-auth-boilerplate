@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Livewire\Admin\Dashboard;
+use App\Livewire\Admin\GeneralSettings;
 use App\Livewire\Admin\Goals\Goals;
 use App\Livewire\Admin\Goals\GoalsCreate;
 use App\Livewire\Admin\Goals\GoalsDetails;
@@ -25,6 +26,7 @@ Route::middleware(['auth', 'admin', 'verified'])->prefix('admin')->name('admin.'
     Route::get('/goals/details/{goalId}', GoalsDetails::class)->name('goals.details');
 
     Route::get('profile/update', ProfileUpdate::class)->name('profile.update');
+    Route::get('general/settings', GeneralSettings::class)->name('general.settings');
 });
 
 

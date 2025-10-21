@@ -36,7 +36,7 @@
                             <label for="email"
                                 class="text-gray-800 text-sm font-medium inline-block mb-2">{{ __('Email') }}
                                 <span class="text-danger">*</span></label>
-                            <input type="text" wire:model="email" class="form-input" id="email"
+                            <input type="email" wire:model="email" class="form-input" id="email"
                                 placeholder="Email">
                             @error('email')
                                 <span class="flex m-1 text-danger">{{ $message }}</span>

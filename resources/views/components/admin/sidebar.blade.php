@@ -78,7 +78,7 @@
                                 </a>
                             </li>
                             <li class="menu-item">
-                                <a href="pages-timeline.html" class="menu-link">
+                                <a href="{{ route('admin.general.settings') }}" class="menu-link">
                                     <span class="menu-text">{{ __("General Settings") }}</span>
                                 </a>
                             </li>
