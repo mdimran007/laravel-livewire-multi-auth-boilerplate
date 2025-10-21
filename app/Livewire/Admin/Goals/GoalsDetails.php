@@ -19,7 +19,7 @@ class GoalsDetails extends Component
     ];
 
 
-     use WithFileUploads;
+    use WithFileUploads;
 
     public $pageTitle = "Goal Details";
 
@@ -43,7 +43,41 @@ class GoalsDetails extends Component
     public $editingAssetId = null;
 
 
-    
+    public $isAssetDetailsModalOpen = false;
+
+
+    public $assetId;
+    public $asset_type;
+    public $asset_data;
+    public $asset_status;
+    public $asset_createdAt;
+    public $asset_updatedAt;
+    public $asset_createdBy;
+
+
+
+    public function openAssetDetailsModal($assetId)
+    {
+        $goalAsset = GoalAsset::findOrFail($assetId)->with(['creator'])->first();
+
+        $this->assetId = $goalAsset->id;
+        $this->asset_type = $goalAsset->asset_type;
+        $this->asset_status = $goalAsset->status;
+        $this->asset_data = json_decode($goalAsset->data);
+        $this->asset_createdAt = $goalAsset->created_at;
+        $this->asset_updatedAt = $goalAsset->updated_at;
+        $this->asset_createdBy = $goalAsset->creator?->name ?? 'N/A';
+
+
+        $this->isAssetDetailsModalOpen = true;
+    }
+
+    public function closeAssetDetailsModal()
+    {
+        $this->isAssetDetailsModalOpen = false;
+    }
+
+
     public function delete($id)
     {
         $goalAssetData = GoalAsset::findOrFail($id);
@@ -56,8 +90,8 @@ class GoalsDetails extends Component
 
         $goalAssetData->delete();
 
-        session()->flash('message', ucfirst($goalAssetData->asset_type).'deleted successfully!');
-          return redirect()->route('admin.goals.details', $this->goalId); // redirect back to list
+        session()->flash('message', ucfirst($goalAssetData->asset_type) . 'deleted successfully!');
+        return redirect()->route('admin.goals.details', $this->goalId); // redirect back to list
     }
 
     public function store()
@@ -66,9 +100,17 @@ class GoalsDetails extends Component
         $rules = [];
         foreach ($this->assetFields as $field) {
             if ($field === 'image') {
-                $rules["formData.$field"] = 'nullable|image|max:2048';
-            } elseif ($field === 'download_link') {
+                $rules["formData.$field"] = 'nullable|image|mimes:jpg,jpeg,png,webp,gif|max:2048';
+            } elseif ($field === 'url') {
                 $rules["formData.$field"] = 'nullable|url';
+            } elseif ($field === 'title') {
+                $rules["formData.$field"] = 'required|string|max:255';
+            } elseif ($field === 'short_description') {
+                $rules["formData.$field"] = 'required|string||max:1000';
+            } elseif ($field === 'description') {
+                $rules["formData.$field"] = 'nullable|string|max:5000';
+            } elseif ($field === 'event_date') {
+                $rules["formData.$field"] = 'required|date|before:today';
             } else {
                 $rules["formData.$field"] = 'nullable|string';
             }
@@ -76,7 +118,34 @@ class GoalsDetails extends Component
 
         $rules['status'] = 'required|boolean';
 
-        $this->validate($rules);
+        $messages = [
+            'formData.image.image' => 'The uploaded file must be an image.',
+            'formData.image.mimes' => 'Allowed image types are jpg, jpeg, png, webp, gif.',
+            'formData.image.max' => 'The image size must not exceed 2MB.',
+
+            'formData.url.url' => 'The url must be a valid URL.',
+
+            'formData.title.required' => 'Please enter a title.',
+            'formData.title.string' => 'The title must be text.',
+            'formData.title.max' => 'The title may not exceed 255 characters.',
+
+            'formData.short_description.required' => 'Please enter a short description.',
+            'formData.short_description.string' => 'The short description must be text.',
+            'formData.short_description.max' => 'The short description may not exceed 1000 characters.',
+
+            'formData.description.string' => 'The description must be text.',
+            'formData.description.max' => 'The description may not exceed 5000 characters.',
+
+            'formData.event_date.required' => 'Please select an event date.',
+            'formData.event_date.date' => 'The event date must be a valid date.',
+            'formData.event_date.after' => 'The event date must be a future date.',
+
+            'status.required' => 'Please select a status.',
+            'status.boolean' => 'The status must be either active or inactive.',
+        ];
+
+
+        $this->validate($rules, $messages);
 
         // 2️⃣ Prepare form data for saving
         $dataToSave = $this->formData;
@@ -116,7 +185,7 @@ class GoalsDetails extends Component
 
         // Optional: refresh asset list via event
         // $this->emit('goalsDetails');
-         return redirect()->route('admin.goals.details', $this->goalId);
+        return redirect()->route('admin.goals.details', $this->goalId);
     }
 
 
@@ -127,6 +196,7 @@ class GoalsDetails extends Component
         $this->assetName = $assetName;
         $properties = goalAssetsProperty();
         $this->assetFields = $properties[$assetName] ?? [];
+
 
         if ($assetId) {
             // Edit mode
@@ -150,7 +220,6 @@ class GoalsDetails extends Component
         $this->isAssetModalOpen = true;
 
         $this->dispatch('initQuillEditor');
-
     }
 
     public function closeAssetModal()
@@ -161,7 +230,7 @@ class GoalsDetails extends Component
 
     public function mount($goalId)
     {
-      
+
         $goal = Goal::findOrFail($goalId)->with(['creator'])->first();
         $this->goalId = $goal->id;
         $this->title = $goal->title;
@@ -175,7 +244,6 @@ class GoalsDetails extends Component
 
         $goalAssets = GoalAsset::all();
         $this->goalAssetList = $goalAssets;
-
     }
 
     public function render()

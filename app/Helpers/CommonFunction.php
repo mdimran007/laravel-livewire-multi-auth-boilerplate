@@ -6,7 +6,8 @@ use App\Models\User;
 use Illuminate\Support\Facades\Storage;
 
 if (!function_exists("getSetting")) {
-    function getSetting($option, $default = NULL){
+    function getSetting($option, $default = NULL)
+    {
         $system_settings = config('settings');
 
         if ($option && isset($system_settings[$option])) {
@@ -19,7 +20,8 @@ if (!function_exists("getSetting")) {
 
 
 if (!function_exists('getTimeZone')) {
-    function getTimeZone(){
+    function getTimeZone()
+    {
         return DateTimeZone::listIdentifiers(
             DateTimeZone::ALL
         );
@@ -27,7 +29,8 @@ if (!function_exists('getTimeZone')) {
 }
 
 if (!function_exists('getImageUrl')) {
-    function getImageUrl($id = null, $demo_image_type = null, $demo_image_dimension = null){
+    function getImageUrl($id = null, $demo_image_type = null, $demo_image_dimension = null)
+    {
         $file = FileHandler::select('path', 'storage_type')->find($id);
         if (!is_null($file)) {
             if (Storage::disk($file->storage_type)->exists($file->path)) {
@@ -52,7 +55,8 @@ if (!function_exists('getImageUrl')) {
 
 
 if (!function_exists('getFileProperty')) {
-    function getFileProperty($id, $property){
+    function getFileProperty($id, $property)
+    {
         $file = FileHandler::find($id);
         $respose = null;
         if (!is_null($file)) {
@@ -63,7 +67,8 @@ if (!function_exists('getFileProperty')) {
 }
 
 if (!function_exists('getStatusHtml')) {
-    function getStatusHtml($status){
+    function getStatusHtml($status)
+    {
         $html = '';
         if ($status == STATUS_ACTIVE) {
             $html = '<p class="zBadge zBadge-active">' . __("Active") . '</p>';
@@ -76,7 +81,8 @@ if (!function_exists('getStatusHtml')) {
 
 
 if (!function_exists('getUserData')) {
-    function getUserData($id){
+    function getUserData($id)
+    {
         $user = User::find($id);
         if (!is_null($user)) {
             return $user;
@@ -86,7 +92,8 @@ if (!function_exists('getUserData')) {
 }
 
 if (!function_exists("goalItemList")) {
-    function goalItemList() {
+    function goalItemList()
+    {
         $arr = [
             'policy',
             'services',
@@ -104,43 +111,52 @@ if (!function_exists("goalItemList")) {
 
 
 if (!function_exists("goalAssetsProperty")) {
-    function goalAssetsProperty() {
+    function goalAssetsProperty()
+    {
+        // if you add new asset then need to check here any new field , if new then need to work form modal,validation,details modal.
+        //  now only support [ 'title',
+        //         'short_description',
+        //         'description',
+        //         'url',
+        //         'image',
+        //  'event_date'];
+
         $arr = [
-            'policy'=>[
+            'policy' => [
                 'title',
                 'short_description',
                 'description',
                 'url',
                 'image',
             ],
-            'services' =>[
+            'services' => [
                 'title',
                 'short_description',
                 'description',
                 'url',
                 'image',
             ],
-            'programmes' =>[
+            'programmes' => [
                 'title',
                 'short_description',
                 'description',
                 'url',
                 'image',
             ],
-            'partnerships'=>[
+            'partnerships' => [
                 'title',
                 'short_description',
                 'url',
                 'image',
             ],
-            'facilities'=>[
+            'facilities' => [
                 'title',
                 'short_description',
                 'description',
                 'url',
                 'image',
             ],
-            'events'=>[
+            'events' => [
                 'title',
                 'short_description',
                 'description',
@@ -148,21 +164,21 @@ if (!function_exists("goalAssetsProperty")) {
                 'image',
                 'event_date'
             ],
-            'research'=>[
+            'research' => [
                 'title',
                 'short_description',
                 'description',
                 'url',
                 'image',
             ],
-            'report'=>[
+            'report' => [
                 'title',
                 'short_description',
                 'description',
                 'url',
                 'image',
             ],
-            'news'=>[
+            'news' => [
                 'title',
                 'short_description',
                 'description',
@@ -189,12 +205,14 @@ if (!function_exists('decoder')) {
     }
 }
 
-function goalAssetCount($assetType) {
-        return GoalAsset::where('asset_type', $assetType)->count();
+function goalAssetCount($assetType)
+{
+    return GoalAsset::where('asset_type', $assetType)->count();
 }
 
 
-function goalAssetCounts() {
+function goalAssetCounts()
+{
     $types = goalAssetsProperty(); // your predefined array
     $counts = [];
 
