@@ -33,4 +33,8 @@ class Facility extends Model
             $data->slug = Str::slug($data->title);
         });
     }
+    public function creator()
+    {
+        return $this->belongsTo(User::class, 'created_by');
+    }
 }

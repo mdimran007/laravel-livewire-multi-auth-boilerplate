@@ -26,12 +26,12 @@ class ResearchEdit extends Component
 
     public $goalList;
 
-    public function mount($researchId = null)
+    public function mount($id = null)
     {
         $this->goalList = Goal::where('status', STATUS_ACTIVE)->get();
-        if ($researchId) {
-            $this->researchId = $researchId;
-            $research = Research::with('goals')->findOrFail($researchId);
+        if ($id) {
+            $this->researchId = $id;
+            $research = Research::with('goals')->findOrFail($id);
             $this->title = $research->title;
             $this->short_description = $research->short_description;
             $this->description = $research->description;

@@ -13,16 +13,17 @@
                     <form wire:submit.prevent="store" class="mt-5 space-y-4">
 
                         <div class="mb-10">
-                            <label for="goal"
-                                class="block text-sm font-medium text-gray-700 dark:text-gray-200">Select
-                                Goal</label>
-                            <select wire:model="goals[]" id="goal" class="form-input js-example-basic-multiple" dropdownCssClass="border-1" multiple>
+                            <label for="goal" class="block text-sm font-medium text-gray-700 dark:text-gray-200">
+                                Select Goal
+                            </label>
+
+                            <select id="goal" wire:model="goals" class="form-input" multiple>
                                 @foreach ($goalList as $goal)
                                     <option value="{{ $goal->id }}">{{ $goal->title }}</option>
                                 @endforeach
                             </select>
 
-                            @error('goals')
+                            @error('selectedGoals')
                                 <span class="text-red-500 text-xs">{{ $message }}</span>
                             @enderror
                         </div>
@@ -30,7 +31,7 @@
                         <div class="mt-10">
                             <label for="title" class="font-medium inline-block mb-2 mt-5 text-gray-800 text-sm">Title
                                 <span class="text-red-500 text-xs">*</span></label>
-                            <input type="text" wire:model.live="title" class="form-input" id="title">
+                            <input type="text" wire:model="title" class="form-input" id="title">
                             @error('title')
                                 <span class="text-red-500 text-xs">{{ $message }}</span>
                             @enderror
@@ -49,10 +50,10 @@
                         </div>
 
                         <div>
-                            <label for="summernote"
+                            <label for="summernote22"
                                 class="text-gray-800 text-sm font-medium inline-block mb-2">Description
-                                <span class="text-red-500 text-xs">*</span></label>
-                            <textarea wire:model="description" rows="3" class="form-input" id="summernote"></textarea>
+                            </label>
+                            <textarea wire:model="description" rows="3" class="form-input" id="summernote22"></textarea>
                             @error('description')
                                 <span class="text-red-500 text-xs">{{ $message }}</span>
                             @enderror
@@ -60,9 +61,9 @@
                         </div>
 
                         <div>
-                            <label for="url" class="text-gray-800 text-sm font-medium inline-block mb-2">Url <span
-                                    class="text-red-500 text-xs">*</span></label>
-                            <input type="text" wire:model.live="url" class="form-input" id="url">
+                            <label for="url" class="text-gray-800 text-sm font-medium inline-block mb-2">Url
+                            </label>
+                            <input type="text" wire:model="url" class="form-input" id="url">
                             @error('url')
                                 <span class="text-red-500 text-xs">{{ $message }}</span>
                             @enderror
@@ -71,8 +72,13 @@
 
                         <div>
                             <label for="image" class="text-gray-800 text-sm font-medium inline-block mb-2">Image
-                                <span class="text-red-500 text-xs">*</span></label>
+                            </label>
                             <input type="file" wire:model="image" class="border form-input p-1.5" id="image">
+                            @if ($existingImage)
+                                <div class="mt-2">
+                                    <img src="{{ asset('storage/research/' . $existingImage) }}" class="h-20">
+                                </div>
+                            @endif
                             @error('image')
                                 <span class="text-red-500 text-xs">{{ $message }}</span>
                             @enderror
@@ -80,7 +86,8 @@
                         </div>
 
                         <div>
-                            <label for="status" class="block text-sm font-medium text-gray-700 dark:text-gray-200">Status</label>
+                            <label for="status"
+                                class="block text-sm font-medium text-gray-700 dark:text-gray-200">Status</label>
                             <select wire:model="status" class="form-input mt-2" id="status">
                                 <option value="{{ STATUS_ACTIVE }}">Active</option>
                                 <option value="{{ STATUS_INACTIVE }}">Inactive</option>
@@ -106,8 +113,11 @@
 
 
                     </form>
+
+
                 </div>
             </div>
         </div>
     </div>
+
 </div>

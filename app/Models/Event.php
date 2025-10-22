@@ -8,7 +8,7 @@ use Illuminate\Support\Str;
 
 class Event extends Model
 {
-     use HasFactory;
+    use HasFactory;
 
     protected $fillable = [
         'images',
@@ -33,5 +33,9 @@ class Event extends Model
         static::creating(function ($data) {
             $data->slug = Str::slug($data->title);
         });
+    }
+    public function creator()
+    {
+        return $this->belongsTo(User::class, 'created_by');
     }
 }

@@ -126,7 +126,7 @@
 
                 <div class="flex justify-between items-center border-b border-gray-200 dark:border-slate-700 pb-3">
                     <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-100 capitalize">
-                        {{ $title ?? 'N/A' }}
+                        Details
                     </h3>
                     <button wire:click="closeDetailsModalAction"
                         class="dark:hover:text-gray-300 font-bold hover:bg-dark px-2 rounded text-2xl text-gray-400">&times;</button>
@@ -136,7 +136,7 @@
                     <div>
 
                         @if (isset($title) && !empty($title))
-                            <h1 class="mb-4 mt-10 mt-7 text-gray-500 text-sm ">{{ $title }}
+                            <h1 class="mb-4 mt-10 mt-7 text-gray-500 text-sm ">
                                 {{ __(' Title') }}
                                 : <span class="text">{{ $title }}</span></h1>
                         @endif

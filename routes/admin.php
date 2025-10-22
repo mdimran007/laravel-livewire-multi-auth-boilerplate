@@ -85,71 +85,62 @@ Route::middleware(['auth', 'admin', 'verified'])->prefix('admin')->name('admin.'
     Route::prefix('policy')->name('policy.')->group(function () {
         Route::get('/', Policy::class)->name('index');
         Route::get('/create', PolicyCreate::class)->name('create');
-        Route::get('/edit/{policyId}', PolicyEdit::class)->name('edit');
-        Route::get('/details/{policyId}', PolicyDetails::class)->name('details');
+        Route::get('/edit/{id}', PolicyEdit::class)->name('edit');
     });
 
     // Services
     Route::prefix('services')->name('services.')->group(function () {
         Route::get('/', Services::class)->name('index');
         Route::get('/create', ServicesCreate::class)->name('create');
-        Route::get('/edit/{serviceId}', ServicesEdit::class)->name('edit');
-        Route::get('/details/{serviceId}', ServicesDetails::class)->name('details');
+        Route::get('/edit/{id}', ServicesEdit::class)->name('edit');
     });
 
     // Programmes
     Route::prefix('programmes')->name('programmes.')->group(function () {
         Route::get('/', Programmes::class)->name('index');
         Route::get('/create', ProgrammesCreate::class)->name('create');
-        Route::get('/edit/{programmeId}', ProgrammesEdit::class)->name('edit');
-        Route::get('/details/{programmeId}', ProgrammesDetails::class)->name('details');
+        Route::get('/edit/{id}', ProgrammesEdit::class)->name('edit');
     });
 
     // Events
     Route::prefix('events')->name('events.')->group(function () {
         Route::get('/', Events::class)->name('index');
         Route::get('/create', EventsCreate::class)->name('create');
-        Route::get('/edit/{eventId}', EventsEdit::class)->name('edit');
-        Route::get('/details/{eventId}', EventsDetails::class)->name('details');
+        Route::get('/edit/{id}', EventsEdit::class)->name('edit');
     });
 
     // Partnerships
     Route::prefix('partnerships')->name('partnerships.')->group(function () {
         Route::get('/', Partnerships::class)->name('index');
         Route::get('/create', PartnershipsCreate::class)->name('create');
-        Route::get('/edit/{partnershipId}', PartnershipsEdit::class)->name('edit');
-        Route::get('/details/{partnershipId}', PartnershipsDetails::class)->name('details');
+        Route::get('/edit/{id}', PartnershipsEdit::class)->name('edit');
     });
 
     // Facilities
     Route::prefix('facilities')->name('facilities.')->group(function () {
         Route::get('/', Facilities::class)->name('index');
         Route::get('/create', FacilitiesCreate::class)->name('create');
-        Route::get('/edit/{facilityId}', FacilitiesEdit::class)->name('edit');
-        Route::get('/details/{facilityId}', FacilitiesDetails::class)->name('details');
+        Route::get('/edit/{id}', FacilitiesEdit::class)->name('edit');
     });
 
     // Research
     Route::prefix('research')->name('research.')->group(function () {
         Route::get('/', ResearchList::class)->name('index');
         Route::get('/create', ResearchCreate::class)->name('create');
-        Route::get('/edit/{researchId}', ResearchEdit::class)->name('edit');
-        Route::get('/details/{researchId}', ResearchDetails::class)->name('details');
+        Route::get('/edit/{id}', ResearchEdit::class)->name('edit');
     });
 
     // Report
     Route::prefix('report')->name('report.')->group(function () {
         Route::get('/', Report::class)->name('index');
         Route::get('/create', ReportCreate::class)->name('create');
-        Route::get('/edit/{reportId}', ReportEdit::class)->name('edit');
-        Route::get('/details/{reportId}', ReportDetails::class)->name('details');
+        Route::get('/edit/{id}', ReportEdit::class)->name('edit');
     });
 
     // News
     Route::prefix('news')->name('news.')->group(function () {
         Route::get('/', News::class)->name('index');
         Route::get('/create', NewsCreate::class)->name('create');
-        Route::get('/edit/{newsId}', NewsEdit::class)->name('edit');
-        Route::get('/details/{newsId}', NewsDetails::class)->name('details');
+        Route::get('/edit/{id}', NewsEdit::class)->name('edit');
     });
 });
