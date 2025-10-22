@@ -8,7 +8,7 @@ use App\Livewire\Admin\Goals\GoalsCreate;
 use App\Livewire\Admin\Goals\GoalsDetails;
 use App\Livewire\Admin\Goals\GoalsEdit;
 use App\Livewire\Admin\ProfileUpdate;
-use App\Livewire\Admin\User;
+use App\Livewire\Admin\Users;
 use Illuminate\Support\Facades\Route;
 
 
@@ -24,7 +24,7 @@ Route::middleware(['auth', 'admin', 'verified'])->prefix('admin')->name('admin.'
 
     Route::get('profile/update', ProfileUpdate::class)->name('profile.update');
     Route::get('general/settings', GeneralSettings::class)->name('general.settings');
-    Route::get('users', User::class)->name('users');
+    Route::get('users', Users::class)->name('users');
 });
 
 
