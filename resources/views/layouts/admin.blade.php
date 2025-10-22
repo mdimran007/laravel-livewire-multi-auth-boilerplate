@@ -7,16 +7,17 @@
     <title>{{ $pageTitle ?? '-' }}</title>
     <link href="{{ asset('assets/admin') }}/css/app.min.css" rel="stylesheet" type="text/css">
     <link href="{{ asset('assets/admin') }}/css/icons.min.css" rel="stylesheet" type="text/css">
-
-    <!-- quill css -->
-    <link href="{{ asset('assets/admin') }}/libs/quill/quill.core.css" rel="stylesheet" type="text/css">
-    <link href="{{ asset('assets/admin') }}/libs/quill/quill.bubble.css" rel="stylesheet" type="text/css">
-    <link href="{{ asset('assets/admin') }}/libs/quill/quill.snow.css" rel="stylesheet" type="text/css">
-
     <script src="{{ asset('assets/admin') }}/js/config.js"></script>
 
-    <!-- Summernote CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote-lite.min.css" rel="stylesheet">
+    <!-- include summernote css/js -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote-lite.min.css" rel="stylesheet">
+
+    {{-- <link href="{{ asset('assets/admin') }}/libs/nice-select2/css/nice-select2.css" rel="stylesheet" type="text/css"> --}}
+
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
 
     <style>
         <style>.toast {
@@ -37,6 +38,18 @@
         .toast.show {
             opacity: 1;
             transform: translateY(0);
+        }
+
+        .select2-container--classic .select2-selection--multiple {
+            border: 1px solid #e9e8e8 !important;
+        }
+
+        .select2-container .select2-selection--multiple {
+            min-height: 38px !important;
+        }
+
+        .select2-container .select2-search--inline .select2-search__field {
+            margin-top: 5px !important;
         }
     </style>
     </style>
@@ -59,17 +72,25 @@
         class="fixed hidden h-10 w-10 items-center justify-center rounded-full z-10 bottom-20 end-14 p-2.5 bg-primary cursor-pointer shadow-lg text-white">
         <i class="mgc_arrow_up_line text-lg"></i>
     </button>
+    <!-- jQuery (required) -->
+
+    <!-- Summernote CSS & JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote-lite.min.js"></script>
+
     <script src="{{ asset('assets/admin') }}/libs/simplebar/simplebar.min.js"></script>
     <script src="{{ asset('assets/admin') }}/libs/feather-icons/feather.min.js"></script>
     <script src="{{ asset('assets/admin') }}/libs/%40frostui/tailwindcss/frostui.js"></script>
     <script src="{{ asset('assets/admin') }}/js/app.js"></script>
     <script src="{{ asset('assets/admin') }}/libs/apexcharts/apexcharts.min.js"></script>
     <script src="{{ asset('assets/admin') }}/js/pages/dashboard.js"></script>
-    <script src="{{ asset('assets/admin') }}/libs/quill/quill.min.js"></script>
-    <script src="{{ asset('assets/admin') }}/js/pages/form-editor.js"></script>
+    {{-- <script src="{{ asset('assets/admin') }}/libs/nice-select2/js/nice-select2.js"></script> --}}
+    <!-- Choices Demo js -->
+    {{-- <script src="{{ asset('assets/admin') }}/js/pages/form-select.js"></script>    --}}
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
     @livewireScripts
 
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         document.addEventListener('livewire:initialized', () => {
             Livewire.on('confirm-delete', (id) => {
@@ -105,22 +126,57 @@
     </script>
     <script>
         document.addEventListener('livewire:init', () => {
-            Livewire.on('toast', (data) => {
+            Livewire.on('toast', event => {
                 Swal.fire({
                     toast: true,
                     position: 'top-end',
-                    icon: data.icon,
-                    title: data.title,
+                    icon: event.icon,
+                    title: event.title,
                     showConfirmButton: false,
                     timer: 3000,
                     timerProgressBar: true,
-                    background: '#fff',
-                    color: '#333',
+                    background: event.icon === 'success' ? '#16a34a' : (event.icon === 'error' ?
+                        '#dc2626' : '#facc15'), // Tailwind green-600, red-600, yellow-400
+                    color: '#ffffff', // text color
                 });
             });
         });
     </script>
+    <script>
+        $(document).ready(function() {
+            $('#summernote').summernote({
+                placeholder: 'Write something...',
+                tabsize: 2,
+                height: 200,
+                // toolbar: [
+                //     ['style', ['bold', 'italic', 'underline', 'clear']],
+                //     ['font', ['strikethrough', 'superscript', 'subscript']],
+                //     ['insert', ['link', 'picture', 'video']],
+                //     ['para', ['ul', 'ol', 'paragraph']],
+                //     ['view', ['fullscreen', 'codeview', 'help']]
+                // ],
+                // Optional: make it match Tailwind dark mode
+                callbacks: {
+                    onInit: function() {
+                        $('.note-editor').addClass(
+                            'rounded-lg border border-gray-300 dark:border-slate-600 dark:bg-slate-800'
+                        );
+                    }
+                }
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+            $('.js-example-basic-multiple').select2({
+                placeholder: 'Select an option',
+                theme: "classic"
+            });
+        });
+    </script>
 
+
+    @stack('script')
 
 
 
