@@ -16,7 +16,7 @@
                 <!-- Profile Dropdown Button -->
                 <div class="relative">
                     <button data-fc-type="dropdown" data-fc-placement="bottom-end" type="button" class="nav-link">
-                        <img src="{{ auth()->user()->picture != null? auth()->user()->picture: asset('assets/no-image.png') }}" alt="user-image" class="rounded-full h-10">
+                        <img src="{{ auth()->user()->picture != null? asset('storage/' . auth()->user()->picture) : asset('assets/no-image.png') }}" alt="user-image" class="rounded-full h-10">
                     </button>
                     <div class="fc-dropdown fc-dropdown-open:opacity-100 hidden opacity-0 w-44 z-50 transition-[margin,opacity] duration-300 mt-2 bg-white shadow-lg border rounded-lg p-2 border-gray-200 dark:border-gray-700 dark:bg-gray-800">
                         <a class="flex items-center py-2 px-3 rounded-md text-sm text-gray-800 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300" href="{{ route('admin.profile.update') }}">

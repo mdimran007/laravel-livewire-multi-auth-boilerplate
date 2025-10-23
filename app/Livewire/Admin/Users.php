@@ -8,23 +8,33 @@ use Livewire\Component;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
+use App\Mail\UserCreatedMail;
+use Illuminate\Support\Facades\Mail;
 
 class Users extends Component
 {
+    protected $listeners = ['delete-goal' => 'delete'];
+
     use WithFileUploads;
 
     public $pageTitle = "Users";
 
-    public $users, $user_id, $name, $email, $role, $phone, $dob, $gender, $image, $oldImage;
+    public $users, $user_id, $name, $email, $role, $phone, $dob, $gender, $image, $oldImage, $password;
     public $userModalOpen = false;
     public $isEdit = false;
 
-        protected $messages = [
+    public $email_verified_at;
+    public $created_by;
+
+    protected $messages = [
+        'role.required' => 'Please select a user role.',
         'name.required' => 'Please enter user name.',
         'name.string' => 'Name must be valid text.',
         'email.required' => 'Please enter email address.',
         'email.email' => 'Please enter a valid email address.',
         'email.unique' => 'This email is already registered.',
+        'password.required' => 'Password is required.',
+        'password.min' => 'Password must be at least 8 characters.',
         'role.required' => 'Please select a user role.',
         'gender.required' => 'Please select gender.',
         'image.image' => 'Only image files are allowed.',
@@ -34,16 +44,34 @@ class Users extends Component
 
     public function render()
     {
-        $this->users = User::latest()->get();
-        return view('livewire.admin.user');
+        $userList = User::query()
+            ->where('role', '!=', USER_ROLE_ADMIN)
+            ->orderBy('created_at', 'desc')
+            ->paginate(20);
+        return view('livewire.admin.user', [
+            'userList' => $userList,
+        ]);
     }
 
     // Open create modal
-    public function openUserModal()
+    public function openUserModal($id = null)
     {
-        $this->resetFields();
+        if ($id) {
+            $user = User::findOrFail($id);
+            $this->user_id = $user->id;
+            $this->name = $user->name;
+            $this->email = $user->email;
+            $this->role = $user->role;
+            $this->phone = $user->phone;
+            $this->dob = $user->dob;
+            $this->gender = $user->gender;
+            $this->oldImage = $user->image;
+            $this->isEdit = true;
+        } else {
+            $this->resetFields();
+            $this->isEdit = false;
+        }
         $this->userModalOpen = true;
-        $this->isEdit = false;
     }
 
     // Close modal
@@ -54,10 +82,11 @@ class Users extends Component
     }
 
     // Store or update user
-    public function profileUpdate()
+    public function userStore()
     {
         $rules = [
             'name' => 'required|string|max:255',
+            'role' => 'required|numeric',
             'email' => [
                 'required',
                 'email',
@@ -65,12 +94,13 @@ class Users extends Component
                     ? Rule::unique('users', 'email')->ignore($this->user_id)
                     : Rule::unique('users', 'email')
             ],
-            'role' => 'required|in:2,3',
+            'password' => $this->user_id ? 'nullable|min:8' : 'required|min:8',
             'phone' => 'nullable|string|max:20',
             'dob' => 'nullable|date|before:today',
-            'gender' => 'required|in:male,female,others',
+            'gender' => 'nullable|in:' . GENDER_MALE . ',' . GENDER_FEMALE . ',' . GENDER_OTHERS,
             'image' => 'nullable|image|mimes:jpg,jpeg,png,webp,gif|max:2048',
         ];
+        
 
         $this->validate($rules);
 
@@ -83,47 +113,52 @@ class Users extends Component
         $user->dob = $this->dob;
         $user->gender = $this->gender;
 
-        if ($this->image) {
-            $path = $this->image->store('users', 'public');
-            $user->image = $path;
+        if (!$this->user_id) {
+            $user->email_verified_at = now();
+            $user->created_by = auth()->id();
         }
 
-        if (!$this->user_id) {
-            $user->password = Hash::make('123456'); // Default password for new users
+        if ($this->image) {
+            $path = $this->image->store('users', 'public');
+            $user->picture = $path;
+        }
+
+        if ($this->password) {
+            $user->password = Hash::make($this->password);
         }
 
         $user->save();
 
-        session()->flash('success', $this->user_id ? 'User updated successfully.' : 'User created successfully.');
+        if (!$this->user_id) {
+            Mail::to($user->email)->send(new UserCreatedMail($user, $this->password));
+        }
+
+        $this->dispatch('toast', [
+            'icon' => 'success',
+            'title' => $this->user_id ? 'User updated successfully.' : 'User created successfully.',
+        ]);
+
         $this->closeUserModal();
     }
 
-    // Edit user
-    public function editUser($id)
-    {
-        $user = User::findOrFail($id);
-        $this->user_id = $user->id;
-        $this->name = $user->name;
-        $this->email = $user->email;
-        $this->role = $user->role;
-        $this->phone = $user->phone;
-        $this->dob = $user->dob;
-        $this->gender = $user->gender;
-        $this->oldImage = $user->image;
 
-        $this->isEdit = true;
-        $this->userModalOpen = true;
-    }
-
-    // Delete user
-    public function deleteUser($id)
+    public function delete($id)
     {
-        $user = User::findOrFail($id);
-        if ($user->image && file_exists(storage_path('app/public/' . $user->image))) {
-            unlink(storage_path('app/public/' . $user->image));
+        $data = User::findOrFail($id);
+
+        // Delete image if exists
+        if ($data->images && \Storage::disk('public')->exists($data->images)) {
+            \Storage::disk('public')->delete($data->images);
         }
-        $user->delete();
-        session()->flash('success', 'User deleted successfully.');
+
+        $data->delete();
+
+        $this->dispatch('toast', [
+            'icon' => 'success',
+            'title' => 'Deleted successfully!',
+        ]);
+
+        return redirect()->route('admin.users');
     }
 
     // Reset fields

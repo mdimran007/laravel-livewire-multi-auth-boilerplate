@@ -68,32 +68,31 @@
                         </div>
                     </div>
 
-                    <div class="grid grid-cols-1 md:grid-cols-1">
-                        <h6>Gender</h6>
-                        <div class="flex items-center gap-2 my-3">
-                            <div class="flex items-center gap-2 my-3">
-                                <input type="radio" wire:model="gender" value="{{ GENDER_MALE }}" id="genderMale"
-                                    class="form-checkbox rounded border border-gray-200">
-                                <label class="text-gray-800 text-sm font-medium inline-block"
-                                    for="genderMale">Male</label>
-                            </div>
-                            <div class="flex items-center gap-2 my-3">
-                                <input type="radio" wire:model="gender" value="{{ GENDER_FEMALE }}" id="genderFemale"
-                                    class="form-checkbox rounded border border-gray-200">
-                                <label class="text-gray-800 text-sm font-medium inline-block"
-                                    for="genderFemale">Female</label>
-                            </div>
-                            <div class="flex items-center gap-2 my-3">
-                                <input type="radio" wire:model="gender" value="{{ GENDER_OTHERS }}" id="genderOthers"
-                                    class="form-checkbox rounded border border-gray-200">
-                                <label class="text-gray-800 text-sm font-medium inline-block"
-                                    for="genderOthers">Others</label>
-                            </div>
+                    <!-- Gender -->
+                    <div>
+                        <label class="text-gray-800 text-sm font-medium mb-2 inline-block">Gender</label>
+                        <div class="flex gap-4">
+                            <label class="flex items-center gap-1">
+                                <input type="radio" wire:model="gender" value="{{ GENDER_MALE }}"
+                                    class="form-radio">
+                                <span>Male</span>
+                            </label>
+                            <label class="flex items-center gap-1">
+                                <input type="radio" wire:model="gender" value="{{ GENDER_FEMALE }}"
+                                    class="form-radio">
+                                <span>Female</span>
+                            </label>
+                            <label class="flex items-center gap-1">
+                                <input type="radio" wire:model="gender" value="{{ GENDER_OTHERS }}"
+                                    class="form-radio">
+                                <span>Others</span>
+                            </label>
                         </div>
                         @error('gender')
-                            <span class="flex m-1 text-danger">{{ $message }}</span>
+                            <span class="text-danger text-sm">{{ $message }}</span>
                         @enderror
                     </div>
+
 
                     <div class="grid grid-cols-1 md:grid-cols-1 gap-6">
                         <div class="mb-10 mt-4">
@@ -132,8 +131,8 @@
                         <span wire:loading wire:target="profileUpdate">
                             <svg class="animate-spin h-5 w-5 text-white mr-2" xmlns="http://www.w3.org/2000/svg"
                                 fill="none" viewBox="0 0 24 24">
-                                <circle class="opacity-25" cx="12" cy="12" r="10"
-                                    stroke="currentColor" stroke-width="4"></circle>
+                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor"
+                                    stroke-width="4"></circle>
                                 <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
                             </svg>
                         </span>

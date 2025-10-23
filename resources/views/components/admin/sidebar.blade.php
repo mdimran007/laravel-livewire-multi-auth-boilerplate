@@ -4,9 +4,9 @@
             <a href="index.html" class="bg-gray-900 logo-box">
                 <!-- Dark Brand Logo -->
                 <div class="logo-dark">
-                    <img src="{{ getSettingData('app_logo') != null ? getSettingData('app_logo') : asset('assets/no-image.png') }}"
+                    <img src="{{ getSettingData('app_logo') != null ? asset('storage/' . getSettingData('app_logo'))  : asset('assets/no-image.png') }}"
                         class="logo-lg h-6" alt="Dark logo">
-                    <img src="{{ getSettingData('app_logo') != null ? getSettingData('app_logo') : asset('assets/no-image.png') }}"
+                    <img src="{{ getSettingData('app_logo') != null ? asset('storage/' . getSettingData('app_logo')) : asset('assets/no-image.png') }}"
                         class="logo-sm" alt="Small logo">
                 </div>
             </a>

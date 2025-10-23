@@ -73,7 +73,7 @@ class ProfileUpdate extends Component
             'email'  => 'required|email|unique:users,email,' . Auth::id(),
             'phone'  => 'nullable|string|max:20',
             'dob'    => 'nullable|date|before:today',
-            'gender' => 'nullable|in:1,2,3',
+            'gender' => 'nullable|in:'.GENDER_MALE.','.GENDER_FEMALE.','.GENDER_OTHERS,
             'image'  => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
         ];
     }
