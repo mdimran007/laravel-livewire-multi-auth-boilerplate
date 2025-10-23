@@ -65,8 +65,7 @@ use App\Livewire\Admin\Asset\News\{
     NewsEdit,
     NewsDetails
 };
-
-
+use App\Livewire\Admin\UserRolePermission;
 
 Route::middleware(['auth', 'admin', 'verified'])->prefix('admin')->name('admin.')->group(function () {
 
@@ -80,6 +79,7 @@ Route::middleware(['auth', 'admin', 'verified'])->prefix('admin')->name('admin.'
     Route::get('profile/update', ProfileUpdate::class)->name('profile.update');
     Route::get('general/settings', GeneralSettings::class)->name('general.settings');
     Route::get('users', Users::class)->name('users');
+    Route::get('users/role-and-permission', UserRolePermission::class)->name('users.role-and-permission');
 
     // Policy
     Route::prefix('policy')->name('policy.')->group(function () {
