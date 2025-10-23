@@ -70,6 +70,19 @@
 
                         </div>
 
+
+                        <div class="mt-10">
+                            <label for="event_date"
+                                class="font-medium inline-block mb-2 mt-5 text-gray-800 text-sm">Event Date
+                                <span class="text-red-500 text-xs">*</span></label>
+                            <input type="date" wire:model="event_date" class="form-input" id="event_date">
+                            @error('event_date')
+                                <span class="text-red-500 text-xs">{{ $message }}</span>
+                            @enderror
+
+                        </div>
+
+
                         <div>
                             <label for="image" class="text-gray-800 text-sm font-medium inline-block mb-2">Image
                             </label>
@@ -120,5 +133,5 @@
             </div>
         </div>
     </div>
- 
+
 </div>

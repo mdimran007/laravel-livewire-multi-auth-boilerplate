@@ -27,6 +27,7 @@ class EventsCreate extends Component
     public $status = STATUS_ACTIVE;
     public $image;
     public $existingImage;
+    public $event_date;
 
     public $goalList;
 
@@ -51,6 +52,7 @@ class EventsCreate extends Component
         $this->status = STATUS_ACTIVE;
         $this->image = null;
         $this->existingImage = null;
+        $this->event_date = null;
     }
 
     public function store()
@@ -61,6 +63,7 @@ class EventsCreate extends Component
                 'short_description' => 'required|string|max:500',
                 'description' => 'nullable|string',
                 'url' => 'nullable|url',
+                'event_date' => 'nullable|date',
                 'status' => 'required|in:' . STATUS_ACTIVE . ',' . STATUS_INACTIVE,
                 'goals' => 'required|array',
                 'goals.*' => 'exists:goals,id',
@@ -81,6 +84,7 @@ class EventsCreate extends Component
                 'image.required' => 'Please upload an image.',
                 'image.image' => 'The uploaded file must be an image.',
                 'image.max' => 'The image must not be larger than 1MB.',
+                'event_date.date' => 'Event date is not valid!',
             ]
         );
 
@@ -90,6 +94,7 @@ class EventsCreate extends Component
             'short_description' => $this->short_description,
             'description' => $this->description,
             'url' => $this->url,
+            'event_date' => $this->event_date,
             'status' => $this->status,
             'created_by' => auth()->id(),
         ];

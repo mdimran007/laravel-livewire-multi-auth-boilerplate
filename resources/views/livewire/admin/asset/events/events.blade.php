@@ -172,6 +172,12 @@
                                     Here</a></h1>
                         @endif
 
+                        @if (isset($event_date) && !empty($event_date))
+                            <h1 class="mb-4 mt-10 mt-7 text-gray-500 text-sm ">
+                                {{ __(' Event Date:') }}
+                                : <span class="text">{{ $event_date }}</span></h1>
+                        @endif
+
                         <div class="grid grid-cols-4 gap-6">
                             <div class="">
                                 <div class="">

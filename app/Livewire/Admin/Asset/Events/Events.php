@@ -27,6 +27,9 @@ class Events extends Component
     public $status = STATUS_ACTIVE;
     public $image;
     public $existingImage;
+    public $event_date;
+
+
 
     public $createdAt;
     public $updatedAt;
@@ -44,6 +47,7 @@ class Events extends Component
         $this->short_description = $data->short_description;
         $this->description = $data->description;
         $this->downloadurl = $data->url;
+        $this->event_date = $data->event_date;
         $this->status = $data->status;
         $this->image = $data->images;
         $this->goals = $data->goals->pluck('id')->toArray();

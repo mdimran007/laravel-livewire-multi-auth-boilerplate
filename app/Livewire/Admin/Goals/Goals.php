@@ -17,8 +17,7 @@ class Goals extends Component
 
 
     public $pageTitle = "Goals";
-    public $goals;
-    
+
 
     public function delete($id)
     {
@@ -38,7 +37,12 @@ class Goals extends Component
 
     public function render()
     {
-        $this->goals = Goal::all();
-        return view('livewire.admin.goals.goals');
+        $goals = Goal::query()
+            ->orderBy('created_at', 'desc')
+            ->paginate(21);
+
+        return view('livewire.admin.goals.goals', [
+            'goals' => $goals
+        ]);
     }
 }

@@ -6,10 +6,16 @@ use Livewire\Component;
 use App\Models\Goal;
 use App\Models\GoalAsset;
 use Livewire\WithFileUploads;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\DB;
+use App\Models\Policy;
+use App\Models\Service;
+use App\Models\Programme;
+use App\Models\Event;
+use App\Models\Partnership;
+use App\Models\Facility;
+use App\Models\Research;
+use App\Models\Report;
+use App\Models\News;
 
 class GoalsDetails extends Component
 {
@@ -53,6 +59,26 @@ class GoalsDetails extends Component
     public $asset_createdAt;
     public $asset_updatedAt;
     public $asset_createdBy;
+
+    public $total_policies;
+    public $total_services;
+    public $total_programmes;
+    public $total_events;
+    public $total_partnerships;
+    public $total_facilities;
+    public $total_research;
+    public $total_reports;
+    public $total_news;
+
+    public $policiesData;
+    public $servicesData;
+    public $programmesData;
+    public $eventsData;
+    public $partnershipsData;
+    public $facilitiesData;
+    public $researchData;
+    public $reportsData;
+    public $newsData;
 
 
 
@@ -242,8 +268,39 @@ class GoalsDetails extends Component
         $this->updatedAt = $goal->updated_at;
         $this->createdBy = $goal->creator->name;
 
-        $goalAssets = GoalAsset::all();
-        $this->goalAssetList = $goalAssets;
+        // $this->policiesData = Policy::all();
+        // $this->total_policies = $this->policiesData->count();
+
+
+        // $this->servicesData = Service::all();
+        // $this->total_services = $this->servicesData->count();
+
+        // $this->programmesData = Programme::all();
+        // $this->total_programmes = $this->programmesData->count();
+
+        // $this->eventsData = Event::all();
+        // $this->total_events = $this->eventsData->count();
+
+        // $this->partnershipsData = Partnership::all();
+        // $this->total_partnerships = $this->partnershipsData->count();
+
+        // $this->facilitiesData = Facility::all();
+        // $this->total_facilities = $this->facilitiesData->count();
+
+        // $this->researchData = Research::all();
+        // $this->total_research = $this->researchData->count();
+
+        // $this->reportsData = Report::all();
+        // $this->total_reports = $this->reportsData->count();
+
+        // $this->newsData = News::all();
+        // $this->total_news = $this->newsData->count();
+
+
+
+
+        // $goalAssets = GoalAsset::all();
+        // $this->goalAssetList = $goalAssets;
     }
 
     public function render()

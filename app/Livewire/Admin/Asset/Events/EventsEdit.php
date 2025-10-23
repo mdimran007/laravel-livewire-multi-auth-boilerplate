@@ -14,7 +14,7 @@ use App\Models\Report;
 
 class EventsEdit extends Component
 {
-     use WithFileUploads;
+    use WithFileUploads;
 
     public $pageTitle = "New Event";
 
@@ -27,12 +27,25 @@ class EventsEdit extends Component
     public $status = STATUS_ACTIVE;
     public $image;
     public $existingImage;
+    public $event_date;
 
     public $goalList;
 
-    public function mount()
+    public function mount($id = null)
     {
         $this->goalList = Goal::where('status', STATUS_ACTIVE)->get();
+        if ($id) {
+            $this->dataId = $id;
+            $research = Event::with('goals')->findOrFail($id);
+            $this->title = $research->title;
+            $this->short_description = $research->short_description;
+            $this->description = $research->description;
+            $this->url = $research->url;
+            $this->event_date = $research->event_date;
+            $this->status = $research->status;
+            $this->existingImage = $research->images;
+            $this->goals = $research->goals->pluck('id')->toArray();
+        }
     }
 
     public function render()
@@ -51,6 +64,7 @@ class EventsEdit extends Component
         $this->status = STATUS_ACTIVE;
         $this->image = null;
         $this->existingImage = null;
+        $this->event_date = null;
     }
 
     public function store()
@@ -61,6 +75,7 @@ class EventsEdit extends Component
                 'short_description' => 'required|string|max:500',
                 'description' => 'nullable|string',
                 'url' => 'nullable|url',
+                'event_date' => 'nullable|date',
                 'status' => 'required|in:' . STATUS_ACTIVE . ',' . STATUS_INACTIVE,
                 'goals' => 'required|array',
                 'goals.*' => 'exists:goals,id',
@@ -81,6 +96,7 @@ class EventsEdit extends Component
                 'image.required' => 'Please upload an image.',
                 'image.image' => 'The uploaded file must be an image.',
                 'image.max' => 'The image must not be larger than 1MB.',
+                'event_date.date' => 'Event date is not valid!',
             ]
         );
 
@@ -90,6 +106,7 @@ class EventsEdit extends Component
             'short_description' => $this->short_description,
             'description' => $this->description,
             'url' => $this->url,
+            'event_date' => $this->event_date,
             'status' => $this->status,
             'created_by' => auth()->id(),
         ];
@@ -109,9 +126,6 @@ class EventsEdit extends Component
             'title' => $this->dataId ? 'Updated successfully!' : 'Created successfully!',
         ]);
 
-        $this->resetInput();
-
-        // return redirect()->route('admin.research.index');
+        return redirect()->route('admin.events.index');
     }
- 
 }

@@ -87,90 +87,28 @@
             </div>
         </div>
 
-        {{-- <div class="col-span-1">
-                        <div class="card">
-                            <div class="card-header">
-                                <h6 class="card-title">{{ __("Image") }}</h6>
-                            </div>
-                            <div class="table overflow-hidden w-full">
-                                <div class="divide-y divide-gray-300 dark:divide-gray-700 overflow-auto w-full max-w-full">
-                                    <div class="p-3">
-                                        <div class="flex items-center gap-3">
-                                            @if ($image)
-                                                <div class="mt-2">
-                                                    <img src="{{ asset('storage/' . $image) }}" alt="Goal Image" class="h-20 w-20 object-cover rounded">
-                                                </div>
-                                            @endif
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div> --}}
+       
 
-        @foreach (goalAssetsProperty() as $key => $item)
-            <div class="lg:col-span-3">
+        <!-- Policy-->
+            {{-- <div class="lg:col-span-3">
                 <div class="card">
                     <div class="card-header">
                         <div class="flex justify-between items-center">
-                            <h5 class="card-title">{{ Str::ucfirst($key) }}</h5>
-                            <button class="bg-success text-xs text-white rounded-md py-1 px-1.5 font-medium"
-                                wire:click="openAssetModal('{{ $key }}')">{{ __('+ Add New ') }}</button>
+                            <h5 class="card-title">adsfasdfasdf</h5>
                         </div>
                     </div>
                     <div class="p-6">
-                        @if (goalAssetCount($key) > 0)
+                        @if ($total_policies > 0)
                             <div class="grid lg:grid-cols-4 gap-6">
-                                @foreach ($goalAssetList as $singleAsset)
-                                    @if ($singleAsset->asset_type === $key)
-                                        {{-- <div wire:key="item-{{ $singleAsset->id }}" class="card">
-                                                            <div class="flex flex-shrink-0 bg-white rounded-lg shadow-md ">
-                                                                @php
-                                                                        $data = json_decode($singleAsset->data);
-                                                                        $imagePath = '';
-
-                                                                        if ($data && isset($data->image)) {
-                                                                            // if image is object (old record) → get ->path, otherwise use directly
-                                                                            $imagePath = is_object($data->image) ? ($data->image->path ?? '') : $data->image;
-                                                                        }
-                                                                        @endphp
-
-                                                                        @if ($imagePath)
-                                                                            <img src="{{ asset('storage/' . $imagePath) }}" 
-                                                                                alt="Logo" 
-                                                                                class="w-24 h-24 rounded-l-lg object-cover">
-                                                                        @endif
-
-                                                                <div class="flex flex-col justify-center p-4 rounded-r-lg">
-                                                                        <h3 class="font-bold text-sm mb-1">{{ $singleAsset->data != null? json_decode($singleAsset->data)->title:'N/A' }}</h3>
-                                                                        <p class="text-xs">{{ $singleAsset->data != null? json_decode($singleAsset->data)->short_description:'N/A' }}</p>
-                                                                </div>
-                                                            </div>
-                                                            <div class="border border-b-primary p-3">
-                                                                        <a href="{{ route('admin.goals.details', $singleAsset->id) }}" class="btn border-info text-info hover:bg-info hover:text-white">{{ __("Details") }}</a>
-                                                                        <button  wire:click="openAssetModal('{{ $key }}', {{ $singleAsset->id }})" class="btn border-primary text-primary hover:bg-primary hover:text-white">{{ __("Edit") }}</button>
-                                                                        <button type="button" class="btn border-danger text-danger hover:bg-danger hover:text-white" wire:click="$dispatch('confirm-delete', {{ $singleAsset->id }})">{{ __("Delete") }}</button>
-                                                            </div>
-                                                        </div> --}}
+                                @foreach ($policiesData as $singleAsset)
+                                    <a href="#" wire:click="openAssetDetailsModal({{ $singleAsset->id }})">
                                         <div wire:key="item-{{ $singleAsset->id }}"
                                             class="bg-white border max-w-[490px] overflow-hidden rounded-lg shadow-[0_0_1rem_rgba(0,0,0,0.2)] w-[100%]">
                                             <div class="bg-slate-200 card">
                                                 <div class="grid grid-cols-5">
                                                     <div class="col-span-2 p-3">
-                                                        @php
-                                                            $data = json_decode($singleAsset->data);
-                                                            $imagePath = '';
-
-                                                            if ($data && isset($data->image)) {
-                                                                // if image is object (old record) → get ->path, otherwise use directly
-                                                                $imagePath = is_object($data->image)
-                                                                    ? $data->image->path ?? ''
-                                                                    : $data->image;
-                                                            }
-                                                        @endphp
-
-                                                        @if ($imagePath)
-                                                            <img src="{{ asset('storage/' . $imagePath) }}"
+                                                        @if ($singleAsset->images)
+                                                            <img src="{{ asset('storage/' . $singleAsset->images) }}"
                                                                 alt="Image"
                                                                 class="w-24 h-24 rounded-l-lg object-cover">
                                                         @else
@@ -183,35 +121,17 @@
                                                   
 
                                                         <div class="font-bold">
-                                                            {{ $singleAsset->data != null ? \Illuminate\Support\Str::limit(json_decode($singleAsset->data)->title, 34, '...') : 'N/A' }}
+                                                            {{ $singleAsset->title != null ? \Illuminate\Support\Str::limit($singleAsset->title, 34, '...') : 'N/A' }}
                                                         </div>
                                                         <div class="mb-3">
-                                                            {{ $singleAsset->data != null ? \Illuminate\Support\Str::limit(json_decode($singleAsset->data)->short_description, 43, '...') : 'N/A' }}
+                                                            {{ $singleAsset->short_description != null ? \Illuminate\Support\Str::limit($singleAsset->short_description, 43, '...') : 'N/A' }}
                                                         </div>
 
-
-                                                        <div class="flex mt-3 gap-2">
-                                                            <button title="{{ __('View') }}"
-                                                                wire:click="openAssetDetailsModal({{ $singleAsset->id }})"
-                                                                class="bg-primary border-2 flex-1 hover:bg-gray-400 px-4 py-2 rounded-lg text-gray-500 text-white">
-                                                                <i class="msr">preview</i>
-                                                            </button>
-                                                            <button title="{{ __('Edit') }}"
-                                                                wire:click="openAssetModal('{{ $key }}', {{ $singleAsset->id }})"
-                                                                class="bg-primary border-2 flex-1 hover:bg-gray-400 px-4 py-2 rounded-lg text-gray-500 text-white">
-                                                                <i class="msr">edit_square</i>
-                                                            </button>
-                                                            <button title="{{ __('Delete') }}"
-                                                                wire:click="$dispatch('confirm-delete', {{ $singleAsset->id }})"
-                                                                class="bg-danger border-2 flex-1 hover:bg-gray-400 px-4 py-2 rounded-lg text-gray-500 text-white">
-                                                                <i class="msr">delete</i>
-                                                            </button>
-                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    @endif
+                                        </a>
                                 @endforeach
                             </div>
                         @else
@@ -235,8 +155,7 @@
                         @endif
                     </div>
                 </div>
-            </div>
-        @endforeach
+            </div> --}}
 
     </div>
 

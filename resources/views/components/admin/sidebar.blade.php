@@ -2,10 +2,12 @@
 
             <!-- Sidenav Brand Logo -->
             <a href="index.html" class="bg-gray-900 logo-box">
-                 <!-- Dark Brand Logo -->
+                <!-- Dark Brand Logo -->
                 <div class="logo-dark">
-                    <img src="{{ getSettingData('app_logo') != null? getSettingData('app_logo'): asset('assets/no-image.png') }}" class="logo-lg h-6" alt="Dark logo">
-                    <img src="{{ getSettingData('app_logo') != null? getSettingData('app_logo'): asset('assets/no-image.png') }}" class="logo-sm" alt="Small logo">
+                    <img src="{{ getSettingData('app_logo') != null ? getSettingData('app_logo') : asset('assets/no-image.png') }}"
+                        class="logo-lg h-6" alt="Dark logo">
+                    <img src="{{ getSettingData('app_logo') != null ? getSettingData('app_logo') : asset('assets/no-image.png') }}"
+                        class="logo-sm" alt="Small logo">
                 </div>
             </a>
 
@@ -50,70 +52,80 @@
 
 
                     <li class="menu-item">
-                        <a href="{{ route('admin.goals') }}" class="menu-link">
+                        <a href="{{ route('admin.goals') }}"
+                            class="menu-link {{ request()->routeIs('admin.goals.*') ? 'active' : '' }}">
                             <span class="menu-icon"><i class="mgc_building_2_line"></i></span>
                             <span class="menu-text"> {{ __('Goals') }} </span>
                         </a>
                     </li>
 
                     <li class="menu-item">
-                        <a href="{{ route('admin.policy.index') }}" class="menu-link">
+                        <a href="{{ route('admin.policy.index') }}"
+                            class="menu-link {{ request()->routeIs('admin.policy.*') ? 'active' : '' }}">
                             <span class="menu-icon"><i class="mgc_document_line"></i></span>
                             <span class="menu-text">{{ __('Policy') }}</span>
                         </a>
                     </li>
 
                     <li class="menu-item">
-                        <a href="{{ route('admin.services.index') }}" class="menu-link">
+                        <a href="{{ route('admin.services.index') }}"
+                            class="menu-link {{ request()->routeIs('admin.services.*') ? 'active' : '' }}">
                             <span class="menu-icon"><i class="mgc_server_line"></i></span>
                             <span class="menu-text">{{ __('Services') }}</span>
                         </a>
                     </li>
 
                     <li class="menu-item">
-                        <a href="{{ route('admin.programmes.index') }}" class="menu-link">
+                        <a href="{{ route('admin.programmes.index') }}"
+                            class="menu-link {{ request()->routeIs('admin.programmes.*') ? 'active' : '' }}">
                             <span class="menu-icon"><i class="mgc_calendar_line"></i></span>
                             <span class="menu-text">{{ __('Programmes') }}</span>
                         </a>
                     </li>
 
                     <li class="menu-item">
-                        <a href="{{ route('admin.events.index') }}" class="menu-link">
+                        <a href="{{ route('admin.events.index') }}"
+                            class="menu-link {{ request()->routeIs('admin.events.*') ? 'active' : '' }}">
                             <span class="menu-icon"><i class="mgc_clock_2_line"></i></span>
                             <span class="menu-text">{{ __('Events') }}</span>
                         </a>
                     </li>
 
                     <li class="menu-item">
-                        <a href="{{ route('admin.partnerships.index') }}" class="menu-link">
+                        <a href="{{ route('admin.partnerships.index') }}"
+                            class="menu-link {{ request()->routeIs('admin.partnerships.*') ? 'active' : '' }}">
                             <span class="menu-icon"><i class="mgc_user_5_line"></i></span>
                             <span class="menu-text">{{ __('Partnerships') }}</span>
                         </a>
                     </li>
 
                     <li class="menu-item">
-                        <a href="{{ route('admin.facilities.index') }}" class="menu-link">
+                        <a href="{{ route('admin.facilities.index') }}"
+                            class="menu-link {{ request()->routeIs('admin.facilities.*') ? 'active' : '' }}">
                             <span class="menu-icon"><i class="mgc_building_2_line"></i></span>
                             <span class="menu-text">{{ __('Facilities') }}</span>
                         </a>
                     </li>
 
                     <li class="menu-item">
-                        <a href="{{ route('admin.research.index') }}" class="menu-link">
+                        <a href="{{ route('admin.research.index') }}"
+                            class="menu-link {{ request()->routeIs('admin.research.*') ? 'active' : '' }}">
                             <span class="menu-icon"><i class="mgc_search_line"></i></span>
                             <span class="menu-text">{{ __('Research') }}</span>
                         </a>
                     </li>
 
                     <li class="menu-item">
-                        <a href="{{ route('admin.report.index') }}" class="menu-link">
+                        <a href="{{ route('admin.report.index') }}"
+                            class="menu-link {{ request()->routeIs('admin.report.*') ? 'active' : '' }}">
                             <span class="menu-icon"><i class="mgc_report_line"></i></span>
                             <span class="menu-text">{{ __('Report') }}</span>
                         </a>
                     </li>
 
                     <li class="menu-item">
-                        <a href="{{ route('admin.news.index') }}" class="menu-link">
+                        <a href="{{ route('admin.news.index') }}"
+                            class="menu-link {{ request()->routeIs('admin.news.*') ? 'active' : '' }}">
                             <span class="menu-icon"><i class="mgc_news_line"></i></span>
                             <span class="menu-text">{{ __('News') }}</span>
                         </a>
