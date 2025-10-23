@@ -2,16 +2,10 @@
 
             <!-- Sidenav Brand Logo -->
             <a href="index.html" class="bg-gray-900 logo-box">
-                <!-- Light Brand Logo -->
-                <div class="logo-light">
-                    <img src="{{ asset('assets/admin') }}/images/logo-light.png" class="logo-lg h-6" alt="Light logo">
-                    <img src="{{ asset('assets/admin') }}/images/logo-sm.png" class="logo-sm" alt="Small logo">
-                </div>
-
-                <!-- Dark Brand Logo -->
+                 <!-- Dark Brand Logo -->
                 <div class="logo-dark">
-                    <img src="{{ asset('assets/admin') }}/images/logo-dark.png" class="logo-lg h-6" alt="Dark logo">
-                    <img src="{{ asset('assets/admin') }}/images/logo-sm.png" class="logo-sm" alt="Small logo">
+                    <img src="{{ getSettingData('app_logo') != null? getSettingData('app_logo'): asset('assets/no-image.png') }}" class="logo-lg h-6" alt="Dark logo">
+                    <img src="{{ getSettingData('app_logo') != null? getSettingData('app_logo'): asset('assets/no-image.png') }}" class="logo-sm" alt="Small logo">
                 </div>
             </a>
 
@@ -27,7 +21,7 @@
                     <li class="menu-title"></li>
 
                     <li class="menu-item">
-                        <a href="index.html" class="menu-link">
+                        <a href="{{ route('admin.dashboard') }}" class="menu-link">
                             <span class="menu-icon"><i class="mgc_home_3_line"></i></span>
                             <span class="menu-text"> {{ __('Dashboard') }} </span>
                         </a>

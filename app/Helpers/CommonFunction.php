@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\FileHandler;
+use App\Models\GeneralSetting;
 use App\Models\GoalAsset;
 use App\Models\User;
 use Illuminate\Support\Facades\Storage;
@@ -19,77 +20,18 @@ if (!function_exists("getSetting")) {
 }
 
 
-if (!function_exists('getTimeZone')) {
-    function getTimeZone()
+if (!function_exists('getSettingData')) {
+    function getSettingData($attr = null)
     {
-        return DateTimeZone::listIdentifiers(
-            DateTimeZone::ALL
-        );
+        $settingsData = GeneralSetting::first();
+        if($attr){
+            if($settingsData != null)
+            return $settingsData->{$attr};
+        }
+        return $settingsData;
     }
 }
 
-if (!function_exists('getImageUrl')) {
-    function getImageUrl($id = null, $demo_image_type = null, $demo_image_dimension = null)
-    {
-        $file = FileHandler::select('path', 'storage_type')->find($id);
-        if (!is_null($file)) {
-            if (Storage::disk($file->storage_type)->exists($file->path)) {
-                if ($file->storage_type == 'public' || $file->storage_type == 'local') {
-                    return asset('storage/' . $file->path);
-                }
-                if ($file->storage_type == 'wasabi') {
-                    return Storage::disk('wasabi')->url($file->path);
-                }
-                return Storage::disk($file->storage_type)->url($file->path);
-            }
-        }
-
-        $demoImgSize = '';
-        if ($demo_image_dimension != null) {
-            $demoImgSize = '-d-' . $demo_image_dimension;
-        }
-
-        return asset('assets/images/no-image' . $demoImgSize . '.jpg');
-    }
-}
-
-
-if (!function_exists('getFileProperty')) {
-    function getFileProperty($id, $property)
-    {
-        $file = FileHandler::find($id);
-        $respose = null;
-        if (!is_null($file)) {
-            return $file->{$property};
-        }
-        return $respose;
-    }
-}
-
-if (!function_exists('getStatusHtml')) {
-    function getStatusHtml($status)
-    {
-        $html = '';
-        if ($status == STATUS_ACTIVE) {
-            $html = '<p class="zBadge zBadge-active">' . __("Active") . '</p>';
-        } else {
-            $html = '<p class="zBadge zBadge-deactivate">' . __("Deactivate") . '</p>';
-        }
-        return $html;
-    }
-}
-
-
-if (!function_exists('getUserData')) {
-    function getUserData($id)
-    {
-        $user = User::find($id);
-        if (!is_null($user)) {
-            return $user;
-        }
-        return null;
-    }
-}
 
 if (!function_exists("goalItemList")) {
     function goalItemList()
@@ -191,19 +133,6 @@ if (!function_exists("goalAssetsProperty")) {
     }
 }
 
-if (!function_exists('encoder')) {
-    function encoder($id)
-    {
-        return base64_encode($id);  // simple encoding
-    }
-}
-
-if (!function_exists('decoder')) {
-    function decoder($encodedId)
-    {
-        return base64_decode($encodedId);  // decode
-    }
-}
 
 function goalAssetCount($assetType)
 {

@@ -13,8 +13,8 @@
 
                         <div class="p-6">
                             <a href="{{ url('/') }}" class="block mb-8">
-                                <img class="h-6 block dark:hidden" src="{{asset('assets/admin')}}/images/logo-dark.png" alt="">
-                                <img class="h-6 hidden dark:block" src="{{asset('assets/admin')}}/images/logo-light.png" alt="">
+                                <img class="h-6 block dark:hidden" src="{{ getSettingData('app_logo') != null? getSettingData('app_logo'): asset('assets/no-image.png') }}" alt="">
+                                <img class="h-6 hidden dark:block" src="{{ getSettingData('app_logo') != null? getSettingData('app_logo'): asset('assets/no-image.png') }}" alt="">
                             </a>
 
                              <h4 class="fs-32 fw-600 lh-48 text-main-color pb-5">{{__("Password Reset")}}</h4>

@@ -10,8 +10,8 @@
                     @csrf
                         <div class="p-6">
                             <a href="{{ url('/') }}" class="block mb-8">
-                                <img class="h-6 block dark:hidden" src="{{asset('assets/admin')}}/images/logo-dark.png" alt="">
-                                <img class="h-6 hidden dark:block" src="{{asset('assets/admin')}}/images/logo-light.png" alt="">
+                                <img class="h-6 block dark:hidden" src="{{ getSettingData('app_logo') != null? getSettingData('app_logo'): asset('assets/no-image.png') }}" alt="">
+                                <img class="h-6 hidden dark:block" src="{{ getSettingData('app_logo') != null? getSettingData('app_logo'): asset('assets/no-image.png') }}" alt="">
                             </a>
 
                             <div class="mb-4 text-sm text-gray-600">
