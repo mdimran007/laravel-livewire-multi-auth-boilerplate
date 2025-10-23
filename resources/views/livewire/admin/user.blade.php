@@ -84,7 +84,8 @@
                                     {{ $user->created_at }}</td>
 
                                 <td class="whitespace-nowrap py-4 px-3 text-center text-sm font-medium">
-                                    <button wire:click="openUserModal({{ $user->id }})" class="me-0.5"> <i class="mgc_edit_line text-lg"></i>
+                                    <button wire:click="openUserModal({{ $user->id }})" class="me-0.5"> <i
+                                            class="mgc_edit_line text-lg"></i>
                                     </button>
                                     <button wire:click="$dispatch('confirm-delete', {{ $user->id }})"
                                         class="ms-0.5"> <i class="mgc_delete_line text-xl"></i>
@@ -95,19 +96,20 @@
                             <tr>
                                 <td colspan="7">
                                     <div class="flex h-80 justify-center p-8">
-                                <div class="flex flex-col items-center justify-center h-64 text-gray-500">
-                                    <!-- Icon -->
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                        stroke-width="1.5" stroke="currentColor" class="w-12 h-12 mb-3 text-gray-400">
-                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                            d="M9.75 9.75L14.25 14.25M14.25 9.75L9.75 14.25M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                    </svg>
+                                        <div class="flex flex-col items-center justify-center h-64 text-gray-500">
+                                            <!-- Icon -->
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                                stroke-width="1.5" stroke="currentColor"
+                                                class="w-12 h-12 mb-3 text-gray-400">
+                                                <path stroke-linecap="round" stroke-linejoin="round"
+                                                    d="M9.75 9.75L14.25 14.25M14.25 9.75L9.75 14.25M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                            </svg>
 
-                                    <!-- Text -->
-                                    <p class="text-lg font-medium">Data not found!</p>
-                                </div>
+                                            <!-- Text -->
+                                            <p class="text-lg font-medium">Data not found!</p>
+                                        </div>
 
-                            </div>
+                                    </div>
 
                                 </td>
                             </tr>
@@ -128,7 +130,7 @@
 
                 <div class="flex justify-between items-center border-b border-gray-200 dark:border-slate-700 pb-3">
                     <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-100 capitalize">
-                        Create New User
+                        {{ $isEdit != true?'Create New':'Edit' }}  User
                     </h3>
                     <button wire:click="closeUserModal"
                         class="dark:hover:text-gray-300 font-bold hover:bg-dark px-2 rounded text-2xl text-gray-400">&times;</button>
@@ -143,8 +145,12 @@
                                     class="text-gray-800 text-sm font-medium inline-block mb-2">{{ __('User Role') }}
                                     <span class="text-danger">*</span></label>
                                 <select wire:model="role" class="form-input" id="userRole">
-                                    <option value="2">Admin</option>
-                                    <option value="3">Staff</option>
+                                    <option value="">Select Role</option>
+                                    @foreach ($roleList as $data)
+                                        <option value="{{ $data->id }}"
+                                            >{{ Str::ucfirst($data->name) }}
+                                        </option>
+                                    @endforeach
                                 </select>
 
                                 @error('role')

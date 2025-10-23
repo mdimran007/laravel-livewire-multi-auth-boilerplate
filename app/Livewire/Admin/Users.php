@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 use App\Mail\UserCreatedMail;
 use Illuminate\Support\Facades\Mail;
+use Spatie\Permission\Models\Role;
 
 class Users extends Component
 {
@@ -25,6 +26,8 @@ class Users extends Component
 
     public $email_verified_at;
     public $created_by;
+    public $roleList;
+    public $assignRole;
 
     protected $messages = [
         'role.required' => 'Please select a user role.',
@@ -42,6 +45,11 @@ class Users extends Component
         'dob.before' => 'Date of birth must be before today.',
     ];
 
+    public function mount()
+    {
+        $this->roleList = Role::all();
+    }
+
     public function render()
     {
         $userList = User::query()
@@ -57,16 +65,17 @@ class Users extends Component
     public function openUserModal($id = null)
     {
         if ($id) {
-            $user = User::findOrFail($id);
+            $user = User::with(['roles'])->findOrFail($id);
             $this->user_id = $user->id;
             $this->name = $user->name;
             $this->email = $user->email;
-            $this->role = $user->role;
+            // $this->role = $user->role;
             $this->phone = $user->phone;
             $this->dob = $user->dob;
             $this->gender = $user->gender;
             $this->oldImage = $user->image;
             $this->isEdit = true;
+            $this->role = isset($user->roles[0]) ? $user->roles[0]->id : null;
         } else {
             $this->resetFields();
             $this->isEdit = false;
@@ -86,7 +95,7 @@ class Users extends Component
     {
         $rules = [
             'name' => 'required|string|max:255',
-            'role' => 'required|numeric',
+            'role' => 'required',
             'email' => [
                 'required',
                 'email',
@@ -100,7 +109,7 @@ class Users extends Component
             'gender' => 'nullable|in:' . GENDER_MALE . ',' . GENDER_FEMALE . ',' . GENDER_OTHERS,
             'image' => 'nullable|image|mimes:jpg,jpeg,png,webp,gif|max:2048',
         ];
-        
+
 
         $this->validate($rules);
 
@@ -108,7 +117,7 @@ class Users extends Component
 
         $user->name = $this->name;
         $user->email = $this->email;
-        $user->role = $this->role;
+        $user->role = USER_ROLE_STAFF;
         $user->phone = $this->phone;
         $user->dob = $this->dob;
         $user->gender = $this->gender;
@@ -128,6 +137,12 @@ class Users extends Component
         }
 
         $user->save();
+
+
+        // $user->syncRoles($this->role);
+
+        $role = Role::findOrFail($this->role);
+        $user->syncRoles($role->name);
 
         if (!$this->user_id) {
             Mail::to($user->email)->send(new UserCreatedMail($user, $this->password));
