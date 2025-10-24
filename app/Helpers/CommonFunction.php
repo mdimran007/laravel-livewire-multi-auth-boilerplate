@@ -47,3 +47,21 @@ if (!function_exists("permissionArrayList")) {
         return $arr;
     }
 }
+
+if (!function_exists("goalItemList")) {
+    function goalItemList()
+    {
+        $arr = [
+            'policy',
+            'services',
+            'programmes',
+            'partnerships',
+            'facilities',
+            'events',
+            'research',
+            'report',
+            'news',
+        ];
+        return $arr;
+    }
+}

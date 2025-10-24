@@ -54,6 +54,7 @@ class PolicyCreate extends Component
 
     public function store()
     {
+
         $this->validate(
             [
                 'title' => 'required|string|max:255',

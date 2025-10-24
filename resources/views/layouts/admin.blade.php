@@ -124,55 +124,58 @@
         });
     </script>
     <script>
-        document.addEventListener('livewire:init', () => {
-            Livewire.on('toast', event => {
-                Swal.fire({
-                    toast: true,
-                    position: 'top-end',
-                    icon: event.icon,
-                    title: event.title,
-                    showConfirmButton: false,
-                    timer: 3000,
-                    timerProgressBar: true,
-                    background: event.icon === 'success' ? '#16a34a' : (event.icon === 'error' ?
-                        '#dc2626' : '#facc15'), // Tailwind green-600, red-600, yellow-400
-                    color: '#ffffff', // text color
+            document.addEventListener('livewire:init', () => {
+                Livewire.on('toast', event => {
+                    Swal.fire({
+                        toast: true,
+                        position: 'top-end',
+                        icon: event.icon, // 'success', 'error', 'warning'
+                        title: event.title,
+                        showConfirmButton: false,
+                        timer: 3000,
+                        timerProgressBar: true,
+                        customClass: {
+                            popup: event.icon === 'success' ? 'bg-green-600 text-white' : event.icon ===
+                                'error' ? 'bg-red-600 text-white' : 'bg-yellow-400 text-black'
+                        }
+                    });
                 });
             });
-        });
+
     </script>
+
     <script>
-        $(document).ready(function() {
-            $('#summernote').summernote({
-                placeholder: 'Write something...',
-                tabsize: 2,
-                height: 200,
-                // toolbar: [
-                //     ['style', ['bold', 'italic', 'underline', 'clear']],
-                //     ['font', ['strikethrough', 'superscript', 'subscript']],
-                //     ['insert', ['link', 'picture', 'video']],
-                //     ['para', ['ul', 'ol', 'paragraph']],
-                //     ['view', ['fullscreen', 'codeview', 'help']]
-                // ],
-                // Optional: make it match Tailwind dark mode
-                callbacks: {
-                    onInit: function() {
-                        $('.note-editor').addClass(
-                            'rounded-lg border border-gray-300 dark:border-slate-600 dark:bg-slate-800'
-                        );
-                    }
-                }
-            });
-        });
+        // $(document).ready(function() {
+        //     $('#summernote').summernote({
+        //         placeholder: 'Write something...',
+        //         tabsize: 2,
+        //         height: 200,
+        //         // toolbar: [
+        //         //     ['style', ['bold', 'italic', 'underline', 'clear']],
+        //         //     ['font', ['strikethrough', 'superscript', 'subscript']],
+        //         //     ['insert', ['link', 'picture', 'video']],
+        //         //     ['para', ['ul', 'ol', 'paragraph']],
+        //         //     ['view', ['fullscreen', 'codeview', 'help']]
+        //         // ],
+        //         // Optional: make it match Tailwind dark mode
+        //         callbacks: {
+        //             onInit: function() {
+        //                 $('.note-editor').addClass(
+        //                     'rounded-lg border border-gray-300 dark:border-slate-600 dark:bg-slate-800'
+        //                 );
+        //             }
+        //         }
+        //     });
+        // });
     </script>
-    <script>
+    {{-- <script>
         $(document).ready(function() {
             $('.js-example-basic-multiple').select2({
                 placeholder: 'Select an option',
                 theme: "classic"
             });
         });
-    </script>
+    </script> --}}
 
 
     @stack('script')

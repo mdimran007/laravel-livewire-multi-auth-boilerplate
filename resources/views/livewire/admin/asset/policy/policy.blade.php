@@ -163,7 +163,7 @@
 
                         @if (isset($description) && !empty($description))
                             <h1 class="mb-4 mt-10 mt-7 text-gray-500 text-sm ">{{ __('Description') }}: </h1>
-                            <p class="mb-4 mt-10 mt-7 text-gray-500 text-sm ">{{ $description }}</p>
+                            <p class="mb-4 mt-10 mt-7 text-gray-500 text-sm ">{!! $description !!}</p>
                         @endif
 
                         @if (isset($downloadurl) && !empty($downloadurl))
