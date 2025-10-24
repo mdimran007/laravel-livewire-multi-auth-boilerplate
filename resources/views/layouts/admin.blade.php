@@ -90,7 +90,6 @@
 
 
     @livewireScripts
-
     <script>
         document.addEventListener('livewire:initialized', () => {
             Livewire.on('confirm-delete', (id) => {

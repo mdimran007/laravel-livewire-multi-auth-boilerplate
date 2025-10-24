@@ -6,6 +6,7 @@ use App\Models\User;
 use Livewire\Component;
 use Spatie\Permission\Models\Role;
 use Livewire\WithPagination;
+use Illuminate\Validation\Rule;
 
 class UserRolePermission extends Component
 {
@@ -13,74 +14,126 @@ class UserRolePermission extends Component
 
     public $pageTitle = "Role List";
 
-     use WithPagination;
+    use WithPagination;
 
-    public $name, $role_id;
+    public $roleId;
+    public $name;
+    public $selectedPermissions = [];
 
-    protected $rules = [
-        'name' => 'required|string|max:255|unique:roles,name',
-    ];
+    public $search;
 
-    public $userModalOpen = false;
-    public $isEdit = false;
-
-    public $email_verified_at;
-    public $created_by;
-    public $roleList;
-    public $assignRole;
+    protected function rules()
+    {
+        return [
+            'name' => [
+                'required',
+                'string',
+                'max:255',
+                Rule::unique('roles', 'name')->ignore($this->roleId),
+            ],
+            'selectedPermissions' => 'required|array|min:1',
+        ];
+    }
 
     protected $messages = [
-        'role.required' => 'Please select a user role.',
-        'name.required' => 'Please enter user name.',
-        'name.string' => 'Name must be valid text.',
-        'email.required' => 'Please enter email address.',
-        'email.email' => 'Please enter a valid email address.',
-        'email.unique' => 'This email is already registered.',
-        'password.required' => 'Password is required.',
-        'password.min' => 'Password must be at least 8 characters.',
-        'role.required' => 'Please select a user role.',
-        'gender.required' => 'Please select gender.',
-        'image.image' => 'Only image files are allowed.',
-        'image.mimes' => 'Image must be jpg, jpeg, png, webp, or gif.',
-        'dob.before' => 'Date of birth must be before today.',
+        'name.required' => 'The role name is required.',
+        'name.unique' => 'This role name already exists.',
+        'selectedPermissions.required' => 'Please select at least one permission.',
+        'selectedPermissions.min' => 'Please select at least one permission.',
     ];
+
+    public $roleModalOpen = false;
+    public $isEdit = false;
 
     public function mount()
     {
-        $this->roleList = Role::all();
+        // $this->roleList = Role::all();
     }
 
 
     public function render()
     {
-        return view('livewire.admin.user-role-permission');
+        $query = Role::query()
+            ->when(
+                $this->search,
+                fn($q) =>
+                $q->where('name', 'like', "%{$this->search}%")
+            )
+            ->orderBy('id', 'desc');
+
+        return view('livewire.admin.user-role-permission', [
+            'roles' => $query->paginate(10),
+        ]);
     }
 
-     public function openUserModal($id = null)
+    public function openRoleModal($id = null)
     {
         if ($id) {
-            $user = User::with(['roles'])->findOrFail($id);
-            $this->user_id = $user->id;
-            $this->name = $user->name;
-            $this->email = $user->email;
-            // $this->role = $user->role;
-            $this->phone = $user->phone;
-            $this->dob = $user->dob;
-            $this->gender = $user->gender;
-            $this->oldImage = $user->image;
+             $role = Role::findOrFail($id);
+            $this->roleId = $role->id;
+            $this->name = $role->name;
+            $this->selectedPermissions = $role->permissions->pluck('name')->toArray();
             $this->isEdit = true;
-            $this->role = isset($user->roles[0]) ? $user->roles[0]->id : null;
         } else {
             $this->resetFields();
             $this->isEdit = false;
         }
-        $this->userModalOpen = true;
+        $this->roleModalOpen = true;
     }
 
     // Close modal
-    public function closeUserModal()
+    public function closeRoleModal()
     {
-        $this->userModalOpen = false;
+        $this->roleModalOpen = false;
         $this->resetValidation();
+    }
+
+    private function resetFields()
+    {
+        $this->reset(['roleId', 'name', 'selectedPermissions']);
+        $this->resetValidation();
+    }
+
+    public function roleStore()
+    {
+        $this->validate($this->rules(), $this->messages);
+
+        if ($this->roleId) {
+            // 🔹 Update existing role
+            $role = Role::findOrFail($this->roleId);
+            $role->update(['name' => $this->name]);
+            $role->syncPermissions($this->selectedPermissions);
+        } else {
+            // 🔹 Create new role
+            $role = Role::create([
+                'name' => $this->name,
+                'guard_name' => 'web',
+            ]);
+            $role->syncPermissions($this->selectedPermissions);
+        }
+
+
+        $this->dispatch('toast', [
+            'icon' => 'success',
+            'title' => $this->roleId ? 'Role updated successfully.' : 'Role created successfully.',
+        ]);
+
+        $this->resetFields();
+
+        // Optional event for modal or toast refresh
+        $this->closeRoleModal();
+    }
+
+    public function delete($id)
+    {
+        $role = Role::findOrFail($id);
+        $role->delete();
+
+        $this->dispatch('toast', [
+            'icon' => 'success',
+            'title' => 'Deleted successfully!',
+        ]);
+
+        return redirect()->route('admin.users.role-and-permission');
     }
 }
