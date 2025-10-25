@@ -104,7 +104,12 @@ class PolicyCreate extends Component
         // Sync goals
         $data->goals()->sync($this->goals ?? []);
 
-        $this->dispatch('toast', [
+        // $this->dispatch('toast', [
+        //     'icon' => 'success',
+        //     'title' => $this->dataId ? 'Updated successfully!' : 'Created successfully!',
+        // ]);
+
+            $this->dispatch('toast', [
             'icon' => 'success',
             'title' => $this->dataId ? 'Updated successfully!' : 'Created successfully!',
         ]);
