@@ -65,3 +65,10 @@ if (!function_exists("goalItemList")) {
         return $arr;
     }
 }
+
+if (!function_exists("setActive")) {
+    function setActive($route)
+    {
+        return request()->routeIs($route) ? 'bg-white/20 text-white' : 'text-white hover:bg-white/10';
+    }
+}

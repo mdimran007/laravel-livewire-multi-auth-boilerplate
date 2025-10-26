@@ -38,38 +38,46 @@ class Goal extends Model
 
     public function policies()
     {
-        return $this->belongsToMany(Policy::class, 'goal_policy');
+        return $this->belongsToMany(Policy::class, 'goal_policy')->withTimestamps();
     }
+
     public function services()
     {
-        return $this->belongsToMany(Service::class, 'goal_service');
+        return $this->belongsToMany(Service::class, 'goal_service')->withTimestamps();
     }
+
     public function programmes()
     {
-        return $this->belongsToMany(Programme::class, 'goal_programme');
+        return $this->belongsToMany(Programme::class, 'goal_programme')->withTimestamps();
     }
-    public function events()
-    {
-        return $this->belongsToMany(Event::class, 'goal_event');
-    }
-    public function partnerships()
-    {
-        return $this->belongsToMany(Partnership::class, 'goal_partnership');
-    }
+
     public function facilities()
     {
-        return $this->belongsToMany(Facility::class, 'goal_facility');
+        return $this->belongsToMany(Facility::class, 'goal_facility')->withTimestamps();
     }
+
+    public function events()
+    {
+        return $this->belongsToMany(Event::class, 'goal_event')->withTimestamps();
+    }
+
     public function researches()
     {
-        return $this->belongsToMany(Research::class, 'goal_research');
+        return $this->belongsToMany(Research::class, 'goal_research')->withTimestamps();
     }
+
     public function reports()
     {
-        return $this->belongsToMany(Report::class, 'goal_report');
+        return $this->belongsToMany(Report::class, 'goal_report')->withTimestamps();
     }
+
     public function news()
     {
-        return $this->belongsToMany(News::class, 'goal_news');
+        return $this->belongsToMany(News::class, 'goal_news')->withTimestamps();
+    }
+
+    public function partnerships()
+    {
+        return $this->belongsToMany(Partnership::class, 'goal_partnership')->withTimestamps();
     }
 }
