@@ -64,7 +64,7 @@
                             <div class="mb-10 mt-12">
                                 <label for="image"
                                     class="text-gray-800 text-sm font-medium inline-block mb-2">{{ __('Image') }}
-                                    <span class="text-danger">*</span></label>
+                                   (626x256) <span class="text-danger">*</span></label>
                                 <input type="file" wire:model="image" class="border form-input p-1.5" id="image">
                                 @error('image')
                                     <span class="flex m-1 text-danger">{{ $message }}</span>
@@ -76,7 +76,7 @@
                             <div class="mb-10 mt-1">
                                 <label for="sdg_image"
                                     class="text-gray-800 text-sm font-medium inline-block mb-2">{{ __('SDG Image') }}
-                                    <span class="text-danger">*</span></label>
+                                   (200x200) <span class="text-danger">*</span></label>
                                 <input type="file" wire:model="sdg_image" class="border form-input p-1.5" id="sdg_image">
                                 @error('sdg_image')
                                     <span class="flex m-1 text-danger">{{ $message }}</span>
@@ -85,7 +85,7 @@
                         </div>
 
                         <div class="grid grid-cols-1 md:grid-cols-1">
-                            <h6>Select max 4 item for showing on the counter.</h6>
+                            <h6>Select max 4 item for showing on the counter. <span class="text-danger">*</span></h6>
                             <div class="flex items-center gap-2 my-3">
                                 @foreach (goalItemList() as $key => $item)
                                     <div class="flex items-center gap-2 my-3">

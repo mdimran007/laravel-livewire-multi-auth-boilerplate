@@ -41,7 +41,7 @@
             @foreach ($data as $key => $items)
                 @if ($items->count() > 0)
                     <section id="{{ $key }}" class="mb-16 scroll-mt-20">
-                        <h2 class="text-2xl font-bold text-white mb-8 flex items-center">
+                        <h2 class="text-2xl font-bold  mb-8 flex items-center">
                             <!-- You can use conditional icons per key if you like -->
                             <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"

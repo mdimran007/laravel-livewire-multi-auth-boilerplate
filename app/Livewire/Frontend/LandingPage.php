@@ -21,7 +21,7 @@ class LandingPage extends Component
     public function render()
     {
         return view('livewire.frontend.landing-page', [
-            'goals' => Goal::where('status', STATUS_ACTIVE)->with(['creator'])->latest()->paginate(20),
+            'goals' => Goal::where('status', STATUS_ACTIVE)->with(['creator'])->paginate(20),
         ]);
     }
 }

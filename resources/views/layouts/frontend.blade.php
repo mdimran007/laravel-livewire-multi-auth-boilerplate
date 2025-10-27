@@ -36,7 +36,7 @@
 </head>
 
 <body
-    class="{{ request()->routeIs('frontend.index') ? 'min-h-screen flex flex-col from-indigo-600 via-purple-600 to-pink-500' : 'min-h-screen flex flex-col bg-gray-900' }}">
+    class="{{ request()->routeIs('frontend.index') ? 'min-h-screen flex flex-col from-indigo-600 via-purple-600 to-pink-500' : 'min-h-screen flex flex-col ' }}">
     <!-- HEADER -->
     <!-- Replace the existing header section -->
     <header class="sticky top-0 z-50">
@@ -115,7 +115,17 @@
     <!-- MAIN / CONTAINER -->
     <!-- Replace the existing main section -->
 
-    {{ $slot }}
+    <div wire:loading>
+        <div class="space-y-4 animate-pulse">
+            <div class="h-6 bg-gray-700 rounded w-1/3"></div>
+            <div class="h-4 bg-gray-700 rounded w-2/3"></div>
+            <div class="h-4 bg-gray-700 rounded w-1/2"></div>
+        </div>
+    </div>
+    <div wire:loading.remove>
+        {{ $slot }}
+    </div>
+
 
     <!-- FOOTER -->
     <!-- Replace the existing footer -->

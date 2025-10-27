@@ -18,7 +18,10 @@
                                 <!-- Image Section -->
                                 <div class="relative h-64">
                                     <!-- Main Goal Image -->
-                                    <img src="{{ $goal->images ? asset('storage/' . $goal->images) : asset('assets/no-image.png') }}"
+
+
+                                    <img wire:loading.remove
+                                        src="{{ $goal->images ? asset('storage/' . $goal->images) : asset('assets/no-image.png') }}"
                                         alt="Goal Image" class="w-full h-full object-cover">
 
                                     <!-- SDG Image with Gradient Overlay -->
@@ -26,51 +29,85 @@
                                         <div class="absolute top-3 left-3 rounded-lg overflow-hidden shadow-md"
                                             style="width: 150px; height: 150px;">
                                             <!-- SDG Image -->
-                                            <img src="{{ asset('storage/' . $goal->sdg_image) }}" alt="SDG Image"
-                                                class="w-full h-full object-contain">
+                                            {{-- <img src="{{ asset('storage/' . $goal->sdg_image) }}" alt="SDG Image"
+                                                class="w-full h-full object-contain"> --}}
 
                                             <!-- Gradient Overlay ON SDG Image -->
-                                            <div
+                                            {{-- <div
                                                 class="absolute inset-0 bg-gradient-to-r from-blue-600/70 via-indigo-600/70 to-purple-600/70 opacity-60 group-hover:opacity-80 transition-all duration-300">
-                                            </div>
+                                            </div> --}}
                                         </div>
                                     @endif
                                 </div>
 
                                 <!-- Content Section -->
                                 <div class="bg-indigo-600 flex flex-col justify-between flex-grow p-6">
-                                    <div>
-                                        <h3 class="text-lg font-semibold text-white">
-                                            {{ $goal->title ? \Illuminate\Support\Str::limit($goal->title, 50, '...') : 'N/A' }}
-                                        </h3>
-                                        <p class="mt-2 text-sm text-gray-200 line-clamp-3">
-                                            {{ $goal->short_description ? \Illuminate\Support\Str::limit($goal->short_description, 100, '...') : 'N/A' }}
-                                        </p>
-                                    </div>
+                                    <article class="group overflow-hidden rounded-2xl shadow-lg">
+                                        <div class="flex flex-col md:flex-row h-full">
+                                            <!-- Left: image -->
+                                            @if ($goal->sdg_image)
+                                                <div class="md:w-2/5 h-48 md:h-auto overflow-hidden"
+                                                    style="height: 100%;">
+                                                    <div wire:loading>
+                                                        <svg fill="hsl(228, 97%, 42%)" viewBox="0 0 24 24"
+                                                            xmlns="http://www.w3.org/2000/svg">
+                                                            <path
+                                                                d="M12,1A11,11,0,1,0,23,12,11,11,0,0,0,12,1Zm0,19a8,8,0,1,1,8-8A8,8,0,0,1,12,20Z"
+                                                                opacity=".25" />
+                                                            <path
+                                                                d="M12,4a8,8,0,0,1,7.89,6.7A1.53,1.53,0,0,0,21.38,12h0a1.5,1.5,0,0,0,1.48-1.75,11,11,0,0,0-21.72,0A1.5,1.5,0,0,0,2.62,12h0a1.53,1.53,0,0,0,1.49-1.3A8,8,0,0,1,12,4Z">
+                                                                <animateTransform attributeName="transform"
+                                                                    type="rotate" dur="0.75s"
+                                                                    values="0 12 12;360 12 12"
+                                                                    repeatCount="indefinite" />
+                                                            </path>
+                                                        </svg>
+                                                    </div>
 
-                                    <div class="mt-4 flex items-center justify-between">
-                                        <div class="flex items-center space-x-3">
-                                            <div
-                                                class="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center">
-                                                <svg class="w-4 h-4 text-gray-100" fill="none" stroke="currentColor"
-                                                    viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                                        stroke-width="1.5"
-                                                        d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                                                </svg>
+                                                    <img wire:loading.remove
+                                                        src="{{ asset('storage/' . $goal->sdg_image) }}" alt="SDG Image"
+                                                        class="w-full h-full object-contain">
+                                                    />
+                                                </div>
+                                            @endif
+                                            <!-- Content on right -->
+                                            <div class="bg-indigo-600 flex flex-col justify-between flex-grow p-6">
+                                                <div>
+                                                    <h3 class="text-lg font-semibold text-white">
+                                                        {{ $goal->title ? \Illuminate\Support\Str::limit($goal->title, 50, '...') : 'N/A' }}
+                                                    </h3>
+                                                    <p class="mt-2 text-sm text-gray-200 line-clamp-3">
+                                                        {{ $goal->short_description ? \Illuminate\Support\Str::limit($goal->short_description, 100, '...') : 'N/A' }}
+                                                    </p>
+                                                </div>
+
+                                                <div class="mt-4 flex items-center justify-between">
+                                                    <div class="flex items-center space-x-3">
+                                                        <div
+                                                            class="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center">
+                                                            <svg class="w-4 h-4 text-gray-100" fill="none"
+                                                                stroke="currentColor" viewBox="0 0 24 24">
+                                                                <path stroke-linecap="round" stroke-linejoin="round"
+                                                                    stroke-width="1.5"
+                                                                    d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                                                            </svg>
+                                                        </div>
+                                                        <div>
+                                                            <p class="text-sm font-medium text-white">
+                                                                {{ $goal->creator?->name ?? 'N/A' }}</p>
+                                                            <p class="text-xs text-gray-300">
+                                                                {{ $goal->created_at->diffForHumans() }}</p>
+                                                        </div>
+                                                    </div>
+                                                    <a href="{{ route('goal.details', $goal->slug) }}"
+                                                        class="bg-white/10 hover:bg-indigo-700 px-3 py-1 rounded-full text-sm text-white transition">
+                                                        More Details
+                                                    </a>
+                                                </div>
                                             </div>
-                                            <div>
-                                                <p class="text-sm font-medium text-white">
-                                                    {{ $goal->creator?->name ?? 'N/A' }}</p>
-                                                <p class="text-xs text-gray-300">
-                                                    {{ $goal->created_at->diffForHumans() }}</p>
-                                            </div>
+
                                         </div>
-                                        <a href="{{ route('goal.details', $goal->slug) }}"
-                                            class="bg-white/10 hover:bg-indigo-700 px-3 py-1 rounded-full text-sm text-white transition">
-                                            More Details
-                                        </a>
-                                    </div>
+                                    </article>
                                 </div>
                             </div>
                         </article>
