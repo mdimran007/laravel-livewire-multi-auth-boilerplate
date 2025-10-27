@@ -12,18 +12,15 @@
                 <div class="p-6">
                     <form wire:submit.prevent="store" class="mt-5 space-y-4">
 
-                        <div class="mb-10">
-                            <label for="goal" class="block text-sm font-medium text-gray-700 dark:text-gray-200">
-                                Select Goal
-                            </label>
-
-                            <select id="goal" wire:model="goals" class="form-input" multiple>
+                        <div wire:ignore>
+                            <label for="goal" class="text-gray-800 text-sm font-medium inline-block mb-2">Select
+                                Goals</label>
+                            <select id="goal" class="form-input js-example-basic-multiple" multiple>
                                 @foreach ($goalList as $goal)
                                     <option value="{{ $goal->id }}">{{ $goal->title }}</option>
                                 @endforeach
                             </select>
-
-                            @error('selectedGoals')
+                            @error('goals')
                                 <span class="text-red-500 text-xs">{{ $message }}</span>
                             @enderror
                         </div>
@@ -49,11 +46,11 @@
 
                         </div>
 
-                        <div>
-                            <label for="summernote22"
+                        <div wire:ignore>
+                            <label for="summernote"
                                 class="text-gray-800 text-sm font-medium inline-block mb-2">Description
                             </label>
-                            <textarea wire:model="description" rows="3" class="form-input" id="summernote22"></textarea>
+                            <textarea rows="3" class="form-input" id="summernote"></textarea>
                             @error('description')
                                 <span class="text-red-500 text-xs">{{ $message }}</span>
                             @enderror
@@ -72,9 +69,10 @@
 
 
                         <div class="mt-10">
-                            <label for="event_date" class="font-medium inline-block mb-2 mt-5 text-gray-800 text-sm">Event Date
+                            <label for="event_date"
+                                class="font-medium inline-block mb-2 mt-5 text-gray-800 text-sm">Event Date
                                 <span class="text-red-500 text-xs">*</span></label>
-                            <input type="date" wire:model="event_date" class="form-input" id="event_date" >
+                            <input type="date" wire:model="event_date" class="form-input" id="event_date">
                             @error('event_date')
                                 <span class="text-red-500 text-xs">{{ $message }}</span>
                             @enderror
@@ -130,5 +128,71 @@
             </div>
         </div>
     </div>
+    @push('script')
+        <script>
+            document.addEventListener('livewire:load', function() {
+                initSummernote();
+            });
 
+            document.addEventListener('livewire:navigated', function() {
+                initSummernote();
+            });
+
+            function initSummernote() {
+                if ($('#summernote').next('.note-editor').length) {
+                    $('#summernote').summernote('destroy');
+                }
+                $('#summernote').summernote({
+                    placeholder: 'Write something...',
+                    height: 200,
+                    tabsize: 2,
+                    callbacks: {
+                        onChange: function(contents) {
+                            @this.set('description', contents);
+                        }
+                    }
+                });
+
+                $('#summernote').summernote('code', @this.get('description') || '');
+            }
+        </script>
+
+        <script>
+            document.addEventListener('livewire:load', function() {
+                initSelect2();
+            });
+
+            document.addEventListener('livewire:navigated', function() {
+                initSelect2();
+            });
+
+            function initSelect2() {
+                const select = $('.js-example-basic-multiple');
+                const compEl = select.closest('[wire\\:id]');
+                if (!compEl.length) return;
+                const component = Livewire.find(compEl.attr('wire:id'));
+                if (!component) return;
+
+                // destroy if already initialized
+                if (select.hasClass("select2-hidden-accessible")) {
+                    select.select2('destroy');
+                }
+
+                select.select2({
+                    placeholder: 'Select an option',
+                    theme: 'classic'
+                });
+
+                // When value changes in Select2, update Livewire
+                select.on('change', function(e) {
+                    const data = $(this).val();
+                    component.set('goals', data);
+                });
+
+                // Set initial selected values from Livewire property
+                const selected = component.get('goals') || [];
+                select.val(selected).trigger('change');
+            }
+        </script>
+    @endpush
 </div>

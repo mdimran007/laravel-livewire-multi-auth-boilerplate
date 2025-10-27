@@ -49,7 +49,7 @@ class ProgrammesEdit extends Component
     public function render()
     {
         
-        return view('livewire.admin.asset.facilities.facilities-edit');
+        return view('livewire.admin.asset.programmes.programmes-edit');
     }
 
       public function store()

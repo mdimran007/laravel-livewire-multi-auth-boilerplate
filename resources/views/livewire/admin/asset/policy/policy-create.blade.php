@@ -47,7 +47,7 @@
                         </div>
 
                         <div wire:ignore>
-                            <label for="summernote22"
+                            <label for="summernote"
                                 class="text-gray-800 text-sm font-medium inline-block mb-2">Description
                             </label>
                             <textarea rows="3" class="form-input" id="summernote"></textarea>
