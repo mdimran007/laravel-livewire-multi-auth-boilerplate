@@ -13,23 +13,41 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     @foreach ($goals as $goal)
                         <article wire:key="item-{{ $goal->id }}"
-                            class="backdrop-blur-sm bg-white/5 group hover:-translate-y-1 hover:shadow-2xl overflow-hidden rounded-2xl shadow-lg transform transition">
+                            class="group relative bg-white/10 backdrop-blur-sm rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transform hover:-translate-y-2 transition-all duration-300 border border-white/10">
                             <div class="flex flex-col h-full">
-                                <!-- Left: image -->
-                                <div class="h-48 overflow-hidden">
-                                    <img src="{{ $goal->images != null? asset('storage/' . $goal->images) : asset('assets/no-image.png') }}"
-                                        alt="Goal Image" class="w-full h-full object-cover" />
+                                <!-- Image Section -->
+                                <div class="relative h-64">
+                                    <!-- Main Goal Image -->
+                                    <img src="{{ $goal->images ? asset('storage/' . $goal->images) : asset('assets/no-image.png') }}"
+                                        alt="Goal Image" class="w-full h-full object-cover">
+
+                                    <!-- SDG Image with Gradient Overlay -->
+                                    @if ($goal->sdg_image)
+                                        <div class="absolute top-3 left-3 rounded-lg overflow-hidden shadow-md"
+                                            style="width: 150px; height: 150px;">
+                                            <!-- SDG Image -->
+                                            <img src="{{ asset('storage/' . $goal->sdg_image) }}" alt="SDG Image"
+                                                class="w-full h-full object-contain">
+
+                                            <!-- Gradient Overlay ON SDG Image -->
+                                            <div
+                                                class="absolute inset-0 bg-gradient-to-r from-blue-600/70 via-indigo-600/70 to-purple-600/70 opacity-60 group-hover:opacity-80 transition-all duration-300">
+                                            </div>
+                                        </div>
+                                    @endif
                                 </div>
-                                <!-- Content -->
+
+                                <!-- Content Section -->
                                 <div class="bg-indigo-600 flex flex-col justify-between flex-grow p-6">
                                     <div>
                                         <h3 class="text-lg font-semibold text-white">
-                                            {{ $goal->title != null ? \Illuminate\Support\Str::limit($goal->title, 50, '...') : 'N/A' }}
+                                            {{ $goal->title ? \Illuminate\Support\Str::limit($goal->title, 50, '...') : 'N/A' }}
                                         </h3>
                                         <p class="mt-2 text-sm text-gray-200 line-clamp-3">
-                                            {{ $goal->short_description != null ? \Illuminate\Support\Str::limit($goal->short_description, 100, '...') : 'N/A' }}
+                                            {{ $goal->short_description ? \Illuminate\Support\Str::limit($goal->short_description, 100, '...') : 'N/A' }}
                                         </p>
                                     </div>
+
                                     <div class="mt-4 flex items-center justify-between">
                                         <div class="flex items-center space-x-3">
                                             <div
@@ -42,12 +60,16 @@
                                                 </svg>
                                             </div>
                                             <div>
-                                                <p class="text-sm font-medium text-white">{{ $goal->creator?->name ?? 'N/A' }}</p>
-                                                <p class="text-xs text-gray-300">{{ $goal->created_at->diffForHumans() }}</p>
+                                                <p class="text-sm font-medium text-white">
+                                                    {{ $goal->creator?->name ?? 'N/A' }}</p>
+                                                <p class="text-xs text-gray-300">
+                                                    {{ $goal->created_at->diffForHumans() }}</p>
                                             </div>
                                         </div>
-                                        <a class="bg-indigo-600 bg-white/10 hover:bg-indigo-700 px-3 py-1 rounded-full text-sm text-white transition"
-                                            href="{{ route('goal.details', $goal->slug) }}">More Details</a>
+                                        <a href="{{ route('goal.details', $goal->slug) }}"
+                                            class="bg-white/10 hover:bg-indigo-700 px-3 py-1 rounded-full text-sm text-white transition">
+                                            More Details
+                                        </a>
                                     </div>
                                 </div>
                             </div>
@@ -56,38 +78,37 @@
 
                 </div>
                 <!-- Custom Pagination -->
-                @if (! count($goals) > 20)
-                                    <div class="flex justify-between items-center mt-4" style="margin-top: 100px;">
-                    <div>
-                        Showing {{ $goals->firstItem() }} to {{ $goals->lastItem() }} of
-                        {{ $goals->total() }} results
+                @if (!count($goals) > 20)
+                    <div class="flex justify-between items-center mt-4" style="margin-top: 100px;">
+                        <div>
+                            Showing {{ $goals->firstItem() }} to {{ $goals->lastItem() }} of
+                            {{ $goals->total() }} results
+                        </div>
+
+                        <div class="flex space-x-1">
+                            @if ($goals->onFirstPage())
+                                <span class="px-3 py-1 bg-gray-200 text-gray-500 rounded">Previous</span>
+                            @else
+                                <button wire:click="previousPage"
+                                    class="px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600">Previous</button>
+                            @endif
+
+                            @foreach ($goals->getUrlRange(1, $goals->lastPage()) as $page => $url)
+                                <button wire:click="gotoPage({{ $page }})"
+                                    class="px-3 py-1 rounded {{ $page == $goals->currentPage() ? 'bg-slate-700 px-3 py-1 rounded text-white' : 'bg-gray-200 text-gray-700' }}">
+                                    {{ $page }}
+                                </button>
+                            @endforeach
+
+                            @if ($goals->hasMorePages())
+                                <button wire:click="nextPage"
+                                    class="px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600">Next</button>
+                            @else
+                                <span class="px-3 py-1 bg-gray-200 text-gray-500 rounded">Next</span>
+                            @endif
+                        </div>
                     </div>
-
-                    <div class="flex space-x-1">
-                        @if ($goals->onFirstPage())
-                            <span class="px-3 py-1 bg-gray-200 text-gray-500 rounded">Previous</span>
-                        @else
-                            <button wire:click="previousPage"
-                                class="px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600">Previous</button>
-                        @endif
-
-                        @foreach ($goals->getUrlRange(1, $goals->lastPage()) as $page => $url)
-                            <button wire:click="gotoPage({{ $page }})"
-                                class="px-3 py-1 rounded {{ $page == $goals->currentPage() ? 'bg-slate-700 px-3 py-1 rounded text-white' : 'bg-gray-200 text-gray-700' }}">
-                                {{ $page }}
-                            </button>
-                        @endforeach
-
-                        @if ($goals->hasMorePages())
-                            <button wire:click="nextPage"
-                                class="px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600">Next</button>
-                        @else
-                            <span class="px-3 py-1 bg-gray-200 text-gray-500 rounded">Next</span>
-                        @endif
-                    </div>
-                </div>
                 @endif
-
             @else
                 <div class="grid md:grid-cols-1 xl:grid-cols-1 gap-6">
                     <div class="card flex h-80 justify-center p-8">

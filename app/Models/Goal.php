@@ -14,6 +14,7 @@ class Goal extends Model
         'slug',
         'short_description',
         'images',
+        'sdg_image',
         'achievements',
         'status',
         'created_by',

@@ -21,6 +21,8 @@ class GoalsEdit extends Component
     public $short_description;
     public $image;
     public $old_image;
+    public $sdg_image;
+    public $old_sdg_image;
     public $selectedItems = [];
 
     protected $rules = [
@@ -28,6 +30,7 @@ class GoalsEdit extends Component
         'status' => 'required|integer',
         'short_description' => 'required|string',
         'image' => 'nullable|image|max:2048',
+        'sdg_image' => 'nullable|image|max:2048',
         'selectedItems' => 'required|array|min:1|max:4',
         'selectedItems.*' => 'string',
     ];
@@ -47,9 +50,10 @@ class GoalsEdit extends Component
         $this->short_description = $goal->short_description;
         $this->selectedItems = json_decode($goal->achievements, true) ?? [];
         $this->old_image = $goal->images;
-    }
+        $this->old_sdg_image = $goal->sdg_image;
+        }
 
- 
+
 
     // Live validation for each property
     public function updated($propertyName)
@@ -71,11 +75,20 @@ class GoalsEdit extends Component
             $imagePath = $this->image->store('goals', 'public');
         }
 
+        $sdgImagePath = $this->old_sdg_image;
+        if ($this->sdg_image) {
+            if ($this->old_sdg_image && Storage::disk('public')->exists($this->old_sdg_image)) {
+                Storage::disk('public')->delete($this->old_sdg_image);
+            }
+            $sdgImagePath = $this->sdg_image->store('goals', 'public');
+        }
+
         $goal->update([
             'title' => $this->title,
             'slug' => Str::slug($this->title),
             'short_description' => $this->short_description,
             'images' => $imagePath,
+            'sdg_image' => $sdgImagePath,
             'achievements' => json_encode($this->selectedItems),
             'status' => $this->status,
             'created_by' => Auth::id(),

@@ -19,6 +19,7 @@ class GoalsCreate extends Component
     public $status;
     public $short_description;
     public $image;
+    public $sdg_image;
     public $selectedItems = [];
 
     protected $rules = [
@@ -26,6 +27,7 @@ class GoalsCreate extends Component
         'status' => 'required|integer',
         'short_description' => 'required|string',
         'image' => 'required|image|max:2048',
+        'sdg_image' => 'required|image|max:2048',
         'selectedItems' => 'required|array|min:1|max:4',
         'selectedItems.*' => 'string',
     ];
@@ -48,12 +50,14 @@ class GoalsCreate extends Component
         $this->validate();
 
         $imagePath = $this->image->store('goals', 'public');
+        $sdgImagePath = $this->sdg_image->store('goals', 'public');
 
         Goal::create([
             'title' => $this->title,
             'slug' => Str::slug($this->title),
             'short_description' => $this->short_description,
             'images' => $imagePath,
+            'sdg_image' => $sdgImagePath,
             'achievements' => json_encode($this->selectedItems),
             'status' => $this->status,
             'created_by' => Auth::id(),
@@ -61,7 +65,7 @@ class GoalsCreate extends Component
 
         session()->flash('message', 'Goal created successfully!');
 
-        $this->reset(['title', 'status', 'short_description', 'image', 'selectedItems']);
+        $this->reset(['title', 'status', 'short_description', 'image', 'sdg_image', 'selectedItems']);
         return redirect()->route('admin.goals');
     }
 

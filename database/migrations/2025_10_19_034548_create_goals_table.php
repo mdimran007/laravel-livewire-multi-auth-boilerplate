@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('slug');
             $table->longText('short_description');
             $table->string('images');
+            $table->string('sdg_image');
             $table->json('achievements')->nullable();
             $table->tinyInteger('status')->default(STATUS_ACTIVE);
             $table->bigInteger('created_by')->nullable();
