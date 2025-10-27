@@ -96,18 +96,27 @@
         });
 
         document.addEventListener('livewire:init', () => {
-            Livewire.on('toast', event => {
+            Livewire.on('toast', data => {
+                const event = data[0]; // ✅ fix: extract the real object
+
                 Swal.fire({
                     toast: true,
                     position: 'top-end',
-                    icon: event.icon, // 'success', 'error', 'warning'
+                    icon: event.icon,
                     title: event.title,
                     showConfirmButton: false,
                     timer: 3000,
                     timerProgressBar: true,
-                    customClass: {
-                        popup: event.icon === 'success' ? 'bg-green-600 text-white' : event.icon ===
-                            'error' ? 'bg-red-600 text-white' : 'bg-yellow-400 text-black'
+                    background: event.icon === 'success' ? '#16a34a' : event.icon === 'error' ?
+                        '#dc2626' : event.icon === 'warning' ? '#facc15' : '#3b82f6',
+                    color: event.icon === 'warning' ? '#000000' : '#ffffff',
+                    didOpen: toast => {
+                        const titleEl = toast.querySelector('.swal2-title');
+                        if (titleEl) {
+                            titleEl.style.color = event.icon === 'warning' ? '#000000' :
+                                '#ffffff';
+                            titleEl.style.fontWeight = '600';
+                        }
                     }
                 });
             });

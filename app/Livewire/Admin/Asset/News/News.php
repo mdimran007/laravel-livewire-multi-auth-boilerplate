@@ -85,6 +85,6 @@ class News extends Component
             'title' => 'Deleted successfully!',
         ]);
 
-        return redirect()->route('admin.research.index');
+        return redirect()->route('admin.news.index');
     }
 }
