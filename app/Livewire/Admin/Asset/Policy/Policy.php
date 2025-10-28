@@ -2,13 +2,8 @@
 
 namespace App\Livewire\Admin\Asset\Policy;
 
-use App\Models\Facility;
-use App\Models\News as ModelsNews;
 use App\Models\Policy as ModelsPolicy;
-use App\Models\Programme;
-use App\Models\Report as ModelsReport;
 use Livewire\Component;
-use App\Models\Research;
 use Livewire\WithPagination;
 
 class Policy extends Component

@@ -65,6 +65,9 @@ use App\Livewire\Admin\Asset\News\{
     NewsEdit,
     NewsDetails
 };
+use App\Livewire\Admin\Committee\Committee;
+use App\Livewire\Admin\Committee\CommitteeCreate;
+use App\Livewire\Admin\Committee\CommitteeEdit;
 use App\Livewire\Admin\UserRolePermission;
 
 Route::middleware(['auth', 'admin', 'verified'])->prefix('admin')->name('admin.')->group(function () {
@@ -157,4 +160,12 @@ Route::middleware(['auth', 'admin', 'verified'])->prefix('admin')->name('admin.'
             Route::get('/edit/{id}', NewsEdit::class)->name('edit');
         });
     });
+
+    // Route::middleware(['check-permission:committee'])->group(function () {
+        Route::prefix('committee')->name('committee.')->group(function () {
+            Route::get('/', Committee::class)->name('index');
+            Route::get('/create', CommitteeCreate::class)->name('create');
+            Route::get('/edit/{id}', CommitteeEdit::class)->name('edit');
+        });
+    // });
 });

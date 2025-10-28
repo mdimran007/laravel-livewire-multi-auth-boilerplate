@@ -32,6 +32,50 @@ class Goal extends Model
         });
     }
 
+    public function getAchievementCountsAttribute()
+    {
+        $allTypes = [
+            'policies' => 'Policy',
+            'services' => 'Services',
+            'programmes' => 'Programmes',
+            'facilities' => 'Facilities',
+            'events' => 'Events',
+            'researches' => 'Research',
+            'reports' => 'Report',
+            'news' => 'News',
+            'partnerships' => 'Partnerships',
+        ];
+
+        $achievements = $this->achievements;
+
+        if (is_string($achievements)) {
+            // First decode (removes outer quotes)
+            $achievements = json_decode($achievements, true);
+            // If still a string, decode again
+            if (is_string($achievements)) {
+                $achievements = json_decode($achievements, true);
+            }
+        }
+
+        // Ensure we have an array
+        $achievements = is_array($achievements) ? $achievements : [];
+
+        $counts = [];
+
+        foreach ($allTypes as $key => $label) {
+            if (in_array($key, $achievements)) {
+                $counts[$label] = $this->{$key . '_count'} ?? 0;
+            }
+        }
+
+        return $counts;
+    }
+
+    public function committeeMembers()
+    {
+        return $this->belongsToMany(CommitteeMember::class, 'committee_member_goal');
+    }
+
     public function creator()
     {
         return $this->belongsTo(User::class, 'created_by');

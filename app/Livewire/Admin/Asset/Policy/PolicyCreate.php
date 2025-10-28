@@ -2,18 +2,14 @@
 
 namespace App\Livewire\Admin\Asset\Policy;
 
-use App\Models\Facility;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use App\Models\Goal;
-use App\Models\News;
 use App\Models\Policy;
-use App\Models\Programme;
-use App\Models\Report;
 
 class PolicyCreate extends Component
 {
-     use WithFileUploads;
+    use WithFileUploads;
 
     public $pageTitle = "New Programme";
 

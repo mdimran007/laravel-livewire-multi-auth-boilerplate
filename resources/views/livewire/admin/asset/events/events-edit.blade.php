@@ -82,7 +82,7 @@
 
                         <div>
                             <label for="image" class="text-gray-800 text-sm font-medium inline-block mb-2">Image
-                            </label>
+                            (1600x1066)</label>
                             <input type="file" wire:model="image" class="border form-input p-1.5" id="image">
                             @if ($existingImage)
                                 <div class="mt-2">

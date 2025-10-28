@@ -31,7 +31,7 @@ class GoalsEdit extends Component
         'short_description' => 'required|string',
         'image' => 'nullable|image|max:2048',
         'sdg_image' => 'nullable|image|max:2048',
-        'selectedItems' => 'required|array|min:1|max:4',
+        'selectedItems' => 'required|array|min:1',
         'selectedItems.*' => 'string',
     ];
 

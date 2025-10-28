@@ -28,7 +28,7 @@ class GoalsCreate extends Component
         'short_description' => 'required|string',
         'image' => 'required|image|max:2048',
         'sdg_image' => 'required|image|max:2048',
-        'selectedItems' => 'required|array|min:1|max:4',
+        'selectedItems' => 'required|array|min:1',
         'selectedItems.*' => 'string',
     ];
 

@@ -14,7 +14,7 @@
 
                         <div wire:ignore>
                             <label for="goal" class="text-gray-800 text-sm font-medium inline-block mb-2">Select
-                                Goals</label>
+                                Goals <span class="text-red-500 text-xs">*</span></label>
                             <select id="goal" class="form-input js-example-basic-multiple" multiple>
                                 @foreach ($goalList as $goal)
                                     <option value="{{ $goal->id }}">{{ $goal->title }}</option>
@@ -26,36 +26,25 @@
                         </div>
 
                         <div class="mt-10">
-                            <label for="title" class="font-medium inline-block mb-2 mt-5 text-gray-800 text-sm">Title
+                            <label for="name" class="font-medium inline-block mb-2 mt-5 text-gray-800 text-sm">Name
                                 <span class="text-red-500 text-xs">*</span></label>
-                            <input type="text" wire:model="title" class="form-input" id="title">
-                            @error('title')
+                            <input type="text" wire:model="name" class="form-input" id="name">
+                            @error('name')
                                 <span class="text-red-500 text-xs">{{ $message }}</span>
                             @enderror
 
                         </div>
 
-                        <div>
-                            <label for="short_description"
-                                class="text-gray-800 text-sm font-medium inline-block mb-2">Short
-                                Description <span class="text-red-500 text-xs">*</span></label>
-                            <textarea wire:model="short_description" rows="3" class="form-input" id="short_description"></textarea>
-                            @error('short_description')
+                        <div class="mt-10">
+                            <label for="designation" class="font-medium inline-block mb-2 mt-5 text-gray-800 text-sm">Designation
+                                <span class="text-red-500 text-xs">*</span></label>
+                            <input type="text" wire:model="designation" class="form-input" id="designation">
+                            @error('designation')
                                 <span class="text-red-500 text-xs">{{ $message }}</span>
                             @enderror
 
                         </div>
 
-                        <div wire:ignore>
-                            <label for="summernote"
-                                class="text-gray-800 text-sm font-medium inline-block mb-2">Description
-                            </label>
-                            <textarea rows="3" class="form-input" id="summernote"></textarea>
-                            @error('description')
-                                <span class="text-red-500 text-xs">{{ $message }}</span>
-                            @enderror
-
-                        </div>
 
                         <div>
                             <label for="url" class="text-gray-800 text-sm font-medium inline-block mb-2">Url
@@ -68,15 +57,15 @@
                         </div>
 
                         <div>
-                            <label for="image" class="text-gray-800 text-sm font-medium inline-block mb-2">Image
-                            (1600x1066)</label>
-                            <input type="file" wire:model="image" class="border form-input p-1.5" id="image">
-                            @if ($existingImage)
+                            <label for="picture" class="text-gray-800 text-sm font-medium inline-block mb-2">Picture  <span class="text-red-500 text-xs">*</span>
+                            </label>
+                            <input type="file" wire:model="picture" class="border form-input p-1.5" id="picture">
+                            @if ($existingPicture)
                                 <div class="mt-2">
-                                    <img src="{{ asset('storage/research/' . $existingImage) }}" class="h-20">
+                                    <img src="{{ asset('storage/committee/' . $existingPicture) }}" class="h-20">
                                 </div>
                             @endif
-                            @error('image')
+                            @error('picture')
                                 <span class="text-red-500 text-xs">{{ $message }}</span>
                             @enderror
 
@@ -84,7 +73,7 @@
 
                         <div>
                             <label for="status"
-                                class="block text-sm font-medium text-gray-700 dark:text-gray-200">Status</label>
+                                class="block text-sm font-medium text-gray-700 dark:text-gray-200">Status  <span class="text-red-500 text-xs">*</span></label>
                             <select wire:model="status" class="form-input mt-2" id="status">
                                 <option value="{{ STATUS_ACTIVE }}">Active</option>
                                 <option value="{{ STATUS_INACTIVE }}">Inactive</option>
@@ -120,33 +109,7 @@
         </div>
     </div>
     @push('script')
-        <script>
-            document.addEventListener('livewire:load', function() {
-                initSummernote();
-            });
-
-            document.addEventListener('livewire:navigated', function() {
-                initSummernote();
-            });
-
-            function initSummernote() {
-                if ($('#summernote').next('.note-editor').length) {
-                    $('#summernote').summernote('destroy');
-                }
-                $('#summernote').summernote({
-                    placeholder: 'Write something...',
-                    height: 200,
-                    tabsize: 2,
-                    callbacks: {
-                        onChange: function(contents) {
-                            @this.set('description', contents);
-                        }
-                    }
-                });
-
-                $('#summernote').summernote('code', @this.get('description') || '');
-            }
-        </script>
+       
 
         <script>
             document.addEventListener('livewire:load', function() {
@@ -177,11 +140,11 @@
                 // When value changes in Select2, update Livewire
                 select.on('change', function(e) {
                     const data = $(this).val();
-                    component.set('goals', data);
+                    component.set('selectedGoals', data);
                 });
 
                 // Set initial selected values from Livewire property
-                const selected = component.get('goals') || [];
+                const selected = component.get('selectedGoals') || [];
                 select.val(selected).trigger('change');
             }
         </script>

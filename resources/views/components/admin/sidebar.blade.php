@@ -67,8 +67,18 @@
                                 <span class="menu-text"> {{ __('Goals') }} </span>
                             </a>
                         </li>
-
                     @endcan
+
+                    {{-- @can('committee') --}}
+                        <li class="menu-item">
+                            <a href="{{ route('admin.committee.index') }}"
+                                class="menu-link {{ request()->routeIs('admin.committee.*') ? 'active' : '' }}">
+                                <span class="menu-icon"><i class="mgc_user_5_line"></i></span>
+                                <span class="menu-text"> {{ __('Committee') }} </span>
+                            </a>
+                        </li>
+                    {{-- @endcan --}}
+
                     @can('policy')
                         <li class="menu-item">
                             <a href="{{ route('admin.policy.index') }}"
@@ -79,7 +89,6 @@
                         </li>
                     @endcan
                     @can('services')
-
                         <li class="menu-item">
                             <a href="{{ route('admin.services.index') }}"
                                 class="menu-link {{ request()->routeIs('admin.services.*') ? 'active' : '' }}">
@@ -89,7 +98,6 @@
                         </li>
                     @endcan
                     @can('programmes')
-
                         <li class="menu-item">
                             <a href="{{ route('admin.programmes.index') }}"
                                 class="menu-link {{ request()->routeIs('admin.programmes.*') ? 'active' : '' }}">
@@ -99,7 +107,6 @@
                         </li>
                     @endcan
                     @can('events')
-
                         <li class="menu-item">
                             <a href="{{ route('admin.events.index') }}"
                                 class="menu-link {{ request()->routeIs('admin.events.*') ? 'active' : '' }}">
@@ -109,7 +116,6 @@
                         </li>
                     @endcan
                     @can('partnerships')
-
                         <li class="menu-item">
                             <a href="{{ route('admin.partnerships.index') }}"
                                 class="menu-link {{ request()->routeIs('admin.partnerships.*') ? 'active' : '' }}">
@@ -119,7 +125,6 @@
                         </li>
                     @endcan
                     @can('facilities')
-
                         <li class="menu-item">
                             <a href="{{ route('admin.facilities.index') }}"
                                 class="menu-link {{ request()->routeIs('admin.facilities.*') ? 'active' : '' }}">
@@ -129,7 +134,6 @@
                         </li>
                     @endcan
                     @can('research')
-
                         <li class="menu-item">
                             <a href="{{ route('admin.research.index') }}"
                                 class="menu-link {{ request()->routeIs('admin.research.*') ? 'active' : '' }}">
@@ -139,7 +143,6 @@
                         </li>
                     @endcan
                     @can('report')
-
                         <li class="menu-item">
                             <a href="{{ route('admin.report.index') }}"
                                 class="menu-link {{ request()->routeIs('admin.report.*') ? 'active' : '' }}">
@@ -149,7 +152,6 @@
                         </li>
                     @endcan
                     @can('news')
-
                         <li class="menu-item">
                             <a href="{{ route('admin.news.index') }}"
                                 class="menu-link {{ request()->routeIs('admin.news.*') ? 'active' : '' }}">
@@ -157,38 +159,37 @@
                                 <span class="menu-text">{{ __('News') }}</span>
                             </a>
                         </li>
-
                     @endcan
 
 
 
-                        @canany(['settings.profile', 'settings.general-setting'])
-                            <li class="menu-item">
-                                <a href="javascript:void(0)" data-fc-type="collapse" class="menu-link">
-                                    <span class="menu-icon"><i class="mgc_box_3_line"></i></span>
-                                    <span class="menu-text"> {{ __('Settings') }} </span>
-                                    <span class="menu-arrow"></span>
-                                </a>
+                    @canany(['settings.profile', 'settings.general-setting'])
+                        <li class="menu-item">
+                            <a href="javascript:void(0)" data-fc-type="collapse" class="menu-link">
+                                <span class="menu-icon"><i class="mgc_box_3_line"></i></span>
+                                <span class="menu-text"> {{ __('Settings') }} </span>
+                                <span class="menu-arrow"></span>
+                            </a>
 
-                                <ul class="sub-menu hidden">
-                                    @can('settings.profile')
-                                        <li class="menu-item">
-                                            <a href="{{ route('admin.profile.update') }}" class="menu-link">
-                                                <span class="menu-text">{{ __('Profile') }}</span>
-                                            </a>
-                                        </li>
-                                    @endcan
-                                    @can('settings.general-setting')
-                                        <li class="menu-item">
-                                            <a href="{{ route('admin.general.settings') }}" class="menu-link">
-                                                <span class="menu-text">{{ __('General Settings') }}</span>
-                                            </a>
-                                        </li>
-                                    @endcan
-                                </ul>
-                            </li>
-                        @endcanany
+                            <ul class="sub-menu hidden">
+                                @can('settings.profile')
+                                    <li class="menu-item">
+                                        <a href="{{ route('admin.profile.update') }}" class="menu-link">
+                                            <span class="menu-text">{{ __('Profile') }}</span>
+                                        </a>
+                                    </li>
+                                @endcan
+                                @can('settings.general-setting')
+                                    <li class="menu-item">
+                                        <a href="{{ route('admin.general.settings') }}" class="menu-link">
+                                            <span class="menu-text">{{ __('General Settings') }}</span>
+                                        </a>
+                                    </li>
+                                @endcan
+                            </ul>
+                        </li>
+                    @endcanany
 
-                    </ul>
-                </div>
+                </ul>
             </div>
+        </div>

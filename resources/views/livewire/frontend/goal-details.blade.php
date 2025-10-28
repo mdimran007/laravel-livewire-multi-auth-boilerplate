@@ -50,29 +50,37 @@
                             {{ Str::title(str_replace('_', ' ', $key)) }}
                         </h2>
 
-                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
                             @foreach ($items as $item)
-                                <a href="{{ route('goal.asset.details', [$key, $item->slug]) }}">
-                                    <article
-                                        class="group relative bg-white/10 backdrop-blur-sm rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transform hover:-translate-y-2 transition-all duration-300 border border-white/10">
-                                        <div class="relative h-64">
-                                            <img class="w-full h-full object-cover"
-                                                src="{{ $item->images != null ? asset('storage/' . $item->images) : asset('assets/no-image.png') }}"
-                                                alt="{{ $item->title }}">
-                                            <div
-                                                class="absolute inset-0 bg-gradient-to-r from-blue-600/90 via-indigo-600/90 to-purple-600/90">
-                                            </div>
-                                            <div class="absolute bottom-0 left-0 right-0 p-6">
-                                                <h3 class="text-xl font-bold text-white mb-2">
+                                <article
+                                    class="backdrop-blur-sm bg-white/5 group hover:-translate-y-1 hover:shadow-2xl overflow-hidden rounded-2xl shadow-lg transform transition h-[150px]">
+                                    <a href="{{ route('goal.asset.details', [$key, $item->slug]) }}"
+                                        class="absolute inset-0 z-10"></a>
+                                    <div class="flex h-full">
+                                        <!-- Left: image -->
+                                        <div class="w-2/5 h-full overflow-hidden rounded-l-2xl">
+                                            <img src="{{ $item->images != null ? asset('storage/' . $item->images) : asset('assets/no-image.png') }}"
+                                                alt="{{ $item->title }}"
+                                                class="w-full h-full object-cover object-center transition-transform duration-300 group-hover:scale-105" />
+                                        </div>
+                                        <!-- Content on right -->
+                                        <div
+                                            class="w-3/5 bg-indigo-600 flex flex-col justify-between p-4 rounded-r-2xl">
+                                            <div>
+                                                <h3 class="text-lg font-semibold text-white">
                                                     {{ $item->title != null ? \Illuminate\Support\Str::limit($item->title, 35, '...') : 'N/A' }}
                                                 </h3>
-                                                <p class="text-gray-200 text-sm leading-relaxed line-clamp-2">
-                                                    {{ $item->short_description != null ? \Illuminate\Support\Str::limit($item->short_description, 100, '...') : 'N/A' }}
+                                                <p class="mt-2 text-sm text-gray-200 line-clamp-3">
+                                                    {{ $item->short_description != null ? \Illuminate\Support\Str::limit($item->short_description, 70, '...') : 'N/A' }}
                                                 </p>
                                             </div>
+                                            <div class="mt-4 flex items-center justify-between">
+                                                <a class="bg-white/10 hover:bg-indigo-700 px-3 py-1 rounded-full text-sm text-white transition"
+                                                    href="#">Details</a>
+                                            </div>
                                         </div>
-                                    </article>
-                                </a>
+                                    </div>
+                                </article>
                             @endforeach
                         </div>
 

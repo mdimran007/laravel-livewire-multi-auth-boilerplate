@@ -52,14 +52,14 @@ if (!function_exists("goalItemList")) {
     function goalItemList()
     {
         $arr = [
-            'policy',
+            'policies',
             'services',
             'programmes',
             'partnerships',
             'facilities',
             'events',
-            'research',
-            'report',
+            'researches',
+            'reports',
             'news',
         ];
         return $arr;

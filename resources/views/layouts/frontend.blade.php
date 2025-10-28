@@ -10,6 +10,23 @@
     <script src="https://cdn.tailwindcss.com"></script>
 
     <!-- optional small Tailwind config -->
+
+    <style>
+        @keyframes spin-slow {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .animate-spin-slow {
+            animation: spin-slow 20s linear infinite;
+        }
+    </style>
+
     <script>
         tailwind.config = {
             theme: {
@@ -41,15 +58,16 @@
     <!-- Replace the existing header section -->
     <header class="sticky top-0 z-50">
         <!-- Gradient background with shadow -->
-        <div class="bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 shadow-lg">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 shadow-lg" style="height: 70px;">
+            {{-- <div class="lg:px-8 max-w-7xl mx-auto p-1 px-4 sm:px-6"> --}}
+            <div class="lg:px-8 mx-auto p-1 px-4 sm:px-6" style="max-width: 80%;">
                 <div class="flex items-center justify-between h-16">
                     <!-- Left logo -->
                     <div class="flex-shrink-0">
-                        <div class="p-1.5 bg-white/10 rounded-lg hover:bg-white/20 transition">
+                        <div class="rounded-lg hover:bg-white/20 transition" style="background: white;">
                             <a href="{{ route('frontend.index') }}">
                                 <img src="{{ getSettingData('app_logo') != null ? asset('storage/' . getSettingData('app_logo')) : asset('assets/no-image.png') }}"
-                                    alt="App Logo" class="h-8 w-auto" />
+                                    alt="App Logo" class="p-2 w-auto" style="max-height: 42px;" />
                             </a>
                         </div>
                     </div>
@@ -58,12 +76,9 @@
                     <div class="flex-1 flex justify-center">
                         <nav class="hidden md:flex md:items-center md:space-x-8">
                             <a href="{{ route('frontend.index') }}"
-                                class="px-3 py-2 text-sm font-medium text-white hover:bg-white/10 rounded-lg transition {{ setActive('frontend.index') }}">{{ __('Sustainability') }}</a>
-                            <a href="#"
-                                class="px-3 py-2 text-sm font-medium text-white hover:bg-white/10 rounded-lg transition">
-                                {{ __('SDGs Report') }} </a>
-                            <a href="#"
-                                class="px-3 py-2 text-sm font-medium text-white hover:bg-white/10 rounded-lg transition">
+                                class="px-3 py-2 text-sm font-medium text-white hover:bg-white/10 rounded-lg transition {{ setActive(['frontend.index','goal.*']) }}">{{ __('Sustainability') }}</a>
+                            <a href="{{ route('committee.index') }}"
+                                class="px-3 py-2 text-sm font-medium text-white hover:bg-white/10 rounded-lg transition {{ setActive('committee.*') }}">
                                 {{ __('Committee') }} </a>
                         </nav>
                     </div>
@@ -88,9 +103,9 @@
                         </div>
                         <!-- Right logo -->
                         <a href="https://www.bubt.edu.bd/">
-                            <div class="p-1.5 bg-white/10 rounded-lg hover:bg-white/20 transition">
+                            <div class="bg-white/10 rounded-lg hover:bg-white/20 transition" style="background: white;">
                                 <img src="{{ getSettingData('institute_logo') != null ? asset('storage/' . getSettingData('institute_logo')) : asset('assets/no-image.png') }}"
-                                    alt="Right Logo" class="h-8 w-auto" />
+                                    alt="Right Logo" class="h-16 p-1 w-auto" style="height: 50px;" />
                             </div>
                         </a>
                     </div>
