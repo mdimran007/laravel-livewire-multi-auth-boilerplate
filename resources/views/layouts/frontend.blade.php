@@ -54,6 +54,9 @@
 
 <body
     class="{{ request()->routeIs('frontend.index') ? 'min-h-screen flex flex-col from-indigo-600 via-purple-600 to-pink-500' : 'min-h-screen flex flex-col ' }}">
+
+    
+    
     <!-- HEADER -->
     <!-- Replace the existing header section -->
     <header class="sticky top-0 z-50">
@@ -65,7 +68,7 @@
                     <!-- Left logo -->
                     <div class="flex-shrink-0">
                         <div class="rounded-lg hover:bg-white/20 transition" style="background: white;">
-                            <a href="{{ route('frontend.index') }}">
+                            <a wire:navigate href="{{ route('frontend.index') }}">
                                 <img src="{{ getSettingData('app_logo') != null ? asset('storage/' . getSettingData('app_logo')) : asset('assets/no-image.png') }}"
                                     alt="App Logo" class="p-2 w-auto" style="max-height: 42px;" />
                             </a>
@@ -73,7 +76,7 @@
                     </div>
 
                     <!-- Center nav -->
-                    <div class="flex-1 flex justify-center">
+                    {{-- <div class="flex-1 flex justify-center">
                         <nav class="hidden md:flex md:items-center md:space-x-8">
                             <a href="{{ route('frontend.index') }}"
                                 class="px-3 py-2 text-sm font-medium text-white hover:bg-white/10 rounded-lg transition {{ setActive(['frontend.index','goal.*']) }}">{{ __('Sustainability') }}</a>
@@ -81,7 +84,21 @@
                                 class="px-3 py-2 text-sm font-medium text-white hover:bg-white/10 rounded-lg transition {{ setActive('committee.*') }}">
                                 {{ __('Committee') }} </a>
                         </nav>
+                    </div> --}}
+
+                    <div class="flex-1 flex justify-center">
+                        <nav class="hidden md:flex md:items-center md:space-x-8">
+                            <a wire:navigate href="{{ route('frontend.index') }}"
+                                class="px-3 py-2 text-sm font-medium text-white hover:bg-white/10 rounded-lg transition {{ setActive(['frontend.index', 'goal.*']) }}">
+                                {{ __('Sustainability') }}
+                            </a>
+                            <a wire:navigate href="{{ route('committee.index') }}"
+                                class="px-3 py-2 text-sm font-medium text-white hover:bg-white/10 rounded-lg transition {{ setActive('committee.*') }}">
+                                {{ __('Committee') }}
+                            </a>
+                        </nav>
                     </div>
+
 
                     <!-- Right section with logo and mobile menu -->
                     <div class="flex items-center space-x-4">
@@ -129,17 +146,8 @@
     </header>
     <!-- MAIN / CONTAINER -->
     <!-- Replace the existing main section -->
-
-    <div wire:loading>
-        <div class="space-y-4 animate-pulse">
-            <div class="h-6 bg-gray-700 rounded w-1/3"></div>
-            <div class="h-4 bg-gray-700 rounded w-2/3"></div>
-            <div class="h-4 bg-gray-700 rounded w-1/2"></div>
-        </div>
-    </div>
-    <div wire:loading.remove>
+   
         {{ $slot }}
-    </div>
 
 
     <!-- FOOTER -->

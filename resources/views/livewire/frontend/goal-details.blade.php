@@ -35,7 +35,7 @@
     </nav>
 
     <!-- Main Content -->
-    <main class="flex-1 py-12">
+    <main  class="flex-1 py-12">
     <div class="mx-auto px-4 sm:px-6 lg:px-8" style="max-width: 80%;">
 
         @foreach ($data as $key => $items)
@@ -54,7 +54,7 @@
                         @foreach ($items as $item)
                             <article
                                 class="relative backdrop-blur-sm bg-white/5 group hover:-translate-y-1 hover:shadow-2xl overflow-hidden rounded-2xl shadow-lg transform transition h-[150px]">
-                                <a href="{{ route('goal.asset.details', [$key, $item->slug]) }}"
+                                <a wire:navigate href="{{ route('goal.asset.details', [$key, $item->slug]) }}"
                                    class="absolute inset-0 z-10"></a>
 
                                 <div class="flex h-full">

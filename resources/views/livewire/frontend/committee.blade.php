@@ -7,7 +7,7 @@
           Responsive grid, Tailwind CSS — hover to reveal more info.
         </p> -->
         <div style="width: 315px;">
-            <a href="{{ route('committee.details', 'sdg-bubt-committee') }}">
+            <a wire:navigate href="{{ route('committee.details', 'sdg-bubt-committee') }}">
                 <img src="{{ asset('assets/sdg-bubt-committee.png') }}" alt="SDG Wheel"
                     class="mt-14 mx-auto object-cover rounded-full border-4 border-white shadow-xl animate-spin-slow"
                     style="width: 300px; height: 300px;" />
@@ -24,7 +24,7 @@
                     @foreach ($goals as $goal)
                         <article
                             class="backdrop-blur-sm bg-white/5 group hover:-translate-y-1 hover:shadow-2xl overflow-hidden rounded-2xl shadow-lg transform transition relative">
-                            <a href="{{ route('committee.details', $goal->slug) }}" class="absolute inset-0 z-10"></a>
+                            <a wire:navigate href="{{ route('committee.details', $goal->slug) }}" class="absolute inset-0 z-10"></a>
                             <div class="flex h-full">
                                 <!-- Left: image -->
                                 <div class="w-2/5 h-full overflow-hidden rounded-l-2xl">
