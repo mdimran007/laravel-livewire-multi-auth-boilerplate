@@ -1,15 +1,20 @@
 <div>
-    <section class="mb-8 text-center">
+    <section class="flex justify-center mb-8 text-center">
         <!-- <h1 class="text-3xl sm:text-4xl font-extrabold text-white">
           Card Grid with Hover Details
         </h1>
         <p class="mt-2 text-gray-200">
           Responsive grid, Tailwind CSS — hover to reveal more info.
         </p> -->
-      <img src="{{ asset('assets/sdg-wheel-landscape-white-bg_en.png') }}"
-     alt="SDG Wheel"
-     class="mt-14 mx-auto object-cover rounded-full border-4 border-white shadow-xl animate-spin-slow"
-     style="width: 300px; height: 300px;" />
+        <div style="width: 315px;">
+            <a href="{{ route('committee.details', 'sdg-bubt-committee') }}">
+                <img src="{{ asset('assets/sdg-bubt-committee.png') }}" alt="SDG Wheel"
+                    class="mt-14 mx-auto object-cover rounded-full border-4 border-white shadow-xl animate-spin-slow"
+                    style="width: 300px; height: 300px;" />
+            </a>
+        </div>
+
+
     </section>
     <section class="relative py-12 px-4 sm:px-6 lg:px-8">
         <div class="mx-auto rounded-3xl overflow-hidden bg-white/10 p-1" style="max-width: 80%;">

@@ -7,7 +7,7 @@
             alt="Goal Hero Image">
         <div class="absolute inset-0 bg-gradient-to-r from-blue-600/90 via-indigo-600/90 to-purple-600/90"></div>
         <div class="absolute inset-0 flex items-center">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+            <div class="mx-auto px-4 sm:px-6 lg:px-8 w-full" style="max-width: 80%;">
                 <h1 class="text-4xl font-bold text-white mb-4">{{ $goalAssetDetails->title ?? 'N/A' }}</h1>
                 <p class="text-xl text-white/90">{{ $goalAssetDetails->short_description ?? 'N/A' }}</p>
 
@@ -32,7 +32,7 @@
 
     <!-- Main Content -->
     <main class="flex-1 py-12">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-white prose prose-invert prose-a:text-blue-400 hover:prose-a:text-blue-500">
+        <div class="mx-auto px-4 sm:px-6 lg:px-8 text-white prose prose-invert prose-a:text-blue-400 hover:prose-a:text-blue-500" style="max-width: 80%;">
             @if ($goalAssetDetails->short_description != null)
                 {!! $goalAssetDetails->description !!}
             @else

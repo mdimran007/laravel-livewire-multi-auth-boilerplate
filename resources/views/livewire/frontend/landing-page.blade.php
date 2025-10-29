@@ -7,8 +7,7 @@
           Responsive grid, Tailwind CSS — hover to reveal more info.
         </p> -->
     </section>
-    <section class="relative py-12 px-4 sm:px-6 lg:px-8">
-        {{-- <div class="max-w-7xl mx-auto rounded-3xl overflow-hidden bg-white/10 p-1"> --}}
+    {{-- <section class="relative py-12 px-4 sm:px-6 lg:px-8">
         <div class="mx-auto rounded-3xl overflow-hidden bg-white/10 p-1" style="max-width: 80%;">
             @if (!$goals->isEmpty())
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -153,8 +152,8 @@
                 </div>
             @endif
         </div>
-    </section>
-{{-- 
+    </section> --}}
+
     <section class="relative py-12 px-4 sm:px-6 lg:px-8">
         <div class="mx-auto rounded-3xl overflow-hidden bg-white/10 p-1" style="max-width: 80%;">
             @if (!$goals->isEmpty())
@@ -210,7 +209,7 @@
 
                                 <div class="mt-3">
                                     <a href="{{ route('goal.details', $goal->slug) }}"
-                                        class="bg-white/10 hover:bg-indigo-700 px-3 py-1 rounded-full text-sm text-white transition">
+                                        class="bg-white/10 hover:bg-indigo-700 px-3 py-1 rounded-full text-sm text-white transition" style="margin-left: 75px;">
                                         More Details
                                     </a>
                                 </div>
@@ -268,6 +267,6 @@
                 </div>
             @endif
         </div>
-    </section> --}}
+    </section>
 
 </div>
