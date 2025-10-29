@@ -1,18 +1,32 @@
 <div>
     <section class="flex justify-center mb-8 text-center">
-        <!-- <h1 class="text-3xl sm:text-4xl font-extrabold text-white">
-          Card Grid with Hover Details
-        </h1>
-        <p class="mt-2 text-gray-200">
-          Responsive grid, Tailwind CSS — hover to reveal more info.
-        </p> -->
-        <div style="width: 315px;">
+
+         <div style="width: 315px;">
             <a wire:navigate href="{{ route('committee.details', 'sdg-bubt-committee') }}">
-                <img src="{{ asset('assets/sdg-bubt-committee.png') }}" alt="SDG Wheel"
-                    class="mt-14 mx-auto object-cover rounded-full border-4 border-white shadow-xl animate-spin-slow"
-                    style="width: 300px; height: 300px;" />
+                <div class="relative mx-auto mt-20" style="width: 300px; height: 300px;">
+                    <!-- ঘুরবে outer circle -->
+                    <div class="absolute inset-0 rounded-full animate-spin-slow">
+                        <img src="{{ asset('assets/sdg-bubt-committee.png') }}" class="mx-auto object-cover rounded-full border-4 border-white shadow-xl" />
+                    </div>
+
+                    <!-- static middle -->
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <div class="w-24 h-24 rounded-full bg-white flex items-center justify-center">
+                            <span class="text-center font-bold text-sm">
+                                <img src="{{ getSettingData('institute_logo') != null ? asset('storage/' . getSettingData('institute_logo')) : asset('assets/no-image.png') }}"
+                                    alt="Logo" class="w-16 h-16 object-contain mx-auto" />
+                                <div>SDG BUBT COMMITTEE</div>
+                            </span>
+                        </div>
+                    </div>
+                </div>
             </a>
         </div>
+
+         {{-- <a wire:navigate href="{{ route('committee.details', 'sdg-bubt-committee') }}">
+                <img src="{{ asset('assets/sdg-bubt-committee.png') }}" alt="SDG Wheel"
+                    class="mt-14 mx-auto object-cover rounded-full border-4 border-white shadow-xl animate-spin-slow"
+                    style="width: 300px; height: 300px;" /> --}}
 
 
     </section>
@@ -24,7 +38,8 @@
                     @foreach ($goals as $goal)
                         <article
                             class="backdrop-blur-sm bg-white/5 group hover:-translate-y-1 hover:shadow-2xl overflow-hidden rounded-2xl shadow-lg transform transition relative">
-                            <a wire:navigate href="{{ route('committee.details', $goal->slug) }}" class="absolute inset-0 z-10"></a>
+                            <a wire:navigate href="{{ route('committee.details', $goal->slug) }}"
+                                class="absolute inset-0 z-10"></a>
                             <div class="flex h-full">
                                 <!-- Left: image -->
                                 <div class="w-2/5 h-full overflow-hidden rounded-l-2xl">

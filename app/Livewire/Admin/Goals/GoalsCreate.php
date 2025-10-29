@@ -28,13 +28,13 @@ class GoalsCreate extends Component
         'short_description' => 'required|string',
         'image' => 'required|image|max:2048',
         'sdg_image' => 'required|image|max:2048',
-        'selectedItems' => 'required|array|min:1',
+        'selectedItems' => 'required|array|min:1|max:6',
         'selectedItems.*' => 'string',
     ];
 
     // Custom error messages
     protected $messages = [
-        'selectedItems.max' => 'You can select up to 4 items only.',
+        'selectedItems.max' => 'You can select up to 6 items only.',
     ];
 
     // Live validation for each property

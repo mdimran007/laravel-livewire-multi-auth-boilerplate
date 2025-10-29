@@ -85,7 +85,7 @@
                         </div>
 
                         <div class="grid grid-cols-1 md:grid-cols-1">
-                            <h6>Select min 1 item for showing on the counter. <span class="text-danger">*</span></h6>
+                            <h6>Select max 6 item for showing on the counter. <span class="text-danger">*</span></h6>
                             <div class="flex items-center gap-2 my-3">
                                 @foreach (goalItemList() as $key => $item)
                                     <div class="flex items-center gap-2 my-3">

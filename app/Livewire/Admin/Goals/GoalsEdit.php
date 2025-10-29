@@ -31,12 +31,12 @@ class GoalsEdit extends Component
         'short_description' => 'required|string',
         'image' => 'nullable|image|max:2048',
         'sdg_image' => 'nullable|image|max:2048',
-        'selectedItems' => 'required|array|min:1',
+        'selectedItems' => 'required|array|min:1|max:6',
         'selectedItems.*' => 'string',
     ];
 
     protected $messages = [
-        'selectedItems.max' => 'You can select up to 4 items only.',
+        'selectedItems.max' => 'You can select up to 6 items only.',
     ];
 
 

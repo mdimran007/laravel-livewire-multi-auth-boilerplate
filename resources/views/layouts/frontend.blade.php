@@ -11,6 +11,7 @@
 
     <!-- optional small Tailwind config -->
 
+    
     <style>
         @keyframes spin-slow {
             from {
@@ -55,8 +56,10 @@
 <body
     class="{{ request()->routeIs('frontend.index') ? 'min-h-screen flex flex-col from-indigo-600 via-purple-600 to-pink-500' : 'min-h-screen flex flex-col ' }}">
 
+
     
-    
+
+
     <!-- HEADER -->
     <!-- Replace the existing header section -->
     <header class="sticky top-0 z-50">
@@ -76,7 +79,7 @@
                     </div>
 
                     <!-- Center nav -->
-                    {{-- <div class="flex-1 flex justify-center">
+                    <div class="flex-1 flex justify-center">
                         <nav class="hidden md:flex md:items-center md:space-x-8">
                             <a href="{{ route('frontend.index') }}"
                                 class="px-3 py-2 text-sm font-medium text-white hover:bg-white/10 rounded-lg transition {{ setActive(['frontend.index','goal.*']) }}">{{ __('Sustainability') }}</a>
@@ -84,9 +87,9 @@
                                 class="px-3 py-2 text-sm font-medium text-white hover:bg-white/10 rounded-lg transition {{ setActive('committee.*') }}">
                                 {{ __('Committee') }} </a>
                         </nav>
-                    </div> --}}
+                    </div>
 
-                    <div class="flex-1 flex justify-center">
+                    {{-- <div class="flex-1 flex justify-center">
                         <nav class="hidden md:flex md:items-center md:space-x-8">
                             <a wire:navigate href="{{ route('frontend.index') }}"
                                 class="px-3 py-2 text-sm font-medium text-white hover:bg-white/10 rounded-lg transition {{ setActive(['frontend.index', 'goal.*']) }}">
@@ -97,7 +100,7 @@
                                 {{ __('Committee') }}
                             </a>
                         </nav>
-                    </div>
+                    </div> --}}
 
 
                     <!-- Right section with logo and mobile menu -->
@@ -146,8 +149,8 @@
     </header>
     <!-- MAIN / CONTAINER -->
     <!-- Replace the existing main section -->
-   
-        {{ $slot }}
+
+    {{ $slot }}
 
 
     <!-- FOOTER -->
