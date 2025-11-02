@@ -18,6 +18,7 @@ return new class extends Migration
             $table->longText('short_description');
             $table->string('images');
             $table->string('sdg_image');
+            $table->string('color');
             $table->json('achievements')->nullable();
             $table->tinyInteger('status')->default(STATUS_ACTIVE);
             $table->bigInteger('created_by')->nullable();

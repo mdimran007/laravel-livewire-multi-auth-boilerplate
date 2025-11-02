@@ -70,13 +70,22 @@
                     @endcan
 
                     {{-- @can('committee') --}}
-                        <li class="menu-item">
-                            <a href="{{ route('admin.committee.index') }}"
-                                class="menu-link {{ request()->routeIs('admin.committee.*') ? 'active' : '' }}">
-                                <span class="menu-icon"><i class="mgc_user_5_line"></i></span>
-                                <span class="menu-text"> {{ __('Committee') }} </span>
-                            </a>
-                        </li>
+                    <li class="menu-item">
+                        <a href="{{ route('admin.committee.index') }}"
+                            class="menu-link {{ request()->routeIs('admin.committee.*') ? 'active' : '' }}">
+                            <span class="menu-icon"><i class="mgc_user_5_line"></i></span>
+                            <span class="menu-text"> {{ __('Committee') }} </span>
+                        </a>
+                    </li>
+                    {{-- @endcan --}}
+                    {{-- @can('sdg-report') --}}
+                    <li class="menu-item">
+                        <a href="{{ route('admin.sdg-report.index') }}"
+                            class="menu-link {{ request()->routeIs('admin.sdg-report.*') ? 'active' : '' }}">
+                            <span class="menu-icon"><i class="mgc_user_5_line"></i></span>
+                            <span class="menu-text"> {{ __('SDG Report') }} </span>
+                        </a>
+                    </li>
                     {{-- @endcan --}}
 
                     @can('policy')

@@ -20,15 +20,17 @@ class GoalsCreate extends Component
     public $short_description;
     public $image;
     public $sdg_image;
+    public $color;
     public $selectedItems = [];
 
     protected $rules = [
         'title' => 'required|string|max:255',
+        'color' => 'required|string|max:7',
         'status' => 'required|integer',
         'short_description' => 'required|string',
         'image' => 'required|image|max:2048',
         'sdg_image' => 'required|image|max:2048',
-        'selectedItems' => 'required|array|min:1|max:6',
+        'selectedItems' => 'required|array|min:1|max:4',
         'selectedItems.*' => 'string',
     ];
 
@@ -44,7 +46,7 @@ class GoalsCreate extends Component
     }
 
 
-   // Store data
+    // Store data
     public function store()
     {
         $this->validate();
@@ -54,6 +56,7 @@ class GoalsCreate extends Component
 
         Goal::create([
             'title' => $this->title,
+            'color' => $this->color,
             'slug' => Str::slug($this->title),
             'short_description' => $this->short_description,
             'images' => $imagePath,

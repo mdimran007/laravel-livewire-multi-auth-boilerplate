@@ -1,11 +1,23 @@
 <div>
-    <section class="mb-8 text-center">
-        <!-- <h1 class="text-3xl sm:text-4xl font-extrabold text-white">
-          Card Grid with Hover Details
-        </h1>
-        <p class="mt-2 text-gray-200">
-          Responsive grid, Tailwind CSS — hover to reveal more info.
-        </p> -->
+        <section class="flex justify-center mb-8 text-center">
+        <div style="width: 315px;">
+            {{-- <a wire:navigate href="{{ route('committee.details', 'sdg-bubt-committee') }}"> --}}
+                <div class="relative mx-auto mt-20" style="width: 300px; height: 300px;">
+                    <div class="absolute inset-0 rounded-full animate-spin-slow">
+                        <img src="{{ asset('assets/sdg-bubt-committee.png') }}"
+                            class="mx-auto object-cover rounded-full border-4 border-white shadow-xl" />
+                    </div>
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <div class="w-24 h-24 rounded-full bg-white flex items-center justify-center">
+                            <span class="text-center font-bold text-sm">
+                                <img src="{{ asset('assets/bubt-logo.png') }}"
+                                    alt="Logo" class="object-contain mx-auto" />
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            {{-- </a> --}}
+        </div>
     </section>
     {{-- <section class="relative py-12 px-4 sm:px-6 lg:px-8">
         <div class="mx-auto rounded-3xl overflow-hidden bg-white/10 p-1" style="max-width: 80%;">
@@ -161,184 +173,63 @@
                 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
                     @foreach ($goals as $goal)
                         <article wire:key="item-{{ $goal->id }}"
-                            class="group relative bg-white/10 backdrop-blur-sm rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transform hover:-translate-y-2 transition-all duration-300 border border-white/10 flex flex-col">
+                            class="group relative bg-white/10 backdrop-blur-sm rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transform hover:-translate-y-2 transition-all duration-300 border border-white/10 flex flex-col min-h-[450px]">
 
                             <!-- Clickable link -->
                             <a wire:navigate href="{{ route('goal.details', $goal->slug) }}"
                                 class="absolute inset-0 z-10"></a>
 
                             <!-- Image Section -->
-                            <div class="relative h-[150px] overflow-hidden rounded-t-3xl">
+                            <div class="relative h-[250px] overflow-hidden rounded-t-3xl">
                                 <img src="{{ $goal->images ? asset('storage/' . $goal->images) : asset('assets/no-image.png') }}"
                                     alt="Goal Image"
                                     class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
 
-                                <!-- Hover Overlay (color will be set dynamically) -->
-                                {{-- <div
-                                    class="absolute inset-0 overlay opacity-0 group-hover:opacity-100 transition-all duration-500 flex flex-col items-center justify-center text-white text-center p-4">
-                                    <div class="flex flex-wrap gap-2 p-2 border-t border-white/10 rounded">
-                                        @foreach ($goal->achievement_counts as $label => $count)
-                                            <span class="text-white/80 text-sm bg-indigo-600/30 md:text-base px-2 py-1 rounded-full">
-                                                {{ $label }}: {{ $count }}
-                                            </span>
+                                <!-- Hover overlay with achievement counts -->
+                                <div class="absolute inset-0 overlay opacity-0 group-hover:opacity-100 transition-all duration-500 flex flex-col items-center justify-center text-white text-center p-4"
+                                    style="background-color: {{ $goal->color ?? 'rgba(0,0,0,0.6)' }};">
+                                    @php
+                                        $limitedCounts = array_slice($goal->achievement_counts, 0, 4, true);
+                                    @endphp
+
+                                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 w-full max-w-xs">
+                                        @foreach ($limitedCounts as $label => $count)
+                                            <div
+                                                class="bg-white/90 text-black font-semibold rounded-xl shadow-md px-4 py-2 flex flex-col items-center justify-center border border-gray-200">
+                                                <span class="text-[20px] font-medium">{{ $label }}</span>
+                                                <span class="text-[36px] font-bold">{{ $count }}</span>
+                                            </div>
                                         @endforeach
                                     </div>
-                                </div> --}}
-
-                                <div
-    class="absolute inset-0 overlay opacity-0 group-hover:opacity-100 transition-all duration-500 flex flex-col items-center justify-center text-white text-center p-4">
-
-    @php
-        $total = count($goal->achievement_counts);
-        $half = ceil($total / 2);
-        $left = array_slice($goal->achievement_counts, 0, $half, true);
-        $right = array_slice($goal->achievement_counts, $half, null, true);
-    @endphp
-
-    @if ($total === 1)
-        {{-- ✅ Single item centered --}}
-        <div class="flex justify-center">
-            @foreach ($goal->achievement_counts as $label => $count)
-                <div class="bg-indigo-600/20 border border-indigo-400/30 rounded-full px-4 py-2">
-                    <span class="text-[13px] font-medium text-white/90">{{ $label }}: {{ $count }}</span>
-                </div>
-            @endforeach
-        </div>
-    @else
-        {{-- ✅ Two-column minimal layout --}}
-        <div class="overflow-hidden rounded-2xl w-full max-w-md">
-            <table class="min-w-full border-collapse text-[13px] md:text-sm">
-                <tbody>
-                    @for ($i = 0; $i < $half; $i++)
-                        <tr>
-                            {{-- Left Column --}}
-                            <td class="px-4 py-1 text-left w-1/2 align-top">
-                                @php $leftItem = array_slice($left, $i, 1, true); @endphp
-                                @foreach ($leftItem as $label => $count)
-                                    <div style="
-    background: white;
-    color: black;
-    font-weight: 700;
-"
-                                        class="inline-block bg-indigo-600/20 border border-indigo-400/30 rounded-full px-3 py-1 text-white/90 text-[12px]">
-                                        {{ $label }}: {{ $count }}
-                                    </div>
-                                @endforeach
-                            </td>
-
-                            {{-- Right Column --}}
-                            <td class="px-4 py-1 text-left w-1/2 align-top">
-                                @php $rightItem = array_slice($right, $i, 1, true); @endphp
-                                @foreach ($rightItem as $label => $count)
-                                    <div style="
-    background: white;
-    color: black;
-    font-weight: 700;
-"
-                                        class="inline-block bg-indigo-600/20 border border-indigo-400/30 rounded-full px-3 py-1 text-white/90 text-[12px]">
-                                        {{ $label }}: {{ $count }}
-                                    </div>
-                                @endforeach
-                            </td>
-                        </tr>
-                    @endfor
-                </tbody>
-            </table>
-        </div>
-    @endif
-</div>
-
-                                
+                                </div>
                             </div>
 
                             <!-- Content Section -->
-                            <div class="bg-indigo-600 flex flex-col justify-between flex-grow p-4">
+                            <div
+                                class="bg-indigo-600 flex flex-col justify-between flex-grow px-6 pt-6 pb-3 min-h-[200px]">
                                 <div class="flex items-start gap-3">
                                     @if ($goal->sdg_image)
-                                        <div class="flex-shrink-0 w-16 h-16 overflow-hidden rounded-xl">
+                                        <div class="flex-shrink-0 h-[150px] w-[150px] overflow-hidden rounded-xl">
                                             <img src="{{ asset('storage/' . $goal->sdg_image) }}" alt="SDG Image"
                                                 class="w-full h-full object-contain sdg-color-source"
                                                 data-article-id="{{ $goal->id }}">
                                         </div>
                                     @endif
-                                    <div>
-                                        <h3 class="font-semibold text-white text-lg md:text-xl">
-                                            {{ \Illuminate\Support\Str::limit($goal->title, 50, '...') }}
+                                    <div class="flex-1">
+                                        <h3 class="font-semibold text-white text-xl md:text-2xl">
+                                            {{ \Illuminate\Support\Str::limit($goal->title, 70, '...') }}
                                         </h3>
-                                        <p class="mt-1 text-sm text-gray-200 line-clamp-3">
-                                            {{ \Illuminate\Support\Str::limit($goal->short_description, 100, '...') }}
+                                        <p class="line-clamp-3 mb-3 mt-2 text-gray-200 text-sm">
+                                            {{ \Illuminate\Support\Str::limit($goal->short_description, 120, '...') }}
                                         </p>
-                                    </div>
-                                </div>
-
-                                <div class="mt-3">
-                                    <a href="{{ route('goal.details', $goal->slug) }}"
-                                        class="bg-white/10 hover:bg-indigo-700 px-3 py-1 rounded-full text-sm text-white transition"
-                                        style="margin-left: 75px;">
-                                        More Details
-                                    </a>
-                                </div>
-                            </div>
-                        </article>
-
-                              {{-- <article wire:key="item-{{ $goal->id }}"
-                                class="group relative bg-white/10 backdrop-blur-sm rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transform hover:-translate-y-2 transition-all duration-300 border border-white/10 flex flex-col">
-
-                                <!-- Clickable link -->
-                                <a wire:navigate href="{{ route('goal.details', $goal->slug) }}"
-                                    class="absolute inset-0 z-10"></a>
-
-                                <!-- Image Section -->
-                                <div class="relative h-[150px] overflow-hidden rounded-t-3xl">
-                                    <img wire:loading.remove
-                                        src="{{ $goal->images ? asset('storage/' . $goal->images) : asset('assets/no-image.png') }}"
-                                        alt="Goal Image"
-                                        class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
-
-                                    <!-- Hover Overlay -->
-                                    <div
-                                        class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-all duration-500 flex flex-col items-center justify-center text-white text-center p-4">
-                                        <div
-                                            class="flex flex-wrap gap-2 p-2 bg-indigo-700/20 border-t border-white/10 rounded">
-                                            @foreach ($goal->achievement_counts as $label => $count)
-                                                <span
-                                                    class="text-white/80 text-sm md:text-base bg-indigo-600/30 px-2 py-1 rounded-full">
-                                                    {{ $label }}: {{ $count }}
-                                                </span>
-                                            @endforeach
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- Content Section -->
-                                <div class="bg-indigo-600 flex flex-col justify-between flex-grow p-4">
-                                    <div class="flex items-start gap-3">
-                                        @if ($goal->sdg_image)
-                                            <div class="flex-shrink-0 w-16 h-16 overflow-hidden rounded-xl">
-                                                <img wire:loading.remove
-                                                    src="{{ asset('storage/' . $goal->sdg_image) }}" alt="SDG Image"
-                                                    class="w-full h-full object-contain">
-                                            </div>
-                                        @endif
-                                        <div>
-                                            <h3 class="font-semibold text-white text-lg md:text-xl">
-                                                {{ $goal->title ? \Illuminate\Support\Str::limit($goal->title, 50, '...') : 'N/A' }}
-                                            </h3>
-                                            <p class="mt-1 text-sm text-gray-200 line-clamp-3">
-                                                {{ $goal->short_description ? \Illuminate\Support\Str::limit($goal->short_description, 100, '...') : 'N/A' }}
-                                            </p>
-                                        </div>
-                                    </div>
-
-                                    <div class="mt-3">
                                         <a href="{{ route('goal.details', $goal->slug) }}"
-                                            class="bg-white/10 hover:bg-indigo-700 px-3 py-1 rounded-full text-sm text-white transition"
-                                            style="margin-left: 75px;">
+                                            class="bg-white/10 hover:bg-indigo-700 px-3 py-2 rounded-full text-sm text-white transition float-right">
                                             More Details
                                         </a>
                                     </div>
                                 </div>
-                            </article> --}}
+                            </div>
+                        </article>
                     @endforeach
                 </div>
 
@@ -394,7 +285,7 @@
     </section>
 
     @push('script')
-        <script>
+        {{-- <script>
             document.addEventListener('DOMContentLoaded', function() {
                 document.querySelectorAll('.sdg-color-source').forEach(img => {
                     const article = img.closest('article');
@@ -433,6 +324,6 @@
                     };
                 });
             });
-        </script>
+        </script> --}}
     @endpush
 </div>

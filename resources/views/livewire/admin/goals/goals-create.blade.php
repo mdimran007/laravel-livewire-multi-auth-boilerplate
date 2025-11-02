@@ -84,6 +84,18 @@
                             </div>
                         </div>
 
+                         <div class="grid grid-cols-1 md:grid-cols-2  gap-6">
+                            <div class="mb-10 mt-12">
+                                <label for="color"
+                                    class="text-gray-800 text-sm font-medium inline-block mb-2">{{ __('Color') }}
+                                   <span class="text-danger">*</span></label>
+                                <input type="color" wire:model="color" class="border form-input p-1.5" id="color">
+                                @error('color')
+                                    <span class="flex m-1 text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
+
                         <div class="grid grid-cols-1 md:grid-cols-1">
                             <h6>Select max 6 item for showing on the counter. <span class="text-danger">*</span></h6>
                             <div class="flex items-center gap-2 my-3">

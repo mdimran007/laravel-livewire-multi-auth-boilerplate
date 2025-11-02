@@ -11,6 +11,7 @@ class Goal extends Model
 {
     protected $fillable = [
         'title',
+        'color',
         'slug',
         'short_description',
         'images',

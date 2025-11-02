@@ -1,21 +1,19 @@
 <div>
     <section class="flex justify-center mb-8 text-center">
 
-         <div style="width: 315px;">
+        <div style="width: 315px;">
             <a wire:navigate href="{{ route('committee.details', 'sdg-bubt-committee') }}">
                 <div class="relative mx-auto mt-20" style="width: 300px; height: 300px;">
-                    <!-- ঘুরবে outer circle -->
                     <div class="absolute inset-0 rounded-full animate-spin-slow">
-                        <img src="{{ asset('assets/sdg-bubt-committee.png') }}" class="mx-auto object-cover rounded-full border-4 border-white shadow-xl" />
+                        <img src="{{ asset('assets/sdg-bubt-committee.png') }}"
+                            class="mx-auto object-cover rounded-full border-4 border-white shadow-xl" />
                     </div>
-
-                    <!-- static middle -->
                     <div class="absolute inset-0 flex items-center justify-center">
-                        <div class="w-24 h-24 rounded-full bg-white flex items-center justify-center">
+                        <div class="w-24  rounded-full bg-white flex items-center justify-center">
                             <span class="text-center font-bold text-sm">
-                                <img src="{{ getSettingData('institute_logo') != null ? asset('storage/' . getSettingData('institute_logo')) : asset('assets/no-image.png') }}"
+                                <img src="{{ asset('assets/bubt-logo.png') }}"
                                     alt="Logo" class="w-16 h-16 object-contain mx-auto" />
-                                <div>SDG BUBT COMMITTEE</div>
+                                <div>BUBT SDG COMMITTEE</div>
                             </span>
                         </div>
                     </div>
@@ -23,24 +21,19 @@
             </a>
         </div>
 
-         {{-- <a wire:navigate href="{{ route('committee.details', 'sdg-bubt-committee') }}">
-                <img src="{{ asset('assets/sdg-bubt-committee.png') }}" alt="SDG Wheel"
-                    class="mt-14 mx-auto object-cover rounded-full border-4 border-white shadow-xl animate-spin-slow"
-                    style="width: 300px; height: 300px;" /> --}}
-
-
     </section>
     <section class="relative py-12 px-4 sm:px-6 lg:px-8">
         <div class="mx-auto rounded-3xl overflow-hidden bg-white/10 p-1" style="max-width: 80%;">
             @if (!$goals->isEmpty())
-                <!-- Responsive grid: 1 col (mobile), 2 cols (tablet), 3 cols (desktop) -->
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                     @foreach ($goals as $goal)
                         <article
                             class="backdrop-blur-sm bg-white/5 group hover:-translate-y-1 hover:shadow-2xl overflow-hidden rounded-2xl shadow-lg transform transition relative">
                             <a wire:navigate href="{{ route('committee.details', $goal->slug) }}"
                                 class="absolute inset-0 z-10"></a>
-                            <div class="flex h-full">
+
+                            <!-- FIX: make both columns equal height -->
+                            <div class="flex h-full items-stretch">
                                 <!-- Left: image -->
                                 <div class="w-2/5 h-full overflow-hidden rounded-l-2xl">
                                     <img src="{{ $goal->sdg_image ? asset('storage/' . $goal->sdg_image) : asset('assets/no-image.png') }}"
@@ -49,14 +42,14 @@
                                 </div>
 
                                 <!-- Right: content -->
-                                <div class="w-3/5 bg-indigo-600 flex flex-col justify-between p-4 rounded-r-2xl">
+                                <div class="w-3/5 bg-indigo-600 flex flex-col justify-between p-4 rounded-r-2xl h-full">
                                     <div>
-                                        <h3 class="text-lg font-semibold text-white">
+                                        <h3 class="text-lg font-semibold text-white leading-tight">
                                             {{ $goal->title ? \Illuminate\Support\Str::limit($goal->title, 35, '...') : 'N/A' }}
                                         </h3>
                                     </div>
 
-                                    <div class="flex items-center justify-between">
+                                    <div class="flex items-center justify-between mt-auto pt-3 border-t border-white/10">
                                         <div class="flex items-center space-x-3">
                                             <div
                                                 class="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center">
@@ -67,15 +60,10 @@
                                                         d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                                                 </svg>
                                             </div>
-                                            <div>
-                                                <p class="text-sm font-medium text-white">
-                                                    {{ $goal->committee_members_count }}
-                                                </p>
-                                            </div>
+                                            <p class="text-sm font-medium text-white">
+                                                {{ $goal->committee_members_count }}
+                                            </p>
                                         </div>
-                                    </div>
-
-                                    <div class="flex items-center justify-between">
                                         <a class="bg-white/10 hover:bg-indigo-700 px-3 py-1 rounded-full text-sm text-white transition"
                                             href="#">Details</a>
                                     </div>

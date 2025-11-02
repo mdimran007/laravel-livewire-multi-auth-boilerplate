@@ -18,7 +18,6 @@
                         </div>
                     @endif
 
-
                     <form wire:submit.prevent="update">
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div>
@@ -56,7 +55,7 @@
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
                             <div>
                                 <label class="text-gray-800 text-sm font-medium mb-2 inline-block">{{ __('Image') }}
-                                   (1600x1066) <span class="text-danger">*</span></label>
+                                    (1600x1066) <span class="text-danger">*</span></label>
                                 <input type="file" wire:model="image" class="form-input p-1.5 border">
                                 @if ($old_image)
                                     <div class="mt-2">
@@ -72,8 +71,9 @@
 
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
                             <div>
-                                <label class="text-gray-800 text-sm font-medium mb-2 inline-block">{{ __('SDG Image') }}
-                                   (200x200) <span class="text-danger">*</span></label>
+                                <label
+                                    class="text-gray-800 text-sm font-medium mb-2 inline-block">{{ __('SDG Image') }}
+                                    (200x200) <span class="text-danger">*</span></label>
                                 <input type="file" wire:model="sdg_image" class="form-input p-1.5 border">
                                 @if ($old_sdg_image)
                                     <div class="mt-2">
@@ -83,6 +83,17 @@
                                 @endif
                                 @error('sdg_image')
                                     <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2  gap-6">
+                            <div class="mb-10 mt-12">
+                                <label for="color"
+                                    class="text-gray-800 text-sm font-medium inline-block mb-2">{{ __('Color') }}
+                                    <span class="text-danger">*</span></label>
+                                <input type="color" wire:model="color" class="border form-input p-1.5" id="color">
+                                @error('color')
+                                    <span class="flex m-1 text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
                         </div>

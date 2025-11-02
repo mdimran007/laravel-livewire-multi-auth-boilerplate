@@ -68,6 +68,7 @@ use App\Livewire\Admin\Asset\News\{
 use App\Livewire\Admin\Committee\Committee;
 use App\Livewire\Admin\Committee\CommitteeCreate;
 use App\Livewire\Admin\Committee\CommitteeEdit;
+use App\Livewire\Admin\SdgReport;
 use App\Livewire\Admin\UserRolePermission;
 
 Route::middleware(['auth', 'admin', 'verified'])->prefix('admin')->name('admin.')->group(function () {
@@ -168,4 +169,11 @@ Route::middleware(['auth', 'admin', 'verified'])->prefix('admin')->name('admin.'
             Route::get('/edit/{id}', CommitteeEdit::class)->name('edit');
         });
     // });
+
+    // Route::middleware(['check-permission:sdg-report'])->group(function () {
+        Route::prefix('sdg-report')->name('sdg-report.')->group(function () {
+            Route::get('/', SdgReport::class)->name('index');
+        });
+    // });
+
 });

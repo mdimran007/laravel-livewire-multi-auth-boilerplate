@@ -23,15 +23,17 @@ class GoalsEdit extends Component
     public $old_image;
     public $sdg_image;
     public $old_sdg_image;
+    public $color;
     public $selectedItems = [];
 
     protected $rules = [
         'title' => 'required|string|max:255',
+        'color' => 'required|string|max:7',
         'status' => 'required|integer',
         'short_description' => 'required|string',
         'image' => 'nullable|image|max:2048',
         'sdg_image' => 'nullable|image|max:2048',
-        'selectedItems' => 'required|array|min:1|max:6',
+        'selectedItems' => 'required|array|min:1|max:4',
         'selectedItems.*' => 'string',
     ];
 
@@ -46,12 +48,13 @@ class GoalsEdit extends Component
         $goal = Goal::findOrFail($goalId);
         $this->goalId = $goal->id;
         $this->title = $goal->title;
+        $this->color = $goal->color;
         $this->status = $goal->status;
         $this->short_description = $goal->short_description;
         $this->selectedItems = json_decode($goal->achievements, true) ?? [];
         $this->old_image = $goal->images;
         $this->old_sdg_image = $goal->sdg_image;
-        }
+    }
 
 
 
@@ -85,6 +88,7 @@ class GoalsEdit extends Component
 
         $goal->update([
             'title' => $this->title,
+            'color' => $this->color,
             'slug' => Str::slug($this->title),
             'short_description' => $this->short_description,
             'images' => $imagePath,
