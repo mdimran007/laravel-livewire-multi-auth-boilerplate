@@ -45,7 +45,35 @@
                                 <div class="w-3/5 bg-indigo-600 flex flex-col justify-between p-4 rounded-r-2xl h-full">
                                     <div>
                                         <h3 class="text-lg font-semibold text-white leading-tight">
-                                            {{ $goal->title ? \Illuminate\Support\Str::limit($goal->title, 35, '...') : 'N/A' }}
+                                            
+                                             <span class="block sm:hidden md:hidden lg:hidden xl:hidden 2xl:hidden">
+                                                {{ $goal->title ? \Illuminate\Support\Str::limit($goal->title, 8, '...') : 'N/A' }}
+                                            </span>
+
+                                            <!-- Medium screens -->
+                                            <span class="hidden sm:block md:hidden lg:hidden xl:hidden 2xl:hidden">
+                                                {{ $goal->title ? \Illuminate\Support\Str::limit($goal->title, 10, '...') : 'N/A' }}
+                                            </span>
+
+                                            <!-- Large screens -->
+                                            <span class="hidden sm:hidden md:block lg:hidden xl:hidden 2xl:hidden">
+                                                {{ $goal->title ? \Illuminate\Support\Str::limit($goal->title, 15, '...') : 'N/A' }}
+                                            </span>
+
+                                            <!-- Large screens -->
+                                            <span class="hidden sm:hidden md:hidden lg:block xl:hidden 2xl:hidden">
+                                                {{ $goal->title ? \Illuminate\Support\Str::limit($goal->title, 10, '...') : 'N/A' }}
+                                            </span>
+
+                                             <!-- Large screens -->
+                                            <span class="hidden sm:hidden md:hidden lg:hidden xl:block 2xl:hidden">
+                                                {{ $goal->title ? \Illuminate\Support\Str::limit($goal->title, 15, '...') : 'N/A' }}
+                                            </span>
+
+                                            <!-- Large screens -->
+                                            <span class="hidden sm:hidden md:hidden lg:hidden xl:hidden 2xl:block">
+                                                {{ $goal->title ? \Illuminate\Support\Str::limit($goal->title, 35, '...') : 'N/A' }}
+                                            </span>
                                         </h3>
                                     </div>
 

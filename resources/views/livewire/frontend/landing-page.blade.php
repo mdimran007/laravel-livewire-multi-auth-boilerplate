@@ -1,21 +1,21 @@
 <div>
-        <section class="flex justify-center mb-8 text-center">
-        <div style="width: 315px;">
+    <section class="flex justify-center mb-8 text-center">
+        <div class="w-[315px]">
             {{-- <a wire:navigate href="{{ route('committee.details', 'sdg-bubt-committee') }}"> --}}
-                <div class="relative mx-auto mt-20" style="width: 300px; height: 300px;">
-                    <div class="absolute inset-0 rounded-full animate-spin-slow">
-                        <img src="{{ asset('assets/sdg-bubt-committee.png') }}"
-                            class="mx-auto object-cover rounded-full border-4 border-white shadow-xl" />
-                    </div>
-                    <div class="absolute inset-0 flex items-center justify-center">
-                        <div class="w-24 h-24 rounded-full bg-white flex items-center justify-center">
-                            <span class="text-center font-bold text-sm">
-                                <img src="{{ asset('assets/bubt-logo.png') }}"
-                                    alt="Logo" class="object-contain mx-auto" />
-                            </span>
-                        </div>
+            <div class="relative mx-auto mt-20" style="width: 300px; height: 300px;">
+                <div class="absolute inset-0 rounded-full animate-spin-slow">
+                    <img src="{{ asset('assets/sdg-bubt-committee.png') }}"
+                        class="mx-auto object-cover rounded-full border-4 border-white shadow-xl" />
+                </div>
+                <div class="absolute inset-0 flex items-center justify-center">
+                    <div class="w-24 h-24 rounded-full bg-white flex items-center justify-center">
+                        <span class="text-center font-bold text-sm">
+                            <img src="{{ asset('assets/bubt-logo.png') }}" alt="Logo"
+                                class="object-contain mx-auto" />
+                        </span>
                     </div>
                 </div>
+            </div>
             {{-- </a> --}}
         </div>
     </section>
@@ -167,13 +167,13 @@
     </section> --}}
 
     <section class="relative py-12 px-4 sm:px-6 lg:px-8">
-        <div class="mx-auto rounded-3xl overflow-hidden bg-white/10 p-1" style="max-width: 80%;">
+        <div class="mx-auto rounded-3xl overflow-hidden bg-white/10 p-1 w-4/5">
             @if (!$goals->isEmpty())
                 <!-- Grid: 3 columns on md+ screens -->
-                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1  lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-3 gap-6">
                     @foreach ($goals as $goal)
                         <article wire:key="item-{{ $goal->id }}"
-                            class="group relative bg-white/10 backdrop-blur-sm rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transform hover:-translate-y-2 transition-all duration-300 border border-white/10 flex flex-col min-h-[450px]">
+                            class="group relative bg-white/10 backdrop-blur-sm rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transform hover:-translate-y-2 transition-all duration-300 border border-white/10 flex flex-col sm:min-h-[450px]">
 
                             <!-- Clickable link -->
                             <a wire:navigate href="{{ route('goal.details', $goal->slug) }}"
@@ -206,10 +206,11 @@
 
                             <!-- Content Section -->
                             <div
-                                class="bg-indigo-600 flex flex-col justify-between flex-grow px-6 pt-6 pb-3 min-h-[200px]">
+                                class="bg-indigo-600 flex flex-col justify-between sm:flex-grow px-6 pt-6 pb-3 sm:min-h-[200px]">
                                 <div class="flex items-start gap-3">
                                     @if ($goal->sdg_image)
-                                        <div class="flex-shrink-0 h-[150px] w-[150px] overflow-hidden rounded-xl">
+                                        <div
+                                            class="flex-shrink-0 h-[100px] w-[100px] sm:h-[150px] sm:w-[150px] lg:h-[120px] lg:w-[120px] overflow-hidden rounded-xl">
                                             <img src="{{ asset('storage/' . $goal->sdg_image) }}" alt="SDG Image"
                                                 class="w-full h-full object-contain sdg-color-source"
                                                 data-article-id="{{ $goal->id }}">
@@ -217,13 +218,71 @@
                                     @endif
                                     <div class="flex-1">
                                         <h3 class="font-semibold text-white text-xl md:text-2xl">
-                                            {{ \Illuminate\Support\Str::limit($goal->title, 70, '...') }}
+                                            <!-- Small screens -->
+                                            <span class="block sm:hidden md:hidden lg:hidden xl:hidden 2xl:hidden">
+                                                {{ \Illuminate\Support\Str::limit($goal->title, 10, '...') }}
+                                            </span>
+
+                                            <!-- Medium screens -->
+                                            <span class="hidden sm:block md:hidden lg:hidden xl:hidden 2xl:hidden">
+                                                {{ \Illuminate\Support\Str::limit($goal->title, 45, '...') }}
+                                            </span>
+
+                                            <!-- Large screens -->
+                                            <span class="hidden sm:hidden md:block lg:hidden xl:hidden 2xl:hidden">
+                                                {{ \Illuminate\Support\Str::limit($goal->title, 45, '...') }}
+                                            </span>
+
+                                            <!-- Large screens -->
+                                            <span class="hidden sm:hidden md:hidden lg:block xl:hidden 2xl:hidden">
+                                                {{ \Illuminate\Support\Str::limit($goal->title, 45, '...') }}
+                                            </span>
+
+                                             <!-- Large screens -->
+                                            <span class="hidden sm:hidden md:hidden lg:hidden xl:block 2xl:hidden">
+                                                {{ \Illuminate\Support\Str::limit($goal->title, 18, '...') }}
+                                            </span>
+
+                                            <!-- Large screens -->
+                                            <span class="hidden sm:hidden md:hidden lg:hidden xl:hidden 2xl:block">
+                                                {{ \Illuminate\Support\Str::limit($goal->title, 20, '...') }}
+                                            </span>
                                         </h3>
                                         <p class="line-clamp-3 mb-3 mt-2 text-gray-200 text-sm">
-                                            {{ \Illuminate\Support\Str::limit($goal->short_description, 120, '...') }}
+                                            
+
+                                             <!-- Small screens -->
+                                            <span class="block sm:hidden md:hidden lg:hidden xl:hidden 2xl:hidden">
+                                                {{ \Illuminate\Support\Str::limit($goal->short_description, 100, '...') }}
+                                            </span>
+
+                                            <!-- Medium screens -->
+                                            <span class="hidden sm:block md:hidden lg:hidden xl:hidden 2xl:hidden">
+                                                {{ \Illuminate\Support\Str::limit($goal->short_description, 100, '...') }}
+                                            </span>
+
+                                            <!-- Large screens -->
+                                            <span class="hidden sm:hidden md:block lg:hidden xl:hidden 2xl:hidden">
+                                                {{ \Illuminate\Support\Str::limit($goal->short_description, 100, '...') }}
+                                            </span>
+
+                                            <!-- Large screens -->
+                                            <span class="hidden sm:hidden md:hidden lg:block xl:hidden 2xl:hidden">
+                                               {{ \Illuminate\Support\Str::limit($goal->short_description, 100, '...') }}
+                                            </span>
+
+                                             <!-- Large screens -->
+                                            <span class="hidden sm:hidden md:hidden lg:hidden xl:block 2xl:hidden">
+                                                {{ \Illuminate\Support\Str::limit($goal->short_description, 20, '...') }}
+                                            </span>
+
+                                            <!-- Large screens -->
+                                            <span class="hidden sm:hidden md:hidden lg:hidden xl:hidden 2xl:block">
+                                                {{ \Illuminate\Support\Str::limit($goal->short_description, 80, '...') }}
+                                            </span>
                                         </p>
                                         <a href="{{ route('goal.details', $goal->slug) }}"
-                                            class="bg-white/10 hover:bg-indigo-700 px-3 py-2 rounded-full text-sm text-white transition float-right">
+                                            class="hidden sm:block bg-white/10 hover:bg-indigo-700 px-3 py-2 rounded-full text-sm text-white transition float-right">
                                             More Details
                                         </a>
                                     </div>

@@ -13,13 +13,13 @@
                         class="flex flex-col md:flex-row bg-white shadow-lg rounded-xl overflow-hidden border border-gray-200">
 
                         {{-- Image Section --}}
-                        <div class="md:w-1/3 flex-shrink-0">
+                        <div class="relative md:w-1/3 flex-shrink-0 bg-indigo-600">
                             @if ($sdgReport->images)
                                 <img src="{{ $sdgReport->images ? asset('storage/' . $sdgReport->images) : '/path/to/default-image.png' }}"
-                                    alt="{{ $sdgReport->title }}" class="w-full h-full object-cover">
+                                    alt="{{ $sdgReport->title }}" class="absolute w-full h-full object-cover">
                             @else
                                 <img src="/path/to/default-image.png" alt="Report Image"
-                                    class="w-full h-full object-cover">
+                                    class="absolute w-full h-full object-cover">
                             @endif
                         </div>
 
@@ -28,8 +28,15 @@
                             <div>
                                 <h2 class="font-bold mb-4 text-2xl text-gray-800 text-white">{{ $sdgReport->title }}
                                 </h2>
-                                <p class="leading-relaxed mb-6 text-gray-600 text-sm text-white">{!! $sdgReport->description !!}
-                                </p>
+                                <div class="mb-6">
+                                    <p
+                                        class="leading-relaxed mb-2 text-gray-600 text-sm text-white text-justify description">
+                                        {!! $sdgReport->description !!}
+                                    </p>
+                                    <a href="javascript:void(0);" class="see-more text-blue-500 font-semibold">See
+                                        More</a>
+                                </div>
+
                             </div>
 
                             @if ($sdgReport->file)
@@ -63,4 +70,46 @@
             @endif
         </div>
     </section>
+
+    @push('script')
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script>
+            $(document).ready(function() {
+                var showChar = 900; // Character limit
+                var ellipsestext = "";
+                var moretext = "See More";
+                var lesstext = "See Less";
+
+                $('.description').each(function() {
+                    var content = $(this).text();
+
+                    if (content.length > showChar) {
+                        var visibleText = content.substr(0, showChar); // first part
+                        var hiddenText = content.substr(showChar); // remaining
+
+
+                        var html = visibleText + '<span class="ellipses">' + ellipsestext +
+                            '</span><span class="more-content" style="display:none;">' + hiddenText + '</span>';
+                        $(this).html(html);
+                    }
+                });
+
+                $(".see-more").click(function() {
+                    var $desc = $(this).prev('.description');
+                    var $moreContent = $desc.find('.more-content');
+                    var $ellipses = $desc.find('.ellipses');
+
+                    if ($moreContent.is(":visible")) {
+                        $moreContent.hide();
+                        $ellipses.show();
+                        $(this).text(moretext);
+                    } else {
+                        $moreContent.show();
+                        $ellipses.hide();
+                        $(this).text(lesstext);
+                    }
+                });
+            });
+        </script>
+    @endpush
 </div>

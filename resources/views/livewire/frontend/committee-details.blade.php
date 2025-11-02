@@ -1,35 +1,40 @@
 <div>
 
-    <!-- Hero Section -->
-    <div class="relative h-96">
         @if (!$isMainCommittee)
-            <img class="w-full h-full object-cover"
-                src="{{ $goalDetails->images != null ? asset('storage/' . $goalDetails->images) : asset('assets/no-image.png') }}"
-                alt="Goal Hero Image">
-        @endif
-
-        <div class="absolute inset-0 bg-gradient-to-r from-blue-600/90 via-indigo-600/90 to-purple-600/90"></div>
-        <div class="absolute inset-0 flex items-center">
-            <div class="mx-auto px-4 sm:px-6 lg:px-8 w-full" style="max-width: 80%;">
-                @if (!$isMainCommittee)
-                    <h1 class="text-4xl font-bold text-white mb-4">{{ $goalDetails->title ?? 'N/A' }}</h1>
-                    <p class="text-xl text-white/90">{{ $goalDetails->short_description ?? 'N/A' }}</p>
-                @else
-                    <h1 class="text-4xl font-bold text-white mb-4">{{ $mainCommitteeTitle ?? 'N/A' }}</h1>
-                    <p class="text-xl text-white/90">{{ $mainCommitteeShortDesc ?? 'N/A' }}</p>
-                @endif
+            <!-- Hero Section -->
+            <div class="relative bg-cover bg-center"
+                style="background-image: url('{{ $goalDetails->images ? asset('storage/' . $goalDetails->images) : asset('assets/no-image.png') }}')">
+                <div class="bg-gradient-to-r from-blue-600/90 p-10 py-[100px] to-purple-600/90 via-indigo-600/90">
+                    <div class="h-full mx-auto w-4/5">
+                        <h1 class="text-4xl font-bold text-white mb-4">{{ $goalDetails->title ?? 'N/A' }}</h1>
+                        <p class="text-xl text-white/90 leading-relaxed text-justify">
+                            {{ $goalDetails->short_description ?? 'N/A' }}
+                        </p>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
+        @else
+            <!-- Hero Section -->
+            <div class="relative bg-cover bg-center">
+                <div class="bg-gradient-to-r from-blue-600/90 p-10 py-[100px] to-purple-600/90 via-indigo-600/90">
+                    <div class="h-full mx-auto w-4/5">
+                        <h1 class="text-4xl font-bold text-white mb-4">{{ $mainCommitteeTitle ?? 'N/A' }}</h1>
+                        <p class="text-xl text-white/90 leading-relaxed text-justify">
+                            {{ $mainCommitteeShortDesc ?? 'N/A' }}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        @endif
 
 
     <!-- Main Content -->
     <main class="flex-1 py-12">
-        <div
-            class="mx-auto px-4 sm:px-6 lg:px-8 text-white prose prose-invert prose-a:text-blue-400 hover:prose-a:text-blue-500" style="max-width: 80%;">
+        <div class="mx-auto px-4 sm:px-6 lg:px-8 text-white prose prose-invert prose-a:text-blue-400 hover:prose-a:text-blue-500"
+            style="max-width: 80%;">
 
             <section class="py-12 px-4 sm:px-6 lg:px-8">
-                <div class="mx-auto" >
+                <div class="mx-auto">
                     <h3 class="text-4xl mb-16 text-black">Member List:</h3>
 
                     {{-- If not main committee --}}
